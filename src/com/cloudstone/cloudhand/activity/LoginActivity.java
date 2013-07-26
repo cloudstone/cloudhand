@@ -5,6 +5,7 @@
 package com.cloudstone.cloudhand.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class LoginActivity extends BaseActivity {
         btnSet= (Button)findViewById(R.id.btnSet);
         
         btnLogin.setOnClickListener(new btnOnClickListener());
+        btnKaiTai.setOnClickListener(new btnOnClickListener());
     }
     
     class btnOnClickListener implements OnClickListener {
@@ -48,11 +50,16 @@ public class LoginActivity extends BaseActivity {
 		public void onClick(View v) {
 			if(v == btnLogin) {
 				LayoutInflater li = LayoutInflater.from(LoginActivity.this);
-		        View view = li.inflate(R.layout.login_dialog, null);
-		        AlertDialog builder = new AlertDialog.Builder(LoginActivity.this).setTitle(  
-		        		"登录").setPositiveButton("确定", null).setNegativeButton("取消",null).create();  
+		        View view = li.inflate(R.layout.style_login_dialog, null);
+		        AlertDialog builder = new AlertDialog.Builder(LoginActivity.this).create();  
 		        builder.setView(view);
 		        builder.show();
+			} else if(v == btnKaiTai) {
+				btnKaiTai.setText("xxxx");
+				Intent intent = new Intent();
+				intent.putExtra("oo", "xx");
+				intent.setClass(LoginActivity.this, OpenTableActivity.class);
+				LoginActivity.this.startActivity(intent);
 			}
 			
 		}
