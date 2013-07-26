@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/style_login_dialog_bg" >
+    
+    <TableRow
+        android:layout_marginTop="50dip"
+        android:layout_marginLeft="23dip">
+        <TextView
+            android:text="账号:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"/>
+        <EditText 
+            android:id="@+id/login_dialog_user"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@android:drawable/edit_text"/>
+	</TableRow>
+	<TableRow
+        android:layout_marginLeft="23dip">
+        <TextView
+            android:text="密码:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"/>
+        <EditText 
+            android:id="@+id/login_dialog_password"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@android:drawable/edit_text"/>
+	</TableRow>
+    <TableRow
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="23dip">
+        <Button 
+            android:id="@+id/btnLogin"
+            android:text="登录"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_span="2"/>
+    </TableRow>
+    
+
+</TableLayout>
