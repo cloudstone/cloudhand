@@ -31,7 +31,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_login_dialog, container, false);
+        View view = inflater.inflate(R.layout.dialog_login, container, false);
         textView = (AutoCompleteTextView)view.findViewById(R.id.login_dialog_userName);
         textView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, items));
         return view;

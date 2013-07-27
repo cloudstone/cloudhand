@@ -3,55 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal" 
-    android:background="@drawable/cover" >
-    
-	<ImageView 
-	    android:id="@+id/logo"
+    android:background="@drawable/bg_main" >
+
+    <ImageView 
+        android:id="@+id/logo"
         android:layout_marginTop="60dip"
-	    android:layout_width="200dip"
-	    android:layout_height="60dip"
-	    android:background="@drawable/logo_large"/>
-	
-	<Button 
-	    android:id="@+id/btnLogin"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="150dip"
-	    android:layout_alignLeft="@id/logo"
-	    android:background="@drawable/selector_login_btnlogin"/>
-	
-	<Button 
-	    android:id="@+id/btnOpenTable"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="150dip"
-	    android:layout_alignRight="@id/logo"
-	    android:background="@drawable/selector_login_btnopentable"/>
-	
-	<Button 
-	    android:id="@+id/btnTabelInfo"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="250dip"
-	    android:layout_alignLeft="@id/logo"
-	    android:background="@drawable/selector_login_btntableinfo"/>
-	
-	<Button 
-	    android:id="@+id/btnSetting"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="250dip"
-	    android:layout_alignRight="@id/logo"
-	    android:background="@drawable/selector_login_btnsetting"/>
-	
-	<TextView 
-	    android:id="@+id/tvLogin"
-	    android:layout_width="200dip"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="350dip"
-	    android:layout_alignLeft="@id/logo"
-	    android:text="@string/tip_not_login"
-	    android:textColor="#FFFFFF"
-	    android:gravity="center"
-	    android:background="@drawable/tips_frame"/>
+        android:layout_width="200dip"
+        android:layout_height="60dip"
+        android:background="@drawable/logo_large"/>
+
+    <Button 
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dip"
+        android:layout_alignLeft="@id/logo"
+        android:background="@drawable/selector_login_btnlogin"/>
+
+    <Button 
+        android:id="@+id/btnOpenTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dip"
+        android:layout_alignRight="@id/logo"
+        android:background="@drawable/selector_login_btnopentable"/>
+
+    <Button 
+        android:id="@+id/btnTabelInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dip"
+        android:layout_alignLeft="@id/logo"
+        android:background="@drawable/selector_login_btntableinfo"/>
+
+    <Button 
+        android:id="@+id/btnSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dip"
+        android:layout_alignRight="@id/logo"
+        android:background="@drawable/selector_login_btnsetting"/>
+
+    <TextView 
+        android:id="@+id/tvLogin"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dip"
+        android:layout_alignLeft="@id/logo"
+        android:text="@string/tip_not_login"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:background="@drawable/tips_frame"/>
 </RelativeLayout>
