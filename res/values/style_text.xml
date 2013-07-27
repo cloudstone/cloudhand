@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="Text">
+    </style>
+    
+    <style name="Text.xlarge">
+        <item name="android:textSize">@dimen/text.xlarge</item>
+    </style>
+    <style name="Text.large">
+        <item name="android:textSize">@dimen/text.large</item>
+    </style>
+    <style name="Text.normal">
+        <item name="android:textSize">@dimen/text.normal</item>
+    </style>
+
+    <style name="Text.small">
+        <item name="android:textSize">@dimen/text.small</item>
+    </style>
+
+    <style name="Text.tiny">
+        <item name="android:textSize">@dimen/text.tiny</item>
+    </style>
+
+    <style name="Text.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+    <style name="Text.tiny.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+    <style name="Text.small.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+    <style name="Text.normal.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+    <style name="Text.large.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+    <style name="Text.xlarge.gray">
+        <item name="android:textColor">@color/text.gray</item>
+    </style>
+
+    <style name="Text.normal.blue">
+        <item name="android:textColor">@color/text.blue</item>
+    </style>
+    <style name="Text.large.blue">
+        <item name="android:textColor">@color/text.blue</item>
+    </style>
+
+    <style name="Text.large.blueLight">
+        <item name="android:textColor">@color/text.blueLight</item>
+    </style>
+    <style name="Text.normal.blueLight">
+        <item name="android:textColor">@color/text.blueLight</item>
+    </style>
+
+    <style name="Text.xlarge.blackDeep">
+        <item name="android:textColor">@color/text.blackDeep</item>
+    </style>
+    <style name="Text.large.blackDeep">
+        <item name="android:textColor">@color/text.blackDeep</item>
+    </style>
+    <style name="Text.xlarge.black">
+        <item name="android:textColor">@color/text.black</item>
+    </style>
+    <style name="Text.large.black">
+        <item name="android:textColor">@color/text.black</item>
+    </style>
+    <style name="Text.normal.black">
+        <item name="android:textColor">@color/text.black</item>
+    </style>
+
+    <style name="Text.xlarge.white">
+        <item name="android:textColor">@color/text.white</item>
+    </style>
+    <style name="Text.large.white">
+        <item name="android:textColor">@color/text.white</item>
+    </style>
+    <style name="Text.normal.white">
+        <item name="android:textColor">@color/text.white</item>
+    </style>
+    <style name="Text.small.white">
+        <item name="android:textColor">@color/text.white</item>
+    </style>
+    <style name="Text.small.black">
+        <item name="android:textColor">@color/text.black</item>
+    </style>
+</resources>
