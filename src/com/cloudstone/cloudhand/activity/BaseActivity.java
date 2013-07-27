@@ -7,7 +7,7 @@ package com.cloudstone.cloudhand.activity;
 import android.app.Activity;
 
 /**
- * @author xuhongfeng
+ * @author xuhongchuan
  *
  */
 public class BaseActivity extends Activity  {
