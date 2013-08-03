@@ -16,6 +16,7 @@ import com.cloudstone.cloudhand.exception.HttpStatusError;
 import com.cloudstone.cloudhand.exception.NetworkApiException;
 import com.cloudstone.cloudhand.network.HttpClientInstance;
 import com.cloudstone.cloudhand.network.form.IForm;
+import com.cloudstone.cloudhand.util.L;
 
 
 /**
@@ -53,6 +54,9 @@ public abstract class AbsApi<RESULT, FORM extends IForm> implements IServerApi<R
         HttpClient client = HttpClientInstance.newInstance();
         HttpResponse response = null;
         try {
+            L.i(this, "HttpRequest: URL = " + request.getURI().toString());
+            L.i(this, "HttpRequest: Method = " + request.getMethod());
+            L.i(this, "HttpRequest: Form = " + form);
             response = client.execute(request);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode<200 || statusCode>=300){

@@ -14,7 +14,7 @@ public class HttpStatusError extends ApiException {
     private final int status;
 
     public HttpStatusError(int status) {
-        super();
+        super("status = " + status);
         this.status = status;
     }
 
