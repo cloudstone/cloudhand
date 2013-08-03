@@ -5,6 +5,10 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="tip_not_login">您尚未登录！</string>
     <string name="dialog_user">账号:</string>
-	<string name="dialog_password">密码:</string>
-	<string name="diolog_login">登录</string>
+    <string name="dialog_password">密码:</string>
+    <string name="diolog_login">登录</string>
+    
+    <!-- error -->
+    <string name="error_list_user_names_failed">获取用户名列表失败</string>
+
 </resources>
