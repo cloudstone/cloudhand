@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <fragment 
+        android:id="@+id/dianCanFragment"
+        android:name="com.cloudstone.cloudhand.dialog.DianCanFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    
+    
+</LinearLayout>

@@ -29,8 +29,8 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, 0);
+    	super.onCreate(savedInstanceState);
+    	setStyle(STYLE_NO_TITLE, 0);
     }
     
     @Override
