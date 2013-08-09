@@ -15,7 +15,7 @@ import com.cloudstone.cloudhand.Cloudhand;
  *
  */
 public class HttpClientInstance {
-    private static final String USER_AGENT = "cloudhand-android";
+    private static final String USER_AGENT = "CloudHand";
 
     private static final int TIMEOUT_CONNECTION = 30 * 1000;
     private static final int TIMEOUT_SOCKET = 60 * 1000;
