@@ -1,4 +1,4 @@
-package com.cloudstone.cloudhand.dialog;
+package com.cloudstone.cloudhand.activity;
 
 import android.app.Fragment;
 

@@ -1,7 +1,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tab1"
+            android:layout_width="0dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:text="@string/tab_diancai"
+            android:gravity="center"
+            android:background="@drawable/bg_main"
+            style="@style/Text.xlarge.white" />
+        
+        <TextView
+            android:id="@+id/tab2"
+            android:layout_width="0dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:text="@string/tab_yidian"
+            android:gravity="center"
+            android:background="@drawable/bg_main"
+            style="@style/Text.xlarge.white" />
+        
+        <TextView
+            android:id="@+id/tab3"
+            android:layout_width="0dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:text="@string/tab_other"
+            android:gravity="center"
+            android:background="@drawable/bg_main"
+            style="@style/Text.xlarge.white" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+    </LinearLayout> 
+    
+    
     
 </LinearLayout>
