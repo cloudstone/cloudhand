@@ -27,7 +27,6 @@ import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 @SuppressLint("ValidFragment")
 public class OpenTable_Tab1 extends BaseFragment implements SearchView.OnQueryTextListener {
 	
-    private Button btnADD;
     private ListView listView;
     private List<Map<String, String>> data;
     private SimpleAdapter adapter;

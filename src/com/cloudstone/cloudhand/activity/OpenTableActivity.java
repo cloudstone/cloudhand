@@ -47,7 +47,7 @@ public class OpenTableActivity extends BaseActivity {
         fm = getFragmentManager();
         ft = fm.beginTransaction();
         
-        ft.replace(R.id.content, new OpenTable_Tab1(data));
+        ft.replace(R.id.content, new OpenTable_Tab4());
         ft.commit();
         
         tvDianCan.setOnClickListener(new OnClickListener() {
@@ -58,7 +58,8 @@ public class OpenTableActivity extends BaseActivity {
                 
                 ft = fm.beginTransaction();
                 
-                ft.replace(R.id.content, new OpenTable_Tab1(data));
+//                ft.replace(R.id.content, new OpenTable_Tab1(data));
+                ft.replace(R.id.content, new OpenTable_Tab4());
                 ft.commit();
             }
         });
