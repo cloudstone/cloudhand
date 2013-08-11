@@ -45,7 +45,7 @@
         android:background="@drawable/selector_login_btnsetting"/>
 
     <TextView 
-        android:id="@+id/tvLogin"
+        android:id="@+id/tvLoginStatus"
         android:layout_width="200dip"
         android:layout_height="wrap_content"
         android:layout_marginTop="350dip"

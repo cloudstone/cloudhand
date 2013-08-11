@@ -52,7 +52,7 @@ public class OpenTable_Tab4 extends BaseFragment {
     }
     
     private class InnerAdapter extends BaseAdapter implements FoodItemListener {
-
+    	
 		@Override
 		public int getCount() {
 			return food.size();
@@ -98,7 +98,19 @@ public class OpenTable_Tab4 extends BaseFragment {
 
 		@Override
 		public void onChanged(FoodItem view, boolean incr) {
-			// TODO Auto-generated method stub
+			ViewHolder holder = (ViewHolder) view.getTag();
+            Food food = holder.getFood();
+            int count = getFoodCount(food.getId());
+            if (incr) {
+                count++;
+                setFoodCount(food.getId(), count);
+            } else {
+                if (count > 0) {
+                    count--;
+                    setFoodCount(food.getId(), count);
+                }
+            }
+            view.renderCount(count);
 			
 		}
         

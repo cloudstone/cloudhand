@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
@@ -22,6 +24,7 @@ public class MainActivity extends BaseActivity {
     private Button btnOpenTable;
     private Button btnTabelInfo;
     private Button btnSetting;
+    public static TextView tvLoginStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,10 @@ public class MainActivity extends BaseActivity {
         btnOpenTable = (Button)findViewById(R.id.btnOpenTable);
         btnTabelInfo = (Button)findViewById(R.id.btnTabelInfo);
         btnSetting= (Button)findViewById(R.id.btnSetting);
+        
+        tvLoginStatus = (TextView)findViewById(R.id.tvLoginStatus);
+        
+        
         
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override

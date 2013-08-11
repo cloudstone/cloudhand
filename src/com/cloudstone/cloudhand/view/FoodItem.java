@@ -56,7 +56,7 @@ public class FoodItem extends RelativeLayout {
     
     public void render(Food food, int count) {
         tvNameView.setText(food.getName());
-        tvPriceView.setText(String.format("$%.2f", food.getPrice()));
+        tvPriceView.setText(food.getPrice() + "");
         renderCount(count);
     }
     
