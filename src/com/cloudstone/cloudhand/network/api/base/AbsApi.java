@@ -7,6 +7,9 @@ package com.cloudstone.cloudhand.network.api.base;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 import android.os.AsyncTask;
 
@@ -15,6 +18,7 @@ import com.cloudstone.cloudhand.exception.DecodeApiException;
 import com.cloudstone.cloudhand.exception.HttpStatusError;
 import com.cloudstone.cloudhand.exception.NetworkApiException;
 import com.cloudstone.cloudhand.network.HttpClientInstance;
+import com.cloudstone.cloudhand.network.MyCookieStore;
 import com.cloudstone.cloudhand.network.form.IForm;
 import com.cloudstone.cloudhand.util.L;
 
@@ -57,7 +61,7 @@ public abstract class AbsApi<RESULT, FORM extends IForm> implements IServerApi<R
             L.i(this, "HttpRequest: URL = " + request.getURI().toString());
             L.i(this, "HttpRequest: Method = " + request.getMethod());
             L.i(this, "HttpRequest: Form = " + form);
-            response = client.execute(request);
+            response = client.execute(request, createHttpContext());
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode<200 || statusCode>=300){
                 throw new HttpStatusError(statusCode);
@@ -66,6 +70,12 @@ public abstract class AbsApi<RESULT, FORM extends IForm> implements IServerApi<R
             throw new NetworkApiException(e);
         }
         return decodeResponse(response);
+    }
+    
+    private HttpContext createHttpContext() {
+        HttpContext localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, MyCookieStore.getInstance());
+        return localContext;
     }
     
     /* ---------- Inner Class ---------- */
