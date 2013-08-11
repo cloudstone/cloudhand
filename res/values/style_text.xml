@@ -6,9 +6,7 @@
     <style name="Text.xlarge">
         <item name="android:textSize">@dimen/text.xlarge</item>
     </style>
-    <style name="Text.large">
-        <item name="android:textSize">@dimen/text.large</item>
-    </style>
+    
     <style name="Text.normal">
         <item name="android:textSize">@dimen/text.normal</item>
     </style>
@@ -19,6 +17,10 @@
 
     <style name="Text.tiny">
         <item name="android:textSize">@dimen/text.tiny</item>
+    </style>
+    
+    <style name="Text.large">
+        <item name="android:textSize">@dimen/text.large</item>
     </style>
 
     <style name="Text.gray">

@@ -7,7 +7,13 @@
     <string name="dialog_user">账号:</string>
     <string name="dialog_password">密码:</string>
     <string name="diolog_login">登录</string>
-    
+    <string name="tab_diancai">点菜</string>
+    <string name="tab_yidian">已点</string>
+    <string name="tab_other">其它</string>
+    <string name="list1">菜品名称</string>
+    <string name="list2">单价</string>
+    <string name="list3">数量</string>
+
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
 
