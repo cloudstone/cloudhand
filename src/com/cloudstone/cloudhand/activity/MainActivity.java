@@ -13,7 +13,8 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 
 /**
- * @author xuhongchuan
+ * 
+ * @author xhc
  *
  */
 public class MainActivity extends BaseActivity {
@@ -27,10 +28,10 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        btnLogin = (Button)findViewById(R.id.btnLogin);
-        btnOpenTable = (Button)findViewById(R.id.btnOpenTable);
-        btnTabelInfo = (Button)findViewById(R.id.btnTabelInfo);
-        btnSetting= (Button)findViewById(R.id.btnSetting);
+        btnLogin = (Button)findViewById(R.id.button_login);
+        btnOpenTable = (Button)findViewById(R.id.button_login);
+        btnTabelInfo = (Button)findViewById(R.id.button_open_table);
+        btnSetting= (Button)findViewById(R.id.btn_setting);
         
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override

@@ -10,7 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * @author xuhongchuan
+ * 
+ * @author xhc
  *
  */
 public class BaseActivity extends Activity {

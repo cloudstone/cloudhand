@@ -8,19 +8,28 @@
     <TableRow
         android:gravity="center_horizontal" >
         <TextView
-            android:text="@string/dialog_user"
+            android:text="@string/dialog_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
             style="@style/Text.xlarge.white"
             />
+        
+        <!--  
         <AutoCompleteTextView 
-            android:id="@+id/login_dialog_userName"
+            android:id="@+id/text_user_name"
             android:layout_width="200dip"
             android:layout_height="50dip" 
             android:background="@android:drawable/edit_text"
-            android:completionThreshold="1" />
-	</TableRow>
+            android:completionThreshold="1" />-->
+        
+        <Spinner 
+            android:id="@+id/text_user_name" 
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@android:drawable/edit_text" />
+    </TableRow>
+            
 	
 	<TableRow
         android:gravity="center_horizontal" >
@@ -32,7 +41,7 @@
             style="@style/Text.xlarge.white"
             />
         <EditText 
-            android:id="@+id/login_dialog_password"
+            android:id="@+id/text_password"
             android:layout_width="200dip"
             android:layout_height="50dip"
             android:background="@android:drawable/edit_text"
@@ -43,7 +52,7 @@
         android:layout_marginTop="10dip"
         android:gravity="center_horizontal" >
         <Button 
-            android:id="@+id/btnLogin"
+            android:id="@+id/button_login_dialog"
             android:text="@string/diolog_login"
             android:layout_width="match_parent"
             android:layout_height="50dip"
