@@ -5,18 +5,13 @@
     android:background="@drawable/bg_main"
     android:gravity="center_horizontal" >
 
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageView 
+        android:id="@+id/image_logo"
+        android:layout_width="273dip"
+        android:layout_height="50dip"
         android:layout_marginTop="70dip"
-        android:gravity="center_horizontal">
-        
-        <ImageView 
-	        android:id="@+id/image_logo"
-	        android:layout_width="273dip"
-	        android:layout_height="50dip"
-	        android:background="@drawable/logo_large" />
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/logo_large" />
     
     
     <LinearLayout 
@@ -60,22 +55,16 @@
             android:background="@drawable/selector_login_btnsetting"/>
     </LinearLayout>
     
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <TextView 
+        android:id="@+id/text_login_status"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
         android:layout_marginTop="400dip"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-        
-        <TextView 
-            android:id="@+id/text_login_status"
-            android:layout_width="200dip"
-            android:layout_height="wrap_content"
-            android:text="@string/tip_not_login"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:background="@drawable/tips_frame"/>
-    </LinearLayout>
+        android:text="@string/tip_not_login"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/tips_frame"/>
 
 </RelativeLayout>

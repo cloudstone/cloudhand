@@ -15,16 +15,8 @@
             style="@style/Text.xlarge.white"
             />
         
-        <!--  
-        <AutoCompleteTextView 
-            android:id="@+id/text_user_name"
-            android:layout_width="200dip"
-            android:layout_height="50dip" 
-            android:background="@android:drawable/edit_text"
-            android:completionThreshold="1" />-->
-        
         <Spinner 
-            android:id="@+id/text_user_name" 
+            android:id="@+id/text_user_name_dialog" 
             android:layout_width="200dip"
             android:layout_height="50dip"
             android:background="@android:drawable/edit_text" />
@@ -41,7 +33,7 @@
             style="@style/Text.xlarge.white"
             />
         <EditText 
-            android:id="@+id/text_password"
+            android:id="@+id/text_password_dialog"
             android:layout_width="200dip"
             android:layout_height="50dip"
             android:background="@android:drawable/edit_text"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
@@ -22,6 +23,7 @@ public class MainActivity extends BaseActivity {
     private Button btnOpenTable;
     private Button btnTabelInfo;
     private Button btnSetting;
+    private TextView tvLoginStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends BaseActivity {
         btnOpenTable = (Button)findViewById(R.id.button_login);
         btnTabelInfo = (Button)findViewById(R.id.button_open_table);
         btnSetting= (Button)findViewById(R.id.btn_setting);
+        tvLoginStatus = (TextView)findViewById(R.id.text_login_status);
         
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override
@@ -40,5 +43,9 @@ public class MainActivity extends BaseActivity {
                 dialog.show(getFragmentManager(), "loginDialog");
             }
         });
+    }
+    
+    public void setTvLoginStatus(String userName) {
+    	tvLoginStatus.setText(userName);
     }
 }
