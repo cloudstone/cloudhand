@@ -14,6 +14,12 @@ public class User extends BaseData {
     
     private String realName;
     
+    private String name;
+    
+    public String getName() {
+    	return name;
+    }
+    
     /* 备注 */
     private String comment = "";
 
