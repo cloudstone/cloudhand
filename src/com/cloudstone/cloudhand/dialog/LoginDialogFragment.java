@@ -5,6 +5,7 @@
 package com.cloudstone.cloudhand.dialog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
@@ -47,9 +49,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_login, container, false);
-        tvUserName = (Spinner)view.findViewById(R.id.text_user_name_dialog);
-        btnLogin = (Button)view.findViewById(R.id.button_login_dialog);
-        tvPassword = (EditText)view.findViewById(R.id.text_password_dialog);
+        tvUserName = (Spinner)view.findViewById(R.id.spinner_user_name);
+        tvPassword = (EditText)view.findViewById(R.id.edit_password);
+        btnLogin = (Button)view.findViewById(R.id.button_login);
         return view;
     }
     
@@ -87,22 +89,23 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                     public void onSuccess(User result) {
                         //修改主界面的登录用户
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName());
-                    }
-
-                    @Override
-                    public void onFinish() {
                         dismiss();
                     }
 
                     @Override
+                    public void onFinish() {
+                    }
+
+                    @Override
                     protected void onAuthFailed() {
-                        // TODO Auto-generated method stub
+                    	Toast.makeText(getActivity(), "密码错误", 0).show();
                         
                     }
 
                     @Override
                     protected void onError(ApiException e) {
-                        // TODO Auto-generated method stub
+                        Log.e(LoginDialogFragment.this.toString(), e.getMessage());
+                        Toast.makeText(getActivity(), "登陆失败", 0).show();
                         
                     }
                     

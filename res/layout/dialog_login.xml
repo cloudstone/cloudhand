@@ -8,7 +8,7 @@
     <TableRow
         android:gravity="center_horizontal" >
         <TextView
-            android:text="@string/dialog_user_name"
+            android:text="@string/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
@@ -16,7 +16,7 @@
             />
         
         <Spinner 
-            android:id="@+id/text_user_name_dialog" 
+            android:id="@+id/spinner_user_name" 
             android:layout_width="200dip"
             android:layout_height="50dip"
             android:background="@android:drawable/edit_text" />
@@ -26,14 +26,14 @@
 	<TableRow
         android:gravity="center_horizontal" >
         <TextView
-            android:text="@string/dialog_password"
+            android:text="@string/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
             style="@style/Text.xlarge.white"
             />
         <EditText 
-            android:id="@+id/text_password_dialog"
+            android:id="@+id/edit_password"
             android:layout_width="200dip"
             android:layout_height="50dip"
             android:background="@android:drawable/edit_text"
@@ -44,8 +44,8 @@
         android:layout_marginTop="10dip"
         android:gravity="center_horizontal" >
         <Button 
-            android:id="@+id/button_login_dialog"
-            android:text="@string/diolog_login"
+            android:id="@+id/button_login"
+            android:text="@string/login"
             android:layout_width="match_parent"
             android:layout_height="50dip"
             android:layout_span="2"

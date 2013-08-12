@@ -6,9 +6,9 @@
     <string name="tip_not_login">您尚未登录！</string>
     
     <!-- 登录对话框 -->
-    <string name="dialog_user_name">账号:</string>
-    <string name="dialog_password">密码:</string>
-    <string name="diolog_login">登录</string>
+    <string name="user_name">账号:</string>
+    <string name="password">密码:</string>
+    <string name="login">登录</string>
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
