@@ -4,6 +4,7 @@
  */
 package com.cloudstone.cloudhand.network.api;
 
+import com.cloudstone.cloudhand.constant.UrlConst;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.exception.HttpStatusError;
@@ -18,8 +19,8 @@ import com.cloudstone.cloudhand.network.form.BaseForm;
  */
 public class LoginApi extends AbsPostFormGetJsonApi<User, LoginForm> {
     
-    public LoginApi(String url, String name, String password) {
-        super(url, new LoginForm(name, password));
+    public LoginApi(String name, String password) {
+        super(UrlConst.LOGIN_URL, new LoginForm(name, password));
     }
     
     public void asyncCall(LoginApiCallback callback) {
