@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_login_dialog"
-    android:gravity="center" >
+    android:orientation="vertical" >
     
-    <TableRow
-        android:gravity="center_horizontal" >
-        <TextView
-            android:text="@string/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dip"
-            style="@style/Text.xlarge.white"
-            />
+    <TableLayout 
+        android:layout_width="280dip"
+        android:layout_height="230dip"
+        android:gravity="center"
+        android:background="@drawable/bg_main" >
+        <TableRow
+            android:gravity="center_horizontal" >
+            <TextView
+                android:text="@string/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                style="@style/Text.xlarge.white" />
         
-        <Spinner 
-            android:id="@+id/spinner_user_name" 
-            android:layout_width="200dip"
-            android:layout_height="50dip"
-            android:background="@android:drawable/edit_text" />
-    </TableRow>
+            <Spinner 
+                android:id="@+id/spinner_user_name" 
+                android:layout_width="180dip"
+                android:layout_height="50dip"
+                android:background="@drawable/btn_spinner_pressed"
+                style="@style/Text.large.white" />
+        </TableRow>
             
-	
-	<TableRow
-        android:gravity="center_horizontal" >
-        <TextView
-            android:text="@string/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dip"
-            style="@style/Text.xlarge.white"
-            />
-        <EditText 
-            android:id="@+id/edit_password"
-            android:layout_width="200dip"
-            android:layout_height="50dip"
-            android:background="@android:drawable/edit_text"
-            android:inputType="textPassword" />
-	</TableRow>
-	
-    <TableRow
-        android:layout_marginTop="10dip"
-        android:gravity="center_horizontal" >
-        <Button 
-            android:id="@+id/button_login"
-            android:text="@string/login"
-            android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:layout_span="2"
-            style="@style/Text.xlarge.white"
-            />
-    </TableRow>
-    
+        <TableRow
+            android:gravity="center_horizontal" >
+            <TextView
+                android:text="@string/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                style="@style/Text.xlarge.white" />
+            <EditText 
+                android:id="@+id/edit_password"
+                android:layout_width="180dip"
+                android:layout_height="50dip"
+                android:paddingLeft="11dip"
+                android:background="@drawable/textfield_pressed"
+                android:inputType="textPassword"
+                style="@style/Text.normal.white" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_marginTop="10dip"
+            android:gravity="center_horizontal" >
+            <Button 
+                android:id="@+id/button_login"
+                android:text="@string/login"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_span="2"
+                android:background="@drawable/selector_logout_btnlogin"
+                style="@style/Text.xlarge.white" />
+        </TableRow>
+     
+    </TableLayout>
 
-</TableLayout>
+ </LinearLayout>  

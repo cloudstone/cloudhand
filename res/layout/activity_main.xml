@@ -13,25 +13,24 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/logo_large" />
     
-    
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dip"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal" >
         
          <Button 
 	        android:id="@+id/button_login"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:background="@drawable/selector_login_btnlogin"/>
+	        android:background="@drawable/selector_login_btnlogin" />
 
         <Button 
             android:id="@+id/button_open_table"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_login_btnopentable"/>
+            android:background="@drawable/selector_login_btnopentable" />
     </LinearLayout>
     
     
@@ -40,19 +39,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="280dip"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal" >
         
         <Button 
             android:id="@+id/button_table_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_login_btntableinfo"/>
+            android:background="@drawable/selector_login_btntableinfo" />
 
         <Button 
             android:id="@+id/btn_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_login_btnsetting"/>
+            android:background="@drawable/selector_login_btnsetting" />
     </LinearLayout>
     
 
@@ -65,6 +64,6 @@
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/tips_frame"/>
+        android:background="@drawable/tips_frame" />
 
 </RelativeLayout>
