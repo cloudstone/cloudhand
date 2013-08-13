@@ -31,8 +31,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         
         btnLogin = (Button)findViewById(R.id.button_login);
-        btnOpenTable = (Button)findViewById(R.id.button_login);
-        btnTabelInfo = (Button)findViewById(R.id.button_open_table);
+        btnOpenTable = (Button)findViewById(R.id.button_open_table);
+        btnTabelInfo = (Button)findViewById(R.id.button_table_info);
         btnSetting= (Button)findViewById(R.id.btn_setting);
         tvLoginStatus = (TextView)findViewById(R.id.text_login_status);
         
