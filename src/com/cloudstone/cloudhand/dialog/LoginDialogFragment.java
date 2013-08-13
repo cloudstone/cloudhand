@@ -98,14 +98,15 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
 
                     @Override
                     protected void onAuthFailed() {
-                    	Toast.makeText(getActivity(), "密码错误", 0).show();
+                    	Toast.makeText(getActivity(), R.string.wrong_password, 0).show();
                         
                     }
 
                     @Override
                     protected void onError(ApiException e) {
-                        Log.e(LoginDialogFragment.this.toString(), e.getMessage());
-                        Toast.makeText(getActivity(), "登陆失败", 0).show();
+//                        Log.e(LoginDialogFragment.this.toString(), e.getMessage());
+                    	L.e(this, e);
+                        Toast.makeText(getActivity(), R.string.Logon_failed, 0).show();
                         
                     }
                     
