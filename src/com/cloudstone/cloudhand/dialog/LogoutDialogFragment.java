@@ -31,7 +31,7 @@ import com.cloudstone.cloudhand.util.UIUtils;
  *
  */
 public class LogoutDialogFragment extends BaseAlertDialogFragment {
-    private Button btnOK;
+    private Button btnConfirm;
     private Button btnCancle;
     
     @Override
@@ -44,7 +44,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_logout, container, false);
-        btnOK = (Button)view.findViewById(R.id.button_ok);
+        btnConfirm = (Button)view.findViewById(R.id.button_confirm);
         btnCancle = (Button)view.findViewById(R.id.button_cancle);
         return view;
     }
@@ -53,7 +53,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
-        btnOK.setOnClickListener(new OnClickListener() {
+        btnConfirm.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
