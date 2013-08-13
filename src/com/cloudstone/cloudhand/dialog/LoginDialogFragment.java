@@ -20,6 +20,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ListUserNameApi;
 import com.cloudstone.cloudhand.network.api.LoginApi;
 import com.cloudstone.cloudhand.network.api.LoginApi.LoginApiCallback;
@@ -87,8 +88,8 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
 
                     @Override
                     public void onSuccess(User result) {
-                        //修改主界面的登录用户
-                        ((MainActivity) getActivity()).setTvLoginStatus(result.getName());
+                        UserLogic.getInstance().saveUser(result); //保存用户名
+                        ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         dismiss();
                     }
 

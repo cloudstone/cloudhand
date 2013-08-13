@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/bg_logout_dialog" >
+    
+        
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_marginLeft="10dip"
+        android:gravity="center_vertical"
+        android:textColor="#FFFFFF"
+        android:textSize="35px"
+        android:text="@string/remind"/>
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@drawable/divider_white"/>
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        style="@style/Text.xlarge.white"
+        android:text="@string/message" />
+        
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        android:orientation="horizontal" >
+        
+        <Button 
+            android:id="@+id/button_ok"
+            android:layout_width="90dip"
+            android:layout_height="45dip"
+            android:text="@string/ok"/>
+        
+        <Button 
+            android:id="@+id/button_cancle"
+            android:layout_width="90dip"
+            android:layout_height="45dip"
+            android:layout_marginLeft="15dip"
+            android:text="@string/cancle"/>
+        
+    </LinearLayout>
+    
+
+</LinearLayout>
