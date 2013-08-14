@@ -30,6 +30,7 @@ public class UserLogic extends BaseLogic {
     
     public void clearUserInfo() {
         pref().setUser(null);
+        pref().cookiePreference().edit().clear().commit();
     }
 
     private static UserLogic me;
