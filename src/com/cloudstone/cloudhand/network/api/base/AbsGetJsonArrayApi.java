@@ -4,6 +4,7 @@
  */
 package com.cloudstone.cloudhand.network.api.base;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -30,8 +31,8 @@ public abstract class AbsGetJsonArrayApi<RESULT extends IJson, FORM extends IFor
             throws DecodeApiException {
         String json = HttpUtils.responseToString(response);
         L.i(this, "HttpResponse : " + json);
-        return JsonUtils.jsonToList(json, getResultClass());
+        return JsonUtils.jsonToList(json, getType());
     }
     
-    protected abstract Class<RESULT> getResultClass();
+    protected abstract Type getType();
 }
