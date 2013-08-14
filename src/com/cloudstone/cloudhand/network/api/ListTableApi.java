@@ -1,5 +1,6 @@
 package com.cloudstone.cloudhand.network.api;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class ListTableApi extends AbsGetJsonArrayApi<Table, EmptyConst.EmptyForm
 	}
 
 	@Override
-	protected Class<Table> getResultClass() {
+	protected Type getType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.cloudstone.cloudhand.data.IJson;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * @author xuhongfeng
@@ -26,9 +25,7 @@ public class JsonUtils {
         return GSON.fromJson(json, clazz);
     }
     
-    public static <T extends IJson> List<T> jsonToList(String json, Class<T> clazz) {
-        Type type = new TypeToken<List<T>>() {
-        }.getType();
+    public static <T extends IJson> List<T> jsonToList(String json, Type type) {
         return GSON.fromJson(json, type);
     }
 }

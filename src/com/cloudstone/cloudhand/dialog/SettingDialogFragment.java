@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.constant.UrlConst;
-import com.cloudstone.cloudhand.logic.URLLogic;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -37,6 +37,11 @@ public class SettingDialogFragment extends BaseAlertDialogFragment {
         btnConfirm = (Button)view.findViewById(R.id.button_confirm);
         btnCancle = (Button)view.findViewById(R.id.button_cancle);
         editUrl = (EditText)view.findViewById(R.id.edit_URL);
+        if(MiscLogic.getInstance().isSetting()) {
+        	editUrl.setText(MiscLogic.getInstance().getServerIP());
+        } else {
+        	editUrl.setText("192.168.0.101");
+        }
         return view;
     }
     
@@ -48,10 +53,9 @@ public class SettingDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-            	System.out.println("saveURL");
-            	URLLogic.getInstance().saveURL(editUrl.getText().toString());
-            	System.out.println(URLLogic.getInstance().isSetting());
-            	System.out.println(new UrlConst().BASE_URL);
+            	MiscLogic.getInstance().saveServerIP(editUrl.getText().toString());
+            	System.out.println(MiscLogic.getInstance().getServerIP());
+            	System.out.println(MiscLogic.getInstance().getServerUrl());
                 dismiss();
             }
         });
@@ -60,8 +64,6 @@ public class SettingDialogFragment extends BaseAlertDialogFragment {
         
             @Override
             public void onClick(View v) {
-            	URLLogic.getInstance().clearURLInfo();
-            	System.out.println(new UrlConst().BASE_URL);
                 dismiss();
             }
         });

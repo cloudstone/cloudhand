@@ -17,6 +17,7 @@ import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.exception.DecodeApiException;
 import com.cloudstone.cloudhand.exception.HttpStatusError;
 import com.cloudstone.cloudhand.exception.NetworkApiException;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.network.HttpClientInstance;
 import com.cloudstone.cloudhand.network.MyCookieStore;
 import com.cloudstone.cloudhand.network.form.IForm;
@@ -49,7 +50,7 @@ public abstract class AbsApi<RESULT, FORM extends IForm> implements IServerApi<R
     
     /* ---------- protected ---------- */
     protected String getUrl() {
-        return baseUrl;
+        return MiscLogic.getInstance().getServerUrl() + baseUrl;
     }
     
     /* ---------- private ---------- */

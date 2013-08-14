@@ -18,7 +18,6 @@ import android.widget.SimpleAdapter;
 public class TableInfoActivity extends BaseActivity {
     
     ListView lvTableInfo;
-//    private List<Map<String, String>> data;
     SimpleAdapter adapter;
     
     private List<Map<String, String>> data;
@@ -26,7 +25,6 @@ public class TableInfoActivity extends BaseActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_info);
         
@@ -37,7 +35,7 @@ public class TableInfoActivity extends BaseActivity {
 			@Override
 			public void onSuccess(List<Table> result) {
 				System.out.println("onSuccess");
-				for(int i = 0;i < result.size();i++) {
+//				for(int i = 0;i < result.size();i++) {
 //					Map<String, String> map = new HashMap<String, String>();
 //			        map.put("tableName", result.get(i).getName());
 //			        if(result.get(i).getStatus() == 0) {
@@ -49,14 +47,14 @@ public class TableInfoActivity extends BaseActivity {
 //			        }
 //			        data.add(map);
 					
-				}
+//				}
 //				System.out.println(result.get(0).getName());
 //				List<Table> list = new ArrayList<Table>();
 //				list.add(result.get(0));
 //				list.add(result.get(1));
 //				List<Table> list = new ArrayList<Table>();
 //				list = result;
-				System.out.println(result.get(0).getName());
+//				System.out.println(result.get(0).getName());
 //				render();
 			}
 
