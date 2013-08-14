@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.cloudstone.cloudhand.Cloudhand;
+import com.cloudstone.cloudhand.constant.UrlConst;
 import com.cloudstone.cloudhand.data.IJson;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.util.JsonUtils;
@@ -62,6 +63,11 @@ public class PreferenceStorage extends BaseStorage {
     
     /* ---------- preferences ---------- */
     private static final String KEY_USER = "user";
+    private static final String KEY_IP = "ip";
+    
+    public String getIp() {
+        return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
+    }
     
     public User getUser() {
         return readJson(KEY_USER, User.class);
