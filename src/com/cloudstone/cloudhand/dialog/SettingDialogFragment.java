@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
@@ -16,9 +17,10 @@ import com.cloudstone.cloudhand.logic.UserLogic;
  * @author xhc
  *
  */
-public class LogoutDialogFragment extends BaseAlertDialogFragment {
+public class SettingDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
+    private EditText editUrl;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,10 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_logout, container, false);
+        View view = inflater.inflate(R.layout.dialog_setting, container, false);
         btnConfirm = (Button)view.findViewById(R.id.button_confirm);
         btnCancle = (Button)view.findViewById(R.id.button_cancle);
+        editUrl = (EditText)view.findViewById(R.id.edit_URL);
         return view;
     }
     
@@ -43,15 +46,12 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                UserLogic.getInstance().clearUserInfo(); //清空登录信息
-                ((MainActivity) getActivity()).setTvLoginStatus(getString(R.string.tip_not_login));
-                ((MainActivity) getActivity()).showLoginDialog(); //显示登录对话框
                 dismiss();
             }
         });
         
-            btnCancle.setOnClickListener(new OnClickListener() {
-            
+        btnCancle.setOnClickListener(new OnClickListener() {
+        
             @Override
             public void onClick(View v) {
                 dismiss();

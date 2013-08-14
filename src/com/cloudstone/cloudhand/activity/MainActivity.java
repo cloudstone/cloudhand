@@ -4,6 +4,7 @@
  */
 package com.cloudstone.cloudhand.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
+import com.cloudstone.cloudhand.dialog.SettingDialogFragment;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -58,7 +60,27 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        
+        btnTabelInfo.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                  Intent intent = new Intent();
+                  intent.setClass(MainActivity.this, TableInfoActivity.class);
+                  startActivity(intent);
+            }
+        });
+        
+        btnSetting.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+                SettingDialogFragment dialog = new SettingDialogFragment();
+                dialog.show(getFragmentManager(), "settingDialog");
+            }
+        });
     }
+    
     
     //显示登录对话框
     public void showLoginDialog() {

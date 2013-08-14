@@ -18,6 +18,10 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     
+    <!-- 设置对话框 -->
+    <string name="setting_URL">请输入URL</string>
+    <string name="BASE_URL">http://192.168.0.101:8080/api</string>
+    
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
 

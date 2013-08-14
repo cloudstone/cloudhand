@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 
 import com.cloudstone.cloudhand.Cloudhand;
 import com.cloudstone.cloudhand.data.IJson;
+import com.cloudstone.cloudhand.data.URL;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.util.JsonUtils;
 
@@ -69,5 +70,15 @@ public class PreferenceStorage extends BaseStorage {
     
     public void setUser(User user) {
         writeJson(KEY_USER, user);
+    }
+    
+    private static final String KEY_URL = "url";
+    
+    public URL getURL() {
+        return readJson(KEY_USER, URL.class);
+    }
+    
+    public void setURL(URL url) {
+        writeJson(KEY_USER, url);
     }
 }

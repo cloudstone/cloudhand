@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:layout_width="280dip"
+        android:layout_height="180dip"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/bg_main" >
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginLeft="10dip"
+            android:gravity="center_vertical"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:text="@string/setting_URL"/>
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@drawable/divider_white"/>
+        <EditText
+            android:id="@+id/edit_URL"
+            android:layout_width="260dip"
+            android:layout_height="50dip"
+            android:layout_marginTop="10dip"
+            android:gravity="center_vertical"
+            style="@style/Text.normal.white"
+            android:text="@string/BASE_URL"
+            android:background="@drawable/textfield_pressed" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:orientation="horizontal" >
+        
+            <Button 
+                android:id="@+id/button_confirm"
+                android:layout_width="90dip"
+                android:layout_height="45dip"
+                android:text="@string/confirm"
+                style="@style/Text.large.white"
+                android:background="@drawable/selector_logout_btnlogin" />
+        
+            <Button 
+                android:id="@+id/button_cancle"
+                android:layout_width="90dip"
+                android:layout_height="45dip"
+                android:layout_marginLeft="15dip"
+                android:text="@string/cancel"
+                style="@style/Text.large.white"
+                android:background="@drawable/selector_logout_btnlogin" />
+        </LinearLayout>
+    
+    </LinearLayout>
+</LinearLayout>
