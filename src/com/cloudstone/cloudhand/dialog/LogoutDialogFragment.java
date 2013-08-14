@@ -43,7 +43,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                UserLogic.getInstance().clearUserInfo(); //清空登录信息
+                UserLogic.getInstance().logout(); //清空登录信息
                 ((MainActivity) getActivity()).setTvLoginStatus(getString(R.string.tip_not_login));
                 ((MainActivity) getActivity()).showLoginDialog(); //显示登录对话框
                 dismiss();

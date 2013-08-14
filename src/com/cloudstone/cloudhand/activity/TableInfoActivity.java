@@ -38,19 +38,24 @@ public class TableInfoActivity extends BaseActivity {
 			public void onSuccess(List<Table> result) {
 				System.out.println("onSuccess");
 				for(int i = 0;i < result.size();i++) {
-					Map<String, String> map = new HashMap<String, String>();
-			        map.put("tableName", result.get(i).getName());
-			        if(result.get(i).getStatus() == 0) {
-			        	map.put("tableStatus", "空闲");
-			        } else if (result.get(i).getStatus() == 1) {
-			        	map.put("tableStatus", "已用");
-			        } else {
-			        	map.put("tableStatus", "已下单");
-			        }
-			        data.add(map);
+//					Map<String, String> map = new HashMap<String, String>();
+//			        map.put("tableName", result.get(i).getName());
+//			        if(result.get(i).getStatus() == 0) {
+//			        	map.put("tableStatus", "空闲");
+//			        } else if (result.get(i).getStatus() == 1) {
+//			        	map.put("tableStatus", "已用");
+//			        } else {
+//			        	map.put("tableStatus", "已下单");
+//			        }
+//			        data.add(map);
+					
 				}
-				System.out.println(data.size());
-				render();
+//				System.out.println(result.get(0).getName());
+//				List<Table> list = new ArrayList<Table>();
+//				list.add(result.get(0));
+//				list.add(result.get(1));
+				System.out.println(result.get(0).getName());
+//				render();
 			}
 
 			@Override
