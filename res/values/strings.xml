@@ -18,6 +18,14 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     
+    <!-- 开台 -->
+    <string name="order">点餐</string>
+    <string name="already">已点</string>
+    <string name="other">其它</string>
+    <string name="dish_name">菜品名称</string>
+    <string name="price">价格</string>
+    <string name="count">数量</string>
+    
     <!--桌况 -->
     <string name="table_name">桌名</string>
     <string name="table_status">状态</string>

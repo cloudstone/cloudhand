@@ -61,6 +61,16 @@ public class MainActivity extends BaseActivity {
             }
         });
         
+        btnOpenTable.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+                intent.setClass(MainActivity.this, OpenTableActivity.class);
+                startActivity(intent);
+			}
+		});
+        
         btnTabelInfo.setOnClickListener(new OnClickListener() {
             
             @Override
