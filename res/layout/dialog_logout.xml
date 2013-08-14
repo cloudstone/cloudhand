@@ -16,7 +16,7 @@
             android:layout_marginLeft="10dip"
             android:gravity="center_vertical"
             android:textColor="#FFFFFF"
-            android:textSize="35sp"
+            android:textSize="25sp"
             android:text="@string/remind"/>
         <View 
             android:layout_width="match_parent"

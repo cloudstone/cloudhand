@@ -5,8 +5,6 @@
 package com.cloudstone.cloudhand.logic;
 
 import com.cloudstone.cloudhand.constant.UrlConst;
-import com.cloudstone.cloudhand.data.User;
-
 
 /**
  * @author xuhongfeng
