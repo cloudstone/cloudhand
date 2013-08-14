@@ -16,7 +16,7 @@ import com.cloudstone.cloudhand.network.api.base.AbsGetJsonArrayApi;
 public class ListDishApi extends AbsGetJsonArrayApi<Dish, EmptyConst.EmptyForm> {
 
     public ListDishApi() {
-        super(UrlConst.LIST_DISH_URL, EmptyConst.EmptyFormInstance);
+        super(new UrlConst().LIST_DISH_URL, EmptyConst.EmptyFormInstance);
     }
 
     @Override

@@ -12,12 +12,17 @@ public class URLLogic extends BaseLogic {
         return pref().getURL();
     }
     
-    public void saveURL(URL url) {
-        pref().setURL(url);
+    public void saveURL(String url) {
+        pref().setURL(new URL(url));
     }
     
     public boolean isSetting() {
         return getURL() != null;
+    }
+    
+    public void clearURLInfo() {
+        pref().setURL(null);
+        pref().cookiePreference().edit().clear().commit();
     }
     
     private static URLLogic me;

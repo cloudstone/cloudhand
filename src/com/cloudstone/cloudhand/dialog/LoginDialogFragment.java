@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
+import com.cloudstone.cloudhand.constant.UrlConst;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.URLLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ListUserNameApi;
 import com.cloudstone.cloudhand.network.api.LoginApi;
@@ -58,6 +60,8 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        System.out.println("isSetting -- >" + new UrlConst().BASE_URL);
+        System.out.println(URLLogic.getInstance().getURL().getUrl());
         //获取用户名列表
         new ListUserNameApi().asyncCall(new IApiCallback<String[]>() {
             

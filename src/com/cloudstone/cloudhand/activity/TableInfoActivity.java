@@ -54,6 +54,8 @@ public class TableInfoActivity extends BaseActivity {
 //				List<Table> list = new ArrayList<Table>();
 //				list.add(result.get(0));
 //				list.add(result.get(1));
+//				List<Table> list = new ArrayList<Table>();
+//				list = result;
 				System.out.println(result.get(0).getName());
 //				render();
 			}

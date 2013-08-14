@@ -75,10 +75,10 @@ public class PreferenceStorage extends BaseStorage {
     private static final String KEY_URL = "url";
     
     public URL getURL() {
-        return readJson(KEY_USER, URL.class);
+        return readJson(KEY_URL, URL.class);
     }
     
     public void setURL(URL url) {
-        writeJson(KEY_USER, url);
+        writeJson(KEY_URL, url);
     }
 }

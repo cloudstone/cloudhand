@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
+import com.cloudstone.cloudhand.constant.UrlConst;
+import com.cloudstone.cloudhand.logic.URLLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -46,6 +48,10 @@ public class SettingDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
+            	System.out.println("saveURL");
+            	URLLogic.getInstance().saveURL(editUrl.getText().toString());
+            	System.out.println(URLLogic.getInstance().isSetting());
+            	System.out.println(new UrlConst().BASE_URL);
                 dismiss();
             }
         });
@@ -54,6 +60,8 @@ public class SettingDialogFragment extends BaseAlertDialogFragment {
         
             @Override
             public void onClick(View v) {
+            	URLLogic.getInstance().clearURLInfo();
+            	System.out.println(new UrlConst().BASE_URL);
                 dismiss();
             }
         });

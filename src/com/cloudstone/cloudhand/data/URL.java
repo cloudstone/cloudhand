@@ -10,5 +10,11 @@ public class URL extends BaseData {
     public void setUrl(String url) {
         this.url = url;
     }
+    
+    public URL() {}
+    
+    public URL(String url) {
+    	this.url = url;
+    }
 
 }

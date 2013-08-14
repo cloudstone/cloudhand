@@ -13,7 +13,7 @@ import com.cloudstone.cloudhand.network.form.IForm;
 public class ListTableApi extends AbsGetJsonArrayApi<Table, EmptyConst.EmptyForm> {
 
 	public ListTableApi() {
-		super(UrlConst.LIST_TABLE_URL, EmptyConst.EmptyFormInstance);
+		super(new UrlConst().LIST_TABLE_URL, EmptyConst.EmptyFormInstance);
 	}
 
 	@Override

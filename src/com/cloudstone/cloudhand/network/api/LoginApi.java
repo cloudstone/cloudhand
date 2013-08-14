@@ -20,7 +20,7 @@ import com.cloudstone.cloudhand.network.form.BaseForm;
 public class LoginApi extends AbsPostFormGetJsonApi<User, LoginForm> {
     
     public LoginApi(String name, String password) {
-        super(UrlConst.LOGIN_URL, new LoginForm(name, password));
+        super(new UrlConst().LOGIN_URL, new LoginForm(name, password));
     }
     
     public void asyncCall(LoginApiCallback callback) {
