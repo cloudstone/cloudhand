@@ -12,7 +12,11 @@
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pagerTitle"  
             android:layout_width="wrap_content"    
-            android:layout_height="wrap_content"    
-            android:layout_gravity="top" />
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:background="@drawable/bg_main"
+            style="@style/Text.xlarge.white" />
     </android.support.v4.view.ViewPager>
+    
 </LinearLayout>

@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class OpenTableActivity extends FragmentActivity {
 	private ViewPager viewPager;
@@ -22,11 +24,15 @@ public class OpenTableActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_open_table);
+		//隐藏标题栏
+//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏状态栏
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
-		fragmentList.add(new OpenTableFragment1());
-        fragmentList.add(new OpenTableFragment1());
-        fragmentList.add(new OpenTableFragment1());
+		fragmentList.add(new OpenTableOrderFragment());
+        fragmentList.add(new OpenTableAlreadyFragment());
+        fragmentList.add(new OpenTableOtherFragment());
 		titleList.add(getString(R.string.order));
 		titleList.add(getString(R.string.already));
 		titleList.add(getString(R.string.other));

@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <SearchView 
-        android:id="@+id/search_view"
+        android:id="@+id/searchview_dish"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:iconifiedByDefault="false"
@@ -22,7 +22,7 @@
         android:orientation="horizontal">
         
         <TextView 
-            android:id="@+id/name"
+            android:id="@+id/text_dish_name"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
@@ -31,7 +31,7 @@
             style="@style/Text.xlarge" />
         
         <TextView 
-            android:id="@+id/price"
+            android:id="@+id/text_price"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -39,7 +39,7 @@
             style="@style/Text.xlarge" />
         
         <TextView 
-            android:id="@+id/amount"
+            android:id="@+id/text_count"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -49,7 +49,7 @@
     </LinearLayout>
     
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listView_dish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     
