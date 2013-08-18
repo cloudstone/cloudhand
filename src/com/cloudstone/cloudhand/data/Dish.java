@@ -22,8 +22,15 @@ public class Dish extends BaseData {
     private int status = Const.DishStatus.STATUS_INIT;
     private String pinyin;
     private boolean soldout = false;
+    private String name;
     
-    public double getPrice() {
+    public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double getPrice() {
         return price;
     }
     public void setPrice(double price) {

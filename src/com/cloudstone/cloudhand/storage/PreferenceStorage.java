@@ -69,6 +69,10 @@ public class PreferenceStorage extends BaseStorage {
         return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
     }
     
+    public void setIP(String ip) {
+    	preferences().edit().putString(KEY_IP, ip).commit();
+    }
+    
     public User getUser() {
         return readJson(KEY_USER, User.class);
     }

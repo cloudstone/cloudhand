@@ -15,6 +15,6 @@ import com.cloudstone.cloudhand.network.api.base.AbsGetStringArrayApi;
 public class ListUserNameApi extends AbsGetStringArrayApi<EmptyConst.EmptyForm> {
 
     public ListUserNameApi() {
-        super(UrlConst.LIST_USER_NAME_URL, EmptyConst.EmptyFormInstance);
+        super(new UrlConst().LIST_USER_NAME_URL, EmptyConst.EmptyFormInstance);
     }
 }
