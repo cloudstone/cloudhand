@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    
+    android:orientation="vertical" >
     <LinearLayout 
         android:layout_width="260dip"
         android:layout_height="180dip"
@@ -17,18 +16,19 @@
             android:gravity="center_vertical"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
-            android:text="@string/remind"/>
+            android:text="@string/setting_URL"/>
         <View 
             android:layout_width="match_parent"
             android:layout_height="1dip"
             android:background="@drawable/divider_white"/>
-        <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
+        <EditText
+            android:id="@+id/edit_URL"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
             android:layout_marginTop="10dip"
-            android:gravity="center"
-            style="@style/Text.xlarge.white"
-            android:text="@string/message" />
+            android:gravity="center_vertical"
+            style="@style/Text.normal.white"
+            android:background="@drawable/textfield_pressed" />
         
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +54,6 @@
                 style="@style/Text.large.white"
                 android:background="@drawable/selector_logout_btnlogin" />
         </LinearLayout>
-        
-    </LinearLayout>   
-
+    
+    </LinearLayout>
 </LinearLayout>

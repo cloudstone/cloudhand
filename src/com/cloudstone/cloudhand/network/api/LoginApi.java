@@ -20,7 +20,7 @@ import com.cloudstone.cloudhand.network.form.BaseForm;
 public class LoginApi extends AbsPostFormGetJsonApi<User, LoginForm> {
     
     public LoginApi(String name, String password) {
-        super(UrlConst.LOGIN_URL, new LoginForm(name, password));
+        super(new UrlConst().LOGIN_URL, new LoginForm(name, password));
     }
     
     public void asyncCall(LoginApiCallback callback) {
@@ -45,6 +45,7 @@ public class LoginApi extends AbsPostFormGetJsonApi<User, LoginForm> {
         @Override
         public final void onFailed(ApiException exception) {
             if( exception instanceof HttpStatusError) {
+                //TODO refactor
                 HttpStatusError e = (HttpStatusError) exception;
                 int status = e.getStatus();
                 if (status == 401) {

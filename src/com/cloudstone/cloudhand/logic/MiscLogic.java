@@ -6,7 +6,6 @@ package com.cloudstone.cloudhand.logic;
 
 import com.cloudstone.cloudhand.constant.UrlConst;
 
-
 /**
  * @author xuhongfeng
  *
@@ -29,7 +28,16 @@ public class MiscLogic extends BaseLogic {
         return pref().getIp();
     }
     
+    
     public String getServerUrl() {
         return "http://" +  getServerIP() + ":" + UrlConst.PORT;
+    }
+    
+    public void saveServerIP(String IP) {
+        pref().setIP(IP);
+    }
+    
+    public boolean isSetting() {
+        return getServerIP() != null;
     }
 }
