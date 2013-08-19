@@ -45,6 +45,7 @@ public class LoginApi extends AbsPostFormGetJsonApi<User, LoginForm> {
         @Override
         public final void onFailed(ApiException exception) {
             if( exception instanceof HttpStatusError) {
+                //TODO refactor
                 HttpStatusError e = (HttpStatusError) exception;
                 int status = e.getStatus();
                 if (status == 401) {
