@@ -49,15 +49,16 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_login, container, false);
-        tvUserName = (Spinner)view.findViewById(R.id.spinner_user_name);
-        tvPassword = (EditText)view.findViewById(R.id.edit_password);
-        btnLogin = (Button)view.findViewById(R.id.button_login);
+        tvUserName = (Spinner)view.findViewById(R.id.sp_user_name);
+        tvPassword = (EditText)view.findViewById(R.id.ev_password);
+        btnLogin = (Button)view.findViewById(R.id.btn_login);
         return view;
     }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        
         //获取用户名列表
         new ListUserNameApi().asyncCall(new IApiCallback<String[]>() {
             
@@ -104,7 +105,6 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
 
                     @Override
                     protected void onError(ApiException e) {
-//                        Log.e(LoginDialogFragment.this.toString(), e.getMessage());
                     	L.e(this, e);
                         Toast.makeText(getActivity(), R.string.Logon_failed, 0).show();
                         
@@ -120,7 +120,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item,userNames); 
         //设置下拉列表风格
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_line);
+        adapter.setDropDownViewResource(R.layout.view_dropdown_item_line);
         
         //关联适配器到用户名下拉框
         tvUserName.setAdapter(adapter);

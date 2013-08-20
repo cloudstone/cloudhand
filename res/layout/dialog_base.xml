@@ -2,43 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
     
     <LinearLayout 
-        android:layout_width="260dip"
-        android:layout_height="180dip"
-        android:orientation="vertical"
+        android:layout_width="270dip"
+        android:layout_height="120dip"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:background="@drawable/bg_main" >
-        <TextView 
+        
+        <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:layout_marginLeft="10dip"
-            android:gravity="center_vertical"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp"
-            android:text="@string/remind"/>
-        <View 
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@drawable/divider_white"/>
-        <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:layout_marginTop="10dip"
-            android:gravity="center"
-            style="@style/Text.xlarge.white"
-            android:text="@string/message" />
+            android:layout_height="60dip"
+            android:paddingTop="10dip"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal" >
+            
+            <ImageView 
+                android:id="@+id/iv_icon"
+                android:layout_width="40dip"
+                android:layout_height="40dip" />
+            
+             <TextView 
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                style="@style/Text.xlarge.white" />
+            
+        </LinearLayout>
         
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dip"
             android:layout_marginTop="10dip"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:background="@drawable/bg_dropdown_normal" >
         
             <Button 
-                android:id="@+id/button_confirm"
+                android:id="@+id/btn_confirm"
                 android:layout_width="90dip"
                 android:layout_height="45dip"
                 android:text="@string/confirm"
@@ -46,7 +50,7 @@
                 android:background="@drawable/selector_logout_btnlogin" />
         
             <Button 
-                android:id="@+id/button_cancle"
+                android:id="@+id/btn_cancle"
                 android:layout_width="90dip"
                 android:layout_height="45dip"
                 android:layout_marginLeft="15dip"

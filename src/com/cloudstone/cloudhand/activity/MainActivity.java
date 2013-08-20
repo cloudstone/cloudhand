@@ -25,24 +25,24 @@ public class MainActivity extends BaseActivity {
     private Button btnOpenTable;
     private Button btnTabelInfo;
     private Button btnSetting;
-    private TextView tvLoginStatus;
+    private TextView tvLoginUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        btnLogin = (Button)findViewById(R.id.button_login);
-        btnOpenTable = (Button)findViewById(R.id.button_open_table);
-        btnTabelInfo = (Button)findViewById(R.id.button_table_info);
+        btnLogin = (Button)findViewById(R.id.btn_login);
+        btnOpenTable = (Button)findViewById(R.id.btn_open_table);
+        btnTabelInfo = (Button)findViewById(R.id.btn_table_info);
         btnSetting= (Button)findViewById(R.id.btn_setting);
-        tvLoginStatus = (TextView)findViewById(R.id.text_login_status);
+        tvLoginUser = (TextView)findViewById(R.id.tv_login_user);
         
-        //初始化登录状态
+        //初始化登录用户
         if(UserLogic.getInstance().isLogin()) {
-            tvLoginStatus.setText(UserLogic.getInstance().getUser().getName());
+        	tvLoginUser.setText(UserLogic.getInstance().getUser().getName());
         } else {
-            tvLoginStatus.setText(getString(R.string.tip_not_login));
+        	tvLoginUser.setText(getString(R.string.tip_not_login));
         }
         
         //登录
@@ -66,7 +66,8 @@ public class MainActivity extends BaseActivity {
         dialog.show(getFragmentManager(), "loginDialog");
     }
     
+    //修改登录用户
     public void setTvLoginStatus(String userName) {
-        tvLoginStatus.setText(userName);
+    	tvLoginUser.setText(userName);
     }
 }
