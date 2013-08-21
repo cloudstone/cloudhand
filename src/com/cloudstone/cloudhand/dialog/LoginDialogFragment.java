@@ -99,14 +99,14 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
 
                     @Override
                     protected void onAuthFailed() {
-                    	Toast.makeText(getActivity(), R.string.wrong_password, 0).show();
+                    	Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
                         
                     }
 
                     @Override
                     protected void onError(ApiException e) {
                     	L.e(this, e);
-                        Toast.makeText(getActivity(), R.string.Logon_failed, 0).show();
+                        Toast.makeText(getActivity(), R.string.Logon_failed, Toast.LENGTH_SHORT).show();
                         
                     }
                     
@@ -118,9 +118,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     private void render() {
         //创建一个下拉框适配器
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.spinner_item,userNames); 
+                R.layout.view_base_dropdown_list,userNames); 
         //设置下拉列表风格
-        adapter.setDropDownViewResource(R.layout.view_dropdown_item_line);
+        adapter.setDropDownViewResource(R.layout.view_base_dropdown_list_line);
         
         //关联适配器到用户名下拉框
         tvUserName.setAdapter(adapter);

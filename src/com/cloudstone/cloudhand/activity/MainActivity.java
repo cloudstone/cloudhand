@@ -40,9 +40,9 @@ public class MainActivity extends BaseActivity {
         
         //初始化登录用户
         if(UserLogic.getInstance().isLogin()) {
-        	tvLoginUser.setText(UserLogic.getInstance().getUser().getName());
+            tvLoginUser.setText(UserLogic.getInstance().getUser().getName());
         } else {
-        	tvLoginUser.setText(getString(R.string.tip_not_login));
+            tvLoginUser.setText(getString(R.string.tip_not_login));
         }
         
         //登录
@@ -68,6 +68,6 @@ public class MainActivity extends BaseActivity {
     
     //修改登录用户
     public void setTvLoginStatus(String userName) {
-    	tvLoginUser.setText(userName);
+        tvLoginUser.setText(userName);
     }
 }

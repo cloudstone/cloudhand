@@ -19,8 +19,8 @@ import com.cloudstone.cloudhand.logic.UserLogic;
  *
  */
 public class LogoutDialogFragment extends BaseAlertDialogFragment {
-	private ImageView ivIcon;
-	private TextView tvMessage;
+    private ImageView ivIcon;
+    private TextView tvMessage;
     private Button btnConfirm;
     private Button btnCancle;
     
@@ -33,7 +33,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_base, container, false);
+        View view = inflater.inflate(R.layout.dialog_base_confirm_cancle, container, false);
         
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
         btnCancle = (Button)view.findViewById(R.id.btn_cancle);
@@ -42,6 +42,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
         tvMessage.setText(R.string.message_logout);
+        
         return view;
     }
     
@@ -64,7 +65,7 @@ public class LogoutDialogFragment extends BaseAlertDialogFragment {
         //取消
         btnCancle.setOnClickListener(new OnClickListener() {
             
-        	@Override
+            @Override
             public void onClick(View v) {
                 dismiss();
             }
