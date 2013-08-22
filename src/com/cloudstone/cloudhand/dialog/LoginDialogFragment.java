@@ -99,13 +99,13 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
 
                     @Override
                     protected void onAuthFailed() {
-                    	Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
                         
                     }
 
                     @Override
                     protected void onError(ApiException e) {
-                    	L.e(this, e);
+                        L.e(this, e);
                         Toast.makeText(getActivity(), R.string.Logon_failed, Toast.LENGTH_SHORT).show();
                         
                     }
