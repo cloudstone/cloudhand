@@ -10,7 +10,7 @@ package com.cloudstone.cloudhand.constant;
  */
 public class UrlConst {
     
-    public static final String DEFAULT_IP = "192.168.0.104";
+    public static final String DEFAULT_IP = "192.168.0.101";
     public static final int PORT = 8080;
 
     public static final String BASE_URL = "/api";

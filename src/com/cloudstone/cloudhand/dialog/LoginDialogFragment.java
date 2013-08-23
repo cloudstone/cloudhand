@@ -4,13 +4,19 @@
  */
 package com.cloudstone.cloudhand.dialog;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +42,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     private Spinner tvUserName;
     private EditText tvPassword;
     private Button btnLogin;
+    private CheckBox cbRemember;
     
     private String[] userNames = new String[0];
     
@@ -52,6 +59,8 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
         tvUserName = (Spinner)view.findViewById(R.id.sp_user_name);
         tvPassword = (EditText)view.findViewById(R.id.ev_password);
         btnLogin = (Button)view.findViewById(R.id.btn_login);
+        cbRemember = (CheckBox)view.findViewById(R.id.cb_remember);
+        
         return view;
     }
     
@@ -66,6 +75,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             public void onSuccess(String[] result) {
                 LoginDialogFragment.this.userNames = result;
                 LoginDialogFragment.this.render();
+                
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
+                tvPassword.setText(sharedPreferences.getString(tvUserName.getItemAtPosition(0).toString(), ""));
             }
             
             @Override
@@ -90,6 +102,22 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                     public void onSuccess(User result) {
                         UserLogic.getInstance().saveUser(result); //保存用户名
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
+                        
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
+                        //存入数据
+                        Editor editor = sharedPreferences.edit();
+                        if(cbRemember.isChecked()) {
+                            editor.putString(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
+                        } else {
+                            editor.putString(tvUserName.getSelectedItem().toString() , "");
+                        }
+                        editor.commit();
+                        
+                        //返回STRING_KEY的值
+                        Log.d("sharedPreferences", sharedPreferences.getString("STRING_KEY", "none"));
+                        //如果NOT_EXIST不存在，则返回值为"none"
+                        Log.d("sharedPreferences", sharedPreferences.getString("NOT_EXIST", "none"));
+                        
                         dismiss();
                     }
 
@@ -113,7 +141,30 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 });
             }
         });
+        
+        tvUserName.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                    int arg2, long arg3) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
+                tvPassword.setText(sharedPreferences.getString(tvUserName.getSelectedItem().toString(), ""));
+                if(sharedPreferences.getString(tvUserName.getSelectedItem().toString(), "") != "") {
+                    cbRemember.setChecked(true);
+                } else {
+                    cbRemember.setChecked(false);
+                }
+                
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
     }
+    
     
     private void render() {
         //创建一个下拉框适配器
@@ -124,5 +175,13 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
         
         //关联适配器到用户名下拉框
         tvUserName.setAdapter(adapter);
+    }
+    
+    private void saveUserPassword(String userName, String password) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
+        Editor editor = sharedPreferences.edit();
+        editor.putString("USER_NAME", userName);
+        editor.putString("PASSWORD", password);
+        editor.commit();
     }
 }
