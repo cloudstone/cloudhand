@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
     private Button btnLogin;
     private Button btnOpenTable;
     private Button btnTabelInfo;
-    private Button btnSetting;
+    private Button btnSettings;
     private TextView tvLoginUser;
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
         btnLogin = (Button)findViewById(R.id.btn_login);
         btnOpenTable = (Button)findViewById(R.id.btn_open_table);
         btnTabelInfo = (Button)findViewById(R.id.btn_table_info);
-        btnSetting= (Button)findViewById(R.id.btn_setting);
+        btnSettings= (Button)findViewById(R.id.btn_settings);
         tvLoginUser = (TextView)findViewById(R.id.tv_login_user);
         
         //初始化登录用户
