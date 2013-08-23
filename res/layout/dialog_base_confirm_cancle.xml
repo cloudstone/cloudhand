@@ -40,23 +40,17 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:background="@drawable/bg_dropdown_normal" >
-        
+             
             <Button 
                 android:id="@+id/btn_confirm"
-                android:layout_width="90dip"
-                android:layout_height="45dip"
                 android:text="@string/confirm"
-                style="@style/Text.large.white"
-                android:background="@drawable/selector_logout_btnlogin" />
+                style="@style/base_button" />
         
             <Button 
                 android:id="@+id/btn_cancle"
-                android:layout_width="90dip"
-                android:layout_height="45dip"
                 android:layout_marginLeft="15dip"
                 android:text="@string/cancel"
-                style="@style/Text.large.white"
-                android:background="@drawable/selector_logout_btnlogin" />
+                style="@style/base_button" />
         </LinearLayout>
         
     </LinearLayout>   

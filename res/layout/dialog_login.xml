@@ -73,7 +73,7 @@
             android:layout_width="210dip"
             android:layout_height="50dip"
             android:layout_marginTop="10dip"
-            android:background="@drawable/selector_logout_btnlogin"
+            android:background="@drawable/selector_base_button"
             android:text="@string/login"
             style="@style/Text.xlarge.white" />
      

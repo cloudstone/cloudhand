@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:text="@string/tip_not_login"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text.white"
             android:gravity="center"
             android:background="@drawable/tips_frame" />
 
