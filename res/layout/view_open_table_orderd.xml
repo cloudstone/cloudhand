@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tab1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_main" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dip"
+        android:background="@drawable/bg_open_table_body"
+        android:orientation="vertical" >
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="85dip"
+            android:orientation="vertical"
+            android:background="@drawable/bg_open_table_title" >
+        
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:orientation="horizontal" >
+                
+                <TextView 
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/total"
+                    style="@style/Text.large.black" />
+                
+                <TextView 
+                    android:id="@+id/text_total"
+                    android:layout_width="80dip"
+                    android:layout_height="40dip"
+                    android:gravity="center"
+                    android:text="0.0"
+                    android:textColor="#FF0000"
+                    style="@style/Text.large" />
+                
+                <TextView 
+                    android:layout_width="60dip"
+                    android:layout_height="40dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/yuan"
+                    style="@style/Text.large.black" />
+                
+                <Button 
+                    android:layout_width="100dip"
+                    android:layout_height="40dip"
+                    android:gravity="center"
+                    android:text="@string/bill"
+                    style="@style/Text.normal.white"
+                    android:background="@drawable/selector_logout_btnlogin" />
+                
+            </LinearLayout>
+    
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="35dip"
+                android:orientation="horizontal" >
+            
+                <TextView 
+                    android:id="@+id/text_dish_name"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_weight="4"
+                    android:text="@string/dish_name"
+                    style="@style/Text.xlarge.black" />
+            
+                <TextView 
+                    android:id="@+id/text_price"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/price"
+                    style="@style/Text.xlarge.black" />
+            
+                <TextView 
+                    android:id="@+id/text_count"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="@string/count"
+                    style="@style/Text.xlarge.black" />
+            
+            </LinearLayout>
+        </LinearLayout>
+    
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@drawable/divider_red"/>
+        
+        <ListView
+            android:id="@+id/listView_dish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    
+    </LinearLayout>
+    
+
+</LinearLayout>
