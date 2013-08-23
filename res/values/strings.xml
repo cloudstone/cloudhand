@@ -14,7 +14,7 @@
     
     <!-- 询问是否注销对话框 -->
     <string name="remind">提醒</string>
-    <string name="message">您确认要注销吗？</string>
+    <string name="message_logout">您确认要注销吗？</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     

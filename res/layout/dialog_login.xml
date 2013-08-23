@@ -1,62 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_width="384dip"
+    android:layout_height="256dip"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog" >
     
-    <TableLayout 
-        android:layout_width="280dip"
-        android:layout_height="230dip"
+    <LinearLayout 
+        android:layout_width="210dip"
+        android:layout_height="40dip"
         android:gravity="center"
-        android:background="@drawable/bg_main" >
-        <TableRow
-            android:gravity="center_horizontal" >
-            <TextView
-                android:text="@string/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
-                style="@style/Text.xlarge.white" />
-        
-            <Spinner 
-                android:id="@+id/spinner_user_name" 
-                android:layout_width="180dip"
-                android:layout_height="50dip"
-                android:background="@drawable/btn_spinner_pressed"
-                style="@style/Text.large.white" />
-        </TableRow>
-            
-        <TableRow
-            android:gravity="center_horizontal" >
-            <TextView
-                android:text="@string/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
-                style="@style/Text.xlarge.white" />
-            <EditText 
-                android:id="@+id/edit_password"
-                android:layout_width="180dip"
-                android:layout_height="50dip"
-                android:paddingLeft="11dip"
-                android:background="@drawable/textfield_pressed"
-                android:inputType="textPassword"
-                style="@style/Text.normal.white" />
-        </TableRow>
-        
-        <TableRow
-            android:layout_marginTop="10dip"
-            android:gravity="center_horizontal" >
-            <Button 
-                android:id="@+id/button_login"
-                android:text="@string/login"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:layout_span="2"
-                android:background="@drawable/selector_logout_btnlogin"
-                style="@style/Text.xlarge.white" />
-        </TableRow>
-     
-    </TableLayout>
+        android:orientation="horizontal"
+        android:background="@drawable/bg_dropdown_normal" >
+                
+        <View 
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/ic_username" />
 
- </LinearLayout>  
+        <Spinner 
+            android:id="@+id/sp_user_name" 
+            android:layout_width="175dip"
+            android:layout_height="50dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/btn_spinner_normal"
+            style="@style/Text.large.white" />
+                
+    </LinearLayout>
+            
+    <LinearLayout
+        android:layout_width="210dip"
+        android:layout_height="40dip"
+        android:layout_marginTop="5dip"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_dropdown_normal" >
+            
+        <View 
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:layout_marginLeft="12dip"
+            android:background="@drawable/ic_password" />
+            
+        <EditText 
+            android:id="@+id/ev_password"
+            android:layout_width="133dip"
+            android:layout_height="50dip"
+            android:paddingLeft="11dip"
+            android:background="@drawable/bg_dropdown_normal"
+            android:inputType="textPassword"
+            style="@style/Text.normal.white" />
+        
+        <CheckBox 
+            android:id="@+id/cb_remember"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_marginRight="2dip"
+            android:button="@null"
+            android:background="@drawable/selector_login_remember_password" />
+        
+    </LinearLayout>
+
+    <Button 
+        android:id="@+id/btn_login"
+        android:layout_width="210dip"
+        android:layout_height="50dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/selector_base_button"
+        android:text="@string/login"
+        style="@style/Text.xlarge.white" />
+
+ </LinearLayout>

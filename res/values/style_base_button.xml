@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="base_button"
+           parent="@style/Text.large.white">
+        <item name="android:layout_width">90dip</item>
+        <item name="android:layout_height">45dip</item>
+        <item name="android:background">@drawable/selector_base_button</item>
+    </style>
+</resources>
