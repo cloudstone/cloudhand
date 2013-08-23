@@ -15,13 +15,15 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
+import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
 
 public class OpenTableActivity extends FragmentActivity {
     
     private ViewPager viewPager; //页卡内容
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
-//    private List<Fragment> fragmentList = new ArrayList<Fragment>(); // Tab页面列表
-    private TextView tvOrder,tvOrderd; //页卡标题
+    private TextView tvOrder; //页卡标题 - 点餐
+    private TextView tvOrderd; //页卡标题 - 已点
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class OpenTableActivity extends FragmentActivity {
     
     //初始化ViewPager
     private void initViewPager() {
-        viewPager=(ViewPager)findViewById(R.id.viewPager_open_table);
+        viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
         fragmentList.add(new OpenTableOrderFragment());
         fragmentList.add(new OpenTableOrderdFragment());
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
@@ -88,7 +90,7 @@ public class OpenTableActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return (fragmentList == null || fragmentList.size() == 0) ? null : fragmentList.get(position);
+            return fragmentList.get(position);
         }
         
     }
@@ -108,7 +110,7 @@ public class OpenTableActivity extends FragmentActivity {
 
         @Override
         public void onPageSelected(int position) {
-            System.out.println("position");
+            //TODO 改成selector
             if(viewPager.getCurrentItem() == 0) {
                 tvOrder.setBackgroundResource(R.drawable.bg_open_table_title_pressed);
                 tvOrderd.setBackgroundResource(R.drawable.bg_open_table_title_normal);

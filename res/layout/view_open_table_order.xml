@@ -7,30 +7,27 @@
     
     <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dip"
+        android:layout_height="85dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:orientation="vertical"
-        android:background="@drawable/bg_open_table_body" >
-        
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="85dip"
-            android:orientation="vertical"
-            android:background="@drawable/bg_open_table_title" >
-        
-            <SearchView 
-                android:id="@+id/searchview_dish"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:iconifiedByDefault="false"
-                android:inputType="textFilter"
-                android:queryHint="@string/input_keywords_please"
-                android:searchSuggestSelection=" ?"
-                android:searchSuggestThreshold="1"
-                android:includeInGlobalSearch="true"
-                style="@style/Text.normal.white" >
-            </SearchView>
+        android:background="@drawable/bg_open_table_title" >
     
+        <SearchView 
+            android:id="@+id/searchview_dish"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:iconifiedByDefault="false"
+            android:inputType="textFilter"
+            android:queryHint="@string/input_keywords_please"
+            android:searchSuggestSelection=" ?"
+            android:searchSuggestThreshold="1"
+            android:includeInGlobalSearch="true"
+            android:focusable="false"
+            style="@style/Text.normal.white" >
+        </SearchView>
+
         <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="35dip"
@@ -62,17 +59,20 @@
                 style="@style/Text.xlarge.black" />
             
         </LinearLayout>
-     </LinearLayout>
+    </LinearLayout>
     
     <ImageView 
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:background="@drawable/divider_red" />
-    
+
     <ListView
         android:id="@+id/listView_dish"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/bg_open_table_body" />
+
 </LinearLayout>
