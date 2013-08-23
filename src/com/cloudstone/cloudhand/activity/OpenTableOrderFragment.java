@@ -9,11 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class OpenTableOrderFragment extends Fragment {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,9 +16,4 @@ public class OpenTableOrderFragment extends Fragment {
         return inflater.inflate(R.layout.view_open_table_order, container, false);
     }
     
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onActivityCreated(savedInstanceState);
-    }
 }
