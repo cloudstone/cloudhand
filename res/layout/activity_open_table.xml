@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/tv_order"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/tv_orderd"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
