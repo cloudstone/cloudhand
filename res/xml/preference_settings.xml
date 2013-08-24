@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    android:background="@drawable/bg_main">
+    
+    <PreferenceCategory   
+            android:title="基于对话框的偏好" >
+        <EditTextPreference
+                android:layout="@layout/edit"   
+                android:key="edittext_preference"  
+                android:title="设置IP"
+                android:summary="使用一个文本框对话框"  
+                android:dialogTitle="请输入IP：" />
+    </PreferenceCategory>  
+</PreferenceScreen   >

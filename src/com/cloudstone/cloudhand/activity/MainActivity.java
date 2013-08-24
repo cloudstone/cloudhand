@@ -4,6 +4,7 @@
  */
 package com.cloudstone.cloudhand.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
+import com.cloudstone.cloudhand.dialog.SettingsDialogFragment;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -56,6 +58,19 @@ public class MainActivity extends BaseActivity {
                 } else {
                     showLoginDialog();
                 }
+            }
+        });
+        
+        //设置
+        btnSettings.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+            	Intent intent = new Intent();
+            	intent.setClass(MainActivity.this, SettingsActivity.class);
+            	startActivity(intent);
+//                SettingsDialogFragment dialog = new SettingsDialogFragment();
+//                dialog.show(getFragmentManager(), "settingsDialog");
             }
         });
     }
