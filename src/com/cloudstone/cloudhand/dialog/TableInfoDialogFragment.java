@@ -27,9 +27,4 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
         return view;
     }
     
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    
 }
