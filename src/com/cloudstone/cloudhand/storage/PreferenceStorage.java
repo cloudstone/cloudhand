@@ -65,6 +65,7 @@ public class PreferenceStorage extends BaseStorage {
     private static final String KEY_USER = "user";
     private static final String KEY_IP = "ip";
     private static final String KEY_CURRENT_USER = "current_user";
+    private static final String KEY_PASSWORD_PREFIX = "pw_";
     
     public String getIp() {
         return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
@@ -79,15 +80,15 @@ public class PreferenceStorage extends BaseStorage {
     }
     
     public String getPassword(String user) {
-        return preferences().getString(user, "");
+        return preferences().getString(KEY_PASSWORD_PREFIX + user, "");
     }
     
     public void setPassword(String user, String password) {
-        preferences().edit().putString(user, password).commit();
+        preferences().edit().putString(KEY_PASSWORD_PREFIX + user, password).commit();
     }
     
     public void removePassword(String user) {
-        preferences().edit().remove(user).commit();
+        preferences().edit().remove(KEY_PASSWORD_PREFIX + user).commit();
     }
     
     public String getCurrentUser() {

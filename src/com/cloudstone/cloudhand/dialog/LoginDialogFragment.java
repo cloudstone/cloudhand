@@ -75,19 +75,22 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 LoginDialogFragment.this.render();
                 
                 //用户名自动选择上一次登录用户
-                if(MiscLogic.getInstance().getCurrentUser() != "") {
-                    for(int i = 0; i < tvUserName.getCount(); i++) {
-                        if(tvUserName.getItemAtPosition(i).toString().equals
-                                (MiscLogic.getInstance().getCurrentUser())) {
-                            tvUserName.setSelection(i);
-                            break;
-                        }
-                    }
+                if(UserLogic.getInstance().getUser() != null) {
+                    if(!UserLogic.getInstance().getUser().getName().equals("")) {
+                        for(int i = 0; i < userNames.length; i++) {
+                            if(userNames[i].equals
+                                    (MiscLogic.getInstance().getCurrentUser())) {
+                                tvUserName.setSelection(i);
+                                break;
+                             }
+                         }
+                     }
                 }
                 
                 //密码框自动填上密码
-                tvPassword.setText(MiscLogic.getInstance()
-                    .getPassword("_" + tvUserName.getItemAtPosition(0).toString()));
+                String userName = tvUserName.getSelectedItem().toString();
+                String password = MiscLogic.getInstance().getPassword(userName);
+                tvPassword.setText(password);
             }
             
             @Override
@@ -114,13 +117,13 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         
                         //记住当前登录用户
-                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
+//                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
                         
                         //存入数据
                         if(cbRemember.isChecked()) {
-                            MiscLogic.getInstance().savePassword("_" + tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
+                            MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
                         } else {
-                            MiscLogic.getInstance().removePassword("_" + tvUserName.getSelectedItem().toString());
+                            MiscLogic.getInstance().removePassword(tvUserName.getSelectedItem().toString());
                         }
                         
                         dismiss();
@@ -154,9 +157,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                     int arg2, long arg3) {
                 //改变密码框的值
-                tvPassword.setText(MiscLogic.getInstance().getPassword("_" + tvUserName.getSelectedItem().toString()));
+                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()));
                 //判断记住密码是否选中
-                if(MiscLogic.getInstance().getPassword("_" + tvUserName.getSelectedItem().toString()) != "") {
+                if(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()) != "") {
                     cbRemember.setChecked(true);
                 } else {
                     cbRemember.setChecked(false);
