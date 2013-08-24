@@ -17,7 +17,7 @@
             android:layout_marginLeft="10dip"
             android:gravity="center_vertical"
             style="@style/Text.xlarge.white"
-            android:text="@string/input_IP" />
+            android:text="@string/input_ip" />
         
         <EditText
             android:id="@+id/et_IP"
