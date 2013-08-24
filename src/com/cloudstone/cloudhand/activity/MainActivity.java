@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
-import com.cloudstone.cloudhand.dialog.SettingsDialogFragment;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -66,11 +65,9 @@ public class MainActivity extends BaseActivity {
             
             @Override
             public void onClick(View arg0) {
-            	Intent intent = new Intent();
-            	intent.setClass(MainActivity.this, SettingsActivity.class);
-            	startActivity(intent);
-//                SettingsDialogFragment dialog = new SettingsDialogFragment();
-//                dialog.show(getFragmentManager(), "settingsDialog");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }

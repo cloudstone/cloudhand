@@ -9,11 +9,15 @@ import android.preference.PreferenceActivity;
 
 import com.cloudstone.cloudhand.R;
 
+/**
+ * 
+ * @author xhc
+ *
+ */
 public class SettingsActivity extends PreferenceActivity {
 	private EditTextPreference e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference_settings);
         e = (EditTextPreference)findPreference("edittext_preference");
@@ -21,8 +25,7 @@ public class SettingsActivity extends PreferenceActivity {
             
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                //这里老是取得它上一个值
-                e.setSummary(e.getText());
+                e.setSummary(newValue.toString());
                 return true;
             }
         });

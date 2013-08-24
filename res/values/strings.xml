@@ -18,8 +18,11 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     
-    <!-- 设置对话框 -->
+    <!-- 设置 -->
+    <string name="settings">设置</string>
+    <string name="ip">IP</string>
     <string name="input_ip">请输入IP:</string>
+    <string name="default_ip">192.168.0.101</string>
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
