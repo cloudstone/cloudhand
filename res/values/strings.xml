@@ -18,6 +18,10 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     
+    <!--桌况 -->
+    <string name="table_name">桌名</string>
+    <string name="table_status">状态</string>
+    
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
 

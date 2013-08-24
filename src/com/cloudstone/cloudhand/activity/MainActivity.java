@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
+import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -56,6 +57,16 @@ public class MainActivity extends BaseActivity {
                 } else {
                     showLoginDialog();
                 }
+            }
+        });
+        
+        //桌况
+        btnTabelInfo.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                TableInfoDialogFragment dialog = new TableInfoDialogFragment();
+                dialog.show(getFragmentManager(), "tableInfoDialogFragment");
             }
         });
     }
