@@ -4,10 +4,7 @@
  */
 package com.cloudstone.cloudhand.dialog;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,8 +74,20 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 LoginDialogFragment.this.userNames = result;
                 LoginDialogFragment.this.render();
                 
+                //用户名自动选择上一次登录用户
+                if(MiscLogic.getInstance().getCurrentUser() != "") {
+                    for(int i = 0; i < tvUserName.getCount(); i++) {
+                        if(tvUserName.getItemAtPosition(i).toString().equals
+                                (MiscLogic.getInstance().getCurrentUser())) {
+                            tvUserName.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                
                 //密码框自动填上密码
-                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getItemAtPosition(0).toString()));
+                tvPassword.setText(MiscLogic.getInstance()
+                    .getPassword("_" + tvUserName.getItemAtPosition(0).toString()));
             }
             
             @Override
@@ -104,11 +113,14 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         UserLogic.getInstance().saveUser(result); //保存用户名
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         
+                        //记住当前登录用户
+                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
+                        
                         //存入数据
                         if(cbRemember.isChecked()) {
-                            MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
+                            MiscLogic.getInstance().savePassword("_" + tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
                         } else {
-                        	MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , "");
+                            MiscLogic.getInstance().removePassword("_" + tvUserName.getSelectedItem().toString());
                         }
                         
                         dismiss();
@@ -142,9 +154,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                     int arg2, long arg3) {
                 //改变密码框的值
-                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()));
+                tvPassword.setText(MiscLogic.getInstance().getPassword("_" + tvUserName.getSelectedItem().toString()));
                 //判断记住密码是否选中
-                if(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()) != "") {
+                if(MiscLogic.getInstance().getPassword("_" + tvUserName.getSelectedItem().toString()) != "") {
                     cbRemember.setChecked(true);
                 } else {
                     cbRemember.setChecked(false);
@@ -172,11 +184,4 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
         tvUserName.setAdapter(adapter);
     }
     
-    private void saveUserPassword(String userName, String password) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
-        Editor editor = sharedPreferences.edit();
-        editor.putString("USER_NAME", userName);
-        editor.putString("PASSWORD", password);
-        editor.commit();
-    }
 }
