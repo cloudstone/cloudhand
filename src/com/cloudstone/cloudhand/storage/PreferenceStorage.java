@@ -76,4 +76,12 @@ public class PreferenceStorage extends BaseStorage {
     public void setUser(User user) {
         writeJson(KEY_USER, user);
     }
+    
+    public String getPassword(String user) {
+        return preferences().getString(user, "");
+    }
+    
+    public void setPassword(String user, String password) {
+        preferences().edit().putString(user, password).commit();
+    }
 }

@@ -25,6 +25,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ListUserNameApi;
 import com.cloudstone.cloudhand.network.api.LoginApi;
@@ -76,8 +77,8 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 LoginDialogFragment.this.userNames = result;
                 LoginDialogFragment.this.render();
                 
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
-                tvPassword.setText(sharedPreferences.getString(tvUserName.getItemAtPosition(0).toString(), ""));
+                //密码框自动填上密码
+                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getItemAtPosition(0).toString()));
             }
             
             @Override
@@ -103,20 +104,12 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         UserLogic.getInstance().saveUser(result); //保存用户名
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         
-                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
                         //存入数据
-                        Editor editor = sharedPreferences.edit();
                         if(cbRemember.isChecked()) {
-                            editor.putString(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
+                            MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
                         } else {
-                            editor.putString(tvUserName.getSelectedItem().toString() , "");
+                        	MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , "");
                         }
-                        editor.commit();
-                        
-                        //返回STRING_KEY的值
-                        Log.d("sharedPreferences", sharedPreferences.getString("STRING_KEY", "none"));
-                        //如果NOT_EXIST不存在，则返回值为"none"
-                        Log.d("sharedPreferences", sharedPreferences.getString("NOT_EXIST", "none"));
                         
                         dismiss();
                     }
@@ -142,14 +135,16 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             }
         });
         
+        //改变用户名下拉选型的选中项的事件
         tvUserName.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                     int arg2, long arg3) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("sharedPreferences", getActivity().MODE_PRIVATE);
-                tvPassword.setText(sharedPreferences.getString(tvUserName.getSelectedItem().toString(), ""));
-                if(sharedPreferences.getString(tvUserName.getSelectedItem().toString(), "") != "") {
+                //改变密码框的值
+                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()));
+                //判断记住密码是否选中
+                if(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()) != "") {
                     cbRemember.setChecked(true);
                 } else {
                     cbRemember.setChecked(false);
