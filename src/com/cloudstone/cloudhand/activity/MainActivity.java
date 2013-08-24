@@ -4,6 +4,7 @@
  */
 package com.cloudstone.cloudhand.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,6 +57,17 @@ public class MainActivity extends BaseActivity {
                 } else {
                     showLoginDialog();
                 }
+            }
+        });
+        
+        //开台
+        btnOpenTable.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, OpenTableActivity.class);
+                startActivity(intent);
             }
         });
     }
