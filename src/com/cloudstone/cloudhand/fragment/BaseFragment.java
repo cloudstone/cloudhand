@@ -31,7 +31,9 @@ public class BaseFragment extends Fragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            render();
+            if(intent.getAction().equals("update")) {
+                render();
+            }
         }
     };
     
@@ -50,7 +52,7 @@ public class BaseFragment extends Fragment {
         getActivity().unregisterReceiver(broadcastReceiver);
     }
     
-    protected void setDishCount(int dishId, int count) {
+    private void setDishCount(int dishId, int count) {
         ((OpenTableActivity)(getActivity())).getDishCountMap().put(dishId, count);
     }
     
@@ -61,7 +63,7 @@ public class BaseFragment extends Fragment {
         return ((OpenTableActivity)(getActivity())).getDishCountMap().get(dishId);
     }
     
-    protected Dish getDish(int dishId) {
+    private Dish getDish(int dishId) {
         if (((OpenTableActivity)(getActivity())).getDishes() != null) {
             for (Dish dish:((OpenTableActivity)(getActivity())).getDishes()) {
                 if (dish.getId() == dishId) {
