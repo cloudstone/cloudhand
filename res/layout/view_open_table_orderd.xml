@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="@string/submit_order_confirm"
                 style="@style/Text.normal.white"
-                android:background="@drawable/selector_logout_btnlogin" />
+                android:background="@drawable/selector_base_button" />
             
         </LinearLayout>
 
