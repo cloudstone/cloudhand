@@ -34,6 +34,11 @@
             android:name=".activity.OpenTableActivity"
             android:screenOrientation="portrait" />
         
+        
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/perference_set_activity" />
     </application>
 
 </manifest>

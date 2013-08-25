@@ -62,11 +62,21 @@ public class MainActivity extends BaseActivity {
         
         //开台
         btnOpenTable.setOnClickListener(new OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, OpenTableActivity.class);
+                startActivity(intent);
+            }
+        });
+        //设置
+        btnSettings.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
         });
