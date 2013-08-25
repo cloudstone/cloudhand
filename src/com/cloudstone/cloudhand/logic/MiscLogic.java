@@ -33,7 +33,7 @@ public class MiscLogic extends BaseLogic {
         pref().setIP(IP);
     }
     
-    public boolean isSetting() {
+    public boolean isIPSeted() {
         return getServerIP() != null;
     }
     

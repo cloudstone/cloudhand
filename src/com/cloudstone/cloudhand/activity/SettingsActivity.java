@@ -25,7 +25,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preference_settings);
         editText = (EditTextPreference)findPreference("edittext_preference");
         
-        if(MiscLogic.getInstance().isSetting()) {
+        if(MiscLogic.getInstance().isIPSeted()) {
             editText.setSummary(MiscLogic.getInstance().getServerIP());
         } else {
             editText.setSummary("192.168.0.101");
