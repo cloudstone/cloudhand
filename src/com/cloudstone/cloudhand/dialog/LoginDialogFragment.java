@@ -75,14 +75,11 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 LoginDialogFragment.this.render();
                 
                 //用户名自动选择上一次登录用户
-                if(UserLogic.getInstance().getUser() != null) {
-                    if(!UserLogic.getInstance().getUser().getName().equals("")) {
-                        for(int i = 0; i < userNames.length; i++) {
-                            if(userNames[i].equals
-                                    (MiscLogic.getInstance().getCurrentUser())) {
-                                tvUserName.setSelection(i);
-                                break;
-                             }
+                if(!MiscLogic.getInstance().getCurrentUser().equals("")) {
+                    for(int i = 0; i < userNames.length; i++) {
+                        if(userNames[i].equals(MiscLogic.getInstance().getCurrentUser())) {
+                            tvUserName.setSelection(i);
+                            break;
                          }
                      }
                 }
@@ -117,7 +114,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         
                         //记住当前登录用户
-//                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
+                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
                         
                         //存入数据
                         if(cbRemember.isChecked()) {
