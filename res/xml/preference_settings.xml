@@ -9,7 +9,7 @@
                 android:layout="@layout/preference_edit"   
                 android:key="edittext_preference"  
                 android:title="@string/ip"
-                android:summary="@string/default_ip"  
+                android:summary="192.168.0.101"  
                 android:dialogTitle="@string/input_ip" />
     </PreferenceCategory>  
 </PreferenceScreen   >

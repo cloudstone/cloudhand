@@ -15,17 +15,20 @@ import com.cloudstone.cloudhand.R;
  *
  */
 public class SettingsActivity extends PreferenceActivity {
-	private EditTextPreference e;
+    
+    private EditTextPreference editText;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference_settings);
-        e = (EditTextPreference)findPreference("edittext_preference");
-        e.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        editText = (EditTextPreference)findPreference("edittext_preference");
+        
+        editText.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                e.setSummary(newValue.toString());
+                editText.setSummary(newValue.toString());
                 return true;
             }
         });

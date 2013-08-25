@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
         btnSettings.setOnClickListener(new OnClickListener() {
             
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
