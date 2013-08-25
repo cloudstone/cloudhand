@@ -8,6 +8,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 
 /**
  * 
@@ -24,11 +25,18 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preference_settings);
         editText = (EditTextPreference)findPreference("edittext_preference");
         
+        if(MiscLogic.getInstance().isSetting()) {
+            editText.setSummary(MiscLogic.getInstance().getServerIP());
+        } else {
+            editText.setSummary("192.168.0.101");
+        }
+        
         editText.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 editText.setSummary(newValue.toString());
+                MiscLogic.getInstance().saveServerIP(newValue.toString());
                 return true;
             }
         });
