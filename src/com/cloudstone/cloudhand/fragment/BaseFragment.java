@@ -35,7 +35,6 @@ public class BaseFragment extends Fragment {
         }
     };
     
-    
     @Override
     public void onResume() {
         super.onResume();
@@ -43,7 +42,7 @@ public class BaseFragment extends Fragment {
         filter.addAction("update");
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
-    
+        
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -95,7 +94,9 @@ public class BaseFragment extends Fragment {
             }
             view.renderCount(count);
             //更新界面
-            update();
+            Intent intent = new Intent();
+            intent.setAction("update");
+            getActivity().sendBroadcast(intent);
         }
 
         @Override
@@ -158,7 +159,4 @@ public class BaseFragment extends Fragment {
     //更新界面
     protected void render() {}
     
-    //加减按钮点击事件
-    protected void update() {}
-
 }

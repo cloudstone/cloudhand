@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,13 +44,6 @@ public class OpenTableOrderdFragment extends BaseFragment {
         initData();
         adapter = new InnerAdapter(data);
         listView.setAdapter(adapter);
-    }
-    
-    @Override
-    protected void update() {
-        Intent intent = new Intent();
-        intent.setAction("update");
-        getActivity().sendBroadcast(intent);
     }
     
 }
