@@ -21,12 +21,12 @@ public class OpenTableOrderFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView = (ListView)getView().findViewById(R.id.lv_dish);
+        listView = (ListView)getView().findViewById(R.id.listview_dish);
     }
     
     @Override
     protected void render() {
-        adapter = new InnerAdapter(((OpenTableActivity)(getActivity())).getData());
+        adapter = new InnerAdapter(((OpenTableActivity)(getActivity())).getDishes());
         listView.setAdapter(adapter);
     }
     

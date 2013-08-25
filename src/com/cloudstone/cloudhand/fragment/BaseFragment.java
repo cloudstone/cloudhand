@@ -27,7 +27,7 @@ public class BaseFragment extends Fragment {
     protected ListView listView;
     protected BaseAdapter adapter;
     
-    protected BroadcastReceiver bcr = new BroadcastReceiver() {
+    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -41,14 +41,13 @@ public class BaseFragment extends Fragment {
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("update");
-        getActivity().registerReceiver(bcr, filter);
+        getActivity().registerReceiver(broadcastReceiver, filter);
     }
     
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
-        getActivity().unregisterReceiver(bcr);
+        getActivity().unregisterReceiver(broadcastReceiver);
     }
     
     protected void setDishCount(int dishId, int count) {
@@ -63,8 +62,8 @@ public class BaseFragment extends Fragment {
     }
     
     protected Dish getDish(int dishId) {
-        if (((OpenTableActivity)(getActivity())).getData() != null) {
-            for (Dish dish:((OpenTableActivity)(getActivity())).getData()) {
+        if (((OpenTableActivity)(getActivity())).getDishes() != null) {
+            for (Dish dish:((OpenTableActivity)(getActivity())).getDishes()) {
                 if (dish.getId() == dishId) {
                     return dish;
                 }

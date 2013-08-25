@@ -15,7 +15,7 @@
         android:background="@drawable/bg_open_table_title" >
     
         <SearchView 
-            android:id="@+id/sv_dish"
+            android:id="@+id/searchview_dish"
             android:layout_width="match_parent"
             android:layout_height="50dip"
             android:iconifiedByDefault="false"
@@ -67,7 +67,7 @@
         android:background="@drawable/divider_red" />
 
     <ListView
-        android:id="@+id/lv_dish"
+        android:id="@+id/listview_dish"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"

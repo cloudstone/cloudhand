@@ -36,16 +36,16 @@ public class OpenTableActivity extends FragmentActivity {
     private TextView tvOrderd; //页卡标题 - 已点
     
     //用于菜品列表的数据
-    private List<Dish> data = new ArrayList<Dish>();
+    private List<Dish> dishes = new ArrayList<Dish>();
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
-    public List<Dish> getData() {
-        return data;
+    public List<Dish> getDishes() {
+        return dishes;
     }
   
-    public void setData(List<Dish> data) {
-        this.data = data;
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
     
     public Map<Integer, Integer> getDishCountMap() {
@@ -74,7 +74,7 @@ public class OpenTableActivity extends FragmentActivity {
             @Override
             public void onSuccess(List<Dish> result) {
                 for(int i = 0;i < result.size();i++) {
-                    data.add(result.get(i));
+                    dishes.add(result.get(i));
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
@@ -84,13 +84,11 @@ public class OpenTableActivity extends FragmentActivity {
             
             @Override
             public void onFinish() {
-                // TODO Auto-generated method stub
                 
             }
             
             @Override
             public void onFailed(ApiException exception) {
-                // TODO Auto-generated method stub
                 L.e(OpenTableActivity.this, exception);
             }
         });

@@ -26,14 +26,14 @@ public class OpenTableOrderdFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView = (ListView)getView().findViewById(R.id.lv_dish);
+        listView = (ListView)getView().findViewById(R.id.listview_dish);
     }
     
     private void initData() {
         data.clear();
-        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getData().size(); i++) {
+        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
             if(getDishCount(i) > 0) {
-                data.add(((OpenTableActivity)(getActivity())).getData().get(i));
+                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
             }
         }
     }
