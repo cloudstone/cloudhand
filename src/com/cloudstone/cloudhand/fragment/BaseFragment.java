@@ -2,7 +2,9 @@ package com.cloudstone.cloudhand.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.view.DishItem;
@@ -12,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,20 +55,28 @@ public class BaseFragment extends Fragment {
         getActivity().unregisterReceiver(broadcastReceiver);
     }
     
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        listView = (ListView)getView().findViewById(R.id.listview_dish);
+    }
+    
     private void setDishCount(int dishId, int count) {
         ((OpenTableActivity)(getActivity())).getDishCountMap().put(dishId, count);
     }
     
     protected int getDishCount(int dishId) {
-        if (!((OpenTableActivity)(getActivity())).getDishCountMap().containsKey(dishId)) {
-            ((OpenTableActivity)(getActivity())).getDishCountMap().put(dishId, 0);
+        Map<Integer, Integer> map = ((OpenTableActivity)(getActivity())).getDishCountMap();
+        if (!map.containsKey(dishId)) {
+            map.put(dishId, 0);
         }
-        return ((OpenTableActivity)(getActivity())).getDishCountMap().get(dishId);
+        return map.get(dishId);
     }
     
     private Dish getDish(int dishId) {
-        if (((OpenTableActivity)(getActivity())).getDishes() != null) {
-            for (Dish dish:((OpenTableActivity)(getActivity())).getDishes()) {
+    	List<Dish> dishes =((OpenTableActivity)(getActivity())).getDishes();
+        if (dishes != null) {
+            for (Dish dish:dishes) {
                 if (dish.getId() == dishId) {
                     return dish;
                 }
