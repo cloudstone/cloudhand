@@ -11,6 +11,7 @@ import com.cloudstone.cloudhand.constant.Const;
  *
  */
 public class Dish extends BaseData {
+    private int id;
     private double price;
     private double memberPrice;
     private int unit;
@@ -22,7 +23,21 @@ public class Dish extends BaseData {
     private int status = Const.DishStatus.STATUS_INIT;
     private String pinyin;
     private boolean soldout = false;
+    private String name;
     
+    public int getId() {
+        return (id - 1);
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public double getPrice() {
         return price;
     }

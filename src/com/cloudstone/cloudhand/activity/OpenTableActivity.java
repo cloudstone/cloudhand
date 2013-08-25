@@ -1,8 +1,11 @@
 package com.cloudstone.cloudhand.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,8 +20,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
+import com.cloudstone.cloudhand.network.api.ListDishApi;
+import com.cloudstone.cloudhand.network.api.base.IApiCallback;
+import com.cloudstone.cloudhand.util.L;
 
 public class OpenTableActivity extends FragmentActivity {
     
@@ -26,6 +34,27 @@ public class OpenTableActivity extends FragmentActivity {
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private TextView tvOrder; //页卡标题 - 点餐
     private TextView tvOrderd; //页卡标题 - 已点
+    
+    //用于菜品列表的数据
+    private List<Dish> data = new ArrayList<Dish>();
+    //用于记录每样菜点了几份
+    private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
+    
+    public List<Dish> getData() {
+        return data;
+    }
+  
+    public void setData(List<Dish> data) {
+        this.data = data;
+    }
+    
+    public Map<Integer, Integer> getDishCountMap() {
+        return dishCountMap;
+    }
+  
+    public void setDishCountMap(Map<Integer, Integer> dishCountMap) {
+        this.dishCountMap = dishCountMap;
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +67,33 @@ public class OpenTableActivity extends FragmentActivity {
         
         initTextView();
         initViewPager();
+        
+        //获取菜单列表
+        new ListDishApi().asyncCall(new IApiCallback<List<Dish>>() {
+            
+            @Override
+            public void onSuccess(List<Dish> result) {
+                for(int i = 0;i < result.size();i++) {
+                    data.add(result.get(i));
+                }
+                //发送更新菜单界面的广播
+                Intent intent = new Intent();
+                intent.setAction("update");
+                OpenTableActivity.this.sendBroadcast(intent);
+            }
+            
+            @Override
+            public void onFinish() {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {
+                // TODO Auto-generated method stub
+                L.e(OpenTableActivity.this, exception);
+            }
+        });
     }
     
     //初始化ViewPager
