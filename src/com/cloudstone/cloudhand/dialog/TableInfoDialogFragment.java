@@ -13,7 +13,7 @@ import com.cloudstone.cloudhand.R;
  *
  */
 public class TableInfoDialogFragment extends BaseAlertDialogFragment {
-	
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
