@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="384dip"
     android:layout_height="486dip"
-    android:gravity="center"
     android:background="@drawable/bg_dialog_big">
     
     <LinearLayout 
         android:layout_width="306dip"
         android:layout_height="408dip"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:background="@drawable/bg_dropdown_pressed">
         
@@ -43,4 +43,4 @@
         </ListView>
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
