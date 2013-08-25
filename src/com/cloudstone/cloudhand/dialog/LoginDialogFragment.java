@@ -113,14 +113,16 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         UserLogic.getInstance().saveUser(result); //保存用户名
                         ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                         
+                        String userName = tvUserName.getSelectedItem().toString();
+                        String password = tvPassword.getText().toString();
                         //记住当前登录用户
-                        MiscLogic.getInstance().saveCurrentUser(tvUserName.getSelectedItem().toString());
+                        MiscLogic.getInstance().saveCurrentUser(userName);
                         
                         //存入数据
                         if(cbRemember.isChecked()) {
-                            MiscLogic.getInstance().savePassword(tvUserName.getSelectedItem().toString() , tvPassword.getText().toString());
+                            MiscLogic.getInstance().savePassword(userName, password);
                         } else {
-                            MiscLogic.getInstance().removePassword(tvUserName.getSelectedItem().toString());
+                            MiscLogic.getInstance().removePassword(userName);
                         }
                         
                         dismiss();

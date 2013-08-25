@@ -79,23 +79,23 @@ public class PreferenceStorage extends BaseStorage {
         writeJson(KEY_USER, user);
     }
     
-    public String getPassword(String user) {
-        return preferences().getString(KEY_PASSWORD_PREFIX + user, "");
+    public String getPassword(String userName) {
+        return preferences().getString(KEY_PASSWORD_PREFIX + userName, "");
     }
     
-    public void setPassword(String user, String password) {
-        preferences().edit().putString(KEY_PASSWORD_PREFIX + user, password).commit();
+    public void setPassword(String userName, String password) {
+        preferences().edit().putString(KEY_PASSWORD_PREFIX + userName, password).commit();
     }
     
-    public void removePassword(String user) {
-        preferences().edit().remove(KEY_PASSWORD_PREFIX + user).commit();
+    public void removePassword(String userName) {
+        preferences().edit().remove(KEY_PASSWORD_PREFIX + userName).commit();
     }
     
     public String getCurrentUser() {
         return preferences().getString(KEY_CURRENT_USER, "");
     }
     
-    public void setCurrentUser(String user) {
-        preferences().edit().putString(KEY_CURRENT_USER, user).commit();
+    public void setCurrentUser(String userName) {
+        preferences().edit().putString(KEY_CURRENT_USER, userName).commit();
     }
 }
