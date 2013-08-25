@@ -5,9 +5,10 @@
     android:background="@drawable/bg_dialog_big">
     
     <LinearLayout 
-        android:layout_width="306dip"
-        android:layout_height="408dip"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="39dip"
+        android:layout_marginLeft="39dip"
         android:orientation="vertical"
         android:background="@drawable/bg_dropdown_pressed">
         
@@ -36,7 +37,7 @@
         </LinearLayout>
         
         <ListView 
-            android:id="@+id/lv_table_info"
+            android:id="@+id/listview_table_info"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1" >
