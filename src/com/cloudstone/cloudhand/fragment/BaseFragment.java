@@ -47,7 +47,7 @@ public class BaseFragment extends Fragment {
     }
     
     @Override
-    public void onDestroy() {
+    public void onPause() {
         super.onDestroy();
         getActivity().unregisterReceiver(broadcastReceiver);
     }
