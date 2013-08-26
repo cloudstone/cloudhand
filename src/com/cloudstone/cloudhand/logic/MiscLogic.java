@@ -33,10 +33,6 @@ public class MiscLogic extends BaseLogic {
         pref().setIP(IP);
     }
     
-    public boolean isIPSeted() {
-        return getServerIP() != null;
-    }
-    
     public String getServerUrl() {
         return "http://" +  getServerIP() + ":" + UrlConst.PORT;
     }
