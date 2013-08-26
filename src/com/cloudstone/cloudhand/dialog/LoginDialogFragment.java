@@ -75,9 +75,10 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 LoginDialogFragment.this.render();
                 
                 //用户名自动选择上一次登录用户
-                if(!MiscLogic.getInstance().getCurrentUser().equals("")) {
+                String currentUser = MiscLogic.getInstance().getCurrentUser();
+                if(!currentUser.equals("")) {
                     for(int i = 0; i < userNames.length; i++) {
-                        if(userNames[i].equals(MiscLogic.getInstance().getCurrentUser())) {
+                        if(userNames[i].equals(currentUser)) {
                             tvUserName.setSelection(i);
                             break;
                          }
@@ -153,22 +154,19 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
         tvUserName.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
+            public void onItemSelected(AdapterView<?> adapterView, View v,
                     int arg2, long arg3) {
+                String selectedName = tvUserName.getSelectedItem().toString();
+                String password = MiscLogic.getInstance().getPassword(selectedName);
                 //改变密码框的值
-                tvPassword.setText(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()));
+                tvPassword.setText(password);
                 //判断记住密码是否选中
-                if(MiscLogic.getInstance().getPassword(tvUserName.getSelectedItem().toString()) != "") {
-                    cbRemember.setChecked(true);
-                } else {
-                    cbRemember.setChecked(false);
-                }
+                cbRemember.setChecked(!password.equals(""));
                 
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+            public void onNothingSelected(AdapterView<?> adapterView) {
                 
             }
         });
