@@ -67,8 +67,12 @@ public class PreferenceStorage extends BaseStorage {
     private static final String KEY_CURRENT_USER = "current_user";
     private static final String KEY_PASSWORD_PREFIX = "pw_";
     
-    public String getIp() {
+    public String getIP() {
         return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
+    }
+    
+    public void setIP(String ip) {
+        preferences().edit().putString(KEY_IP, ip).commit();
     }
     
     public User getUser() {

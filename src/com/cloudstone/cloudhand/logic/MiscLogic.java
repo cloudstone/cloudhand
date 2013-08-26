@@ -26,7 +26,11 @@ public class MiscLogic extends BaseLogic {
     }
 
     public String getServerIP() {
-        return pref().getIp();
+        return pref().getIP();
+    }
+    
+    public void saveServerIP(String IP) {
+        pref().setIP(IP);
     }
     
     public String getServerUrl() {
