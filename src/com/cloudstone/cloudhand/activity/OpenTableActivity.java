@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
@@ -180,6 +182,16 @@ public class OpenTableActivity extends FragmentActivity {
             }
         }
         
+    }
+    
+    //按下返回键弹出退出确认
+    public boolean onKeyDown(int keyCode, KeyEvent event) { 
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { 
+            ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();
+            dialog.show(getFragmentManager(), "exitOrderDialogFragment");
+            return true;
+        } 
+        return super.onKeyDown(keyCode, event);
     }
     
 }

@@ -30,6 +30,7 @@
     <string name="total_price">总价</string>
     <string name="yuan">元</string>
     <string name="submit_order_confirm">确认下单</string>
+    <string name="message_exit_order">您确认要放弃点餐吗？</string>
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
