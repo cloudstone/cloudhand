@@ -64,6 +64,8 @@ public class PreferenceStorage extends BaseStorage {
     /* ---------- preferences ---------- */
     private static final String KEY_USER = "user";
     private static final String KEY_IP = "ip";
+    private static final String KEY_CURRENT_USER = "current_user";
+    private static final String KEY_PASSWORD_PREFIX = "pw_";
     
     public String getIp() {
         return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
@@ -75,5 +77,25 @@ public class PreferenceStorage extends BaseStorage {
     
     public void setUser(User user) {
         writeJson(KEY_USER, user);
+    }
+    
+    public String getPassword(String userName) {
+        return preferences().getString(KEY_PASSWORD_PREFIX + userName, "");
+    }
+    
+    public void setPassword(String userName, String password) {
+        preferences().edit().putString(KEY_PASSWORD_PREFIX + userName, password).commit();
+    }
+    
+    public void removePassword(String userName) {
+        preferences().edit().remove(KEY_PASSWORD_PREFIX + userName).commit();
+    }
+    
+    public String getCurrentUser() {
+        return preferences().getString(KEY_CURRENT_USER, "");
+    }
+    
+    public void setCurrentUser(String userName) {
+        preferences().edit().putString(KEY_CURRENT_USER, userName).commit();
     }
 }

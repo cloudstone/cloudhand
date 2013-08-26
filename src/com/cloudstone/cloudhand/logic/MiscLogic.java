@@ -32,4 +32,24 @@ public class MiscLogic extends BaseLogic {
     public String getServerUrl() {
         return "http://" +  getServerIP() + ":" + UrlConst.PORT;
     }
+    
+    public String getPassword(String userName) {
+        return pref().getPassword(userName);
+    }
+    
+    public void savePassword(String userName, String password) {
+        pref().setPassword(userName, password);
+    }
+    
+    public void removePassword(String userName) {
+        pref().removePassword(userName);
+    }
+    
+    public String getCurrentUser() {
+        return pref().getCurrentUser();
+    }
+    
+    public void saveCurrentUser(String userName) {
+        pref().setCurrentUser(userName);
+    }
 }
