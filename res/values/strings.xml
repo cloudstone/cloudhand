@@ -21,8 +21,11 @@
     <!--桌况 -->
     <string name="table_name">桌名</string>
     <string name="table_status">状态</string>
+    <string name="empty">空闲</string>
+    <string name="occupied">已用</string>
+    <string name="ordered">已下单</string>
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
-
+    <string name="error_list_table_info_failed">获取桌况列表失败</string>
 </resources>
