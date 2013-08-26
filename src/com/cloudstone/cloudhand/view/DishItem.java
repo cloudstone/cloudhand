@@ -7,10 +7,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class DishItem extends RelativeLayout {
+public class DishItem extends LinearLayout {
     
     private TextView nameView;
     private TextView priceView;

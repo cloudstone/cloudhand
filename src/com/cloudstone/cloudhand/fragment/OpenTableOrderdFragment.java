@@ -24,12 +24,6 @@ public class OpenTableOrderdFragment extends BaseFragment {
         return inflater.inflate(R.layout.view_open_table_orderd, container, false);
     }
     
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        listView = (ListView)getView().findViewById(R.id.listview_dish);
-    }
-    
     private void initData() {
         data.clear();
         for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {

@@ -29,7 +29,6 @@ public class OpenTableOrderFragment extends BaseFragment implements SearchView.O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView = (ListView)getView().findViewById(R.id.listview_dish);
         searchView = (SearchView)getView().findViewById(R.id.searchview_dish);
         searchView.setFocusable(false);
         searchView.setOnQueryTextListener(this);
