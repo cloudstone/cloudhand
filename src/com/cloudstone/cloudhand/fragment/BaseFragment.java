@@ -72,18 +72,6 @@ public class BaseFragment extends Fragment {
         return map.get(dishId);
     }
     
-    private Dish getDish(int dishId) {
-    	List<Dish> dishes =((OpenTableActivity)(getActivity())).getDishes();
-        if (dishes != null) {
-            for (Dish dish:dishes) {
-                if (dish.getId() == dishId) {
-                    return dish;
-                }
-            }
-        }
-        return null;
-    }
-    
     protected class InnerAdapter extends BaseAdapter implements DishItemListener {
         List<Dish> data = new ArrayList<Dish>();
         
