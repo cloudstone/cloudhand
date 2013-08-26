@@ -13,7 +13,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 
-public class OpenTableOrderdFragment extends BaseFragment {
+public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     private List<Dish> data = new ArrayList<Dish>();
     private TextView totalPriceView;
     

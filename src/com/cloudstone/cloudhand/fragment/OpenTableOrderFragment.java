@@ -14,7 +14,7 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 
-public class OpenTableOrderFragment extends BaseFragment implements SearchView.OnQueryTextListener {
+public class OpenTableOrderFragment extends OpenTableBaseFragment implements SearchView.OnQueryTextListener {
     private SearchView searchView;
     
     @Override
@@ -41,7 +41,6 @@ public class OpenTableOrderFragment extends BaseFragment implements SearchView.O
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        // TODO Auto-generated method stub
         return false;
     }
     
