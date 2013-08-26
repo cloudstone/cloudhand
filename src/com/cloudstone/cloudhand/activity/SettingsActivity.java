@@ -8,6 +8,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.constant.UrlConst;
 import com.cloudstone.cloudhand.logic.MiscLogic;
 
 /**
@@ -28,7 +29,7 @@ public class SettingsActivity extends PreferenceActivity {
         if(MiscLogic.getInstance().isIPSeted()) {
             editText.setSummary(MiscLogic.getInstance().getServerIP());
         } else {
-            editText.setSummary("192.168.0.101");
+            editText.setSummary(UrlConst.DEFAULT_IP);
         }
         
         editText.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
