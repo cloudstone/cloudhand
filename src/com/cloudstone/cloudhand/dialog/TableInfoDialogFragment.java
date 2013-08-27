@@ -53,9 +53,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
 
             @Override
             public void onSuccess(List<Table> result) {
-                for(int i = 0;i < result.size();i++) {
-                    tables.add(result.get(i));
-                }
+                tables = result;
                 render();
             }
 
@@ -74,14 +72,6 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     
     private class InnerAdapter extends BaseAdapter {
         
-        List<Table> data = new ArrayList<Table>();
-        
-        public InnerAdapter() {}
-        
-        public InnerAdapter(List<Table> data) {
-            this.data = data;
-        }
-
         @Override
         public int getCount() {
             return tables.size();
