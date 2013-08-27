@@ -1,16 +1,14 @@
 package com.cloudstone.cloudhand.dialog;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -19,6 +17,7 @@ import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.ListTableApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
+import com.cloudstone.cloudhand.view.TableItem;
 
 /**
  * 
@@ -27,9 +26,9 @@ import com.cloudstone.cloudhand.util.L;
  */
 public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     private ListView listTableInfo;
-    private SimpleAdapter adapter;
+    private BaseAdapter adapter;
     
-    private List<Map<String, String>> tables = new ArrayList<Map<String,String>>();
+    private List<Table> tables = new ArrayList<Table>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,16 +54,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
             @Override
             public void onSuccess(List<Table> result) {
                 for(int i = 0;i < result.size();i++) {
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("tableName", result.get(i).getName());
-                    if(result.get(i).getStatus() == 0) {
-                        map.put("tableStatus", getString(R.string.empty));
-                    } else if (result.get(i).getStatus() == 1) {
-                        map.put("tableStatus", getString(R.string.occupied));
-                    } else {
-                        map.put("tableStatus", getString(R.string.ordered));
-                    }
-                    tables.add(map);
+                    tables.add(result.get(i));
                 }
                 render();
             }
@@ -82,10 +72,75 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
         });
     }
     
+    private class InnerAdapter extends BaseAdapter {
+        
+        List<Table> data = new ArrayList<Table>();
+        
+        public InnerAdapter() {}
+        
+        public InnerAdapter(List<Table> data) {
+            this.data = data;
+        }
+
+        @Override
+        public int getCount() {
+            return tables.size();
+        }
+
+        @Override
+        public Table getItem(int position) {
+            return (Table)tables.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TableItem view = (TableItem) convertView;
+            if (view == null) {
+                view = createView();
+            }
+            Table table = getItem(position);
+            view.render(table);
+            bindView(view, position);
+            return view;
+        }
+        
+        private TableItem createView() {
+            TableItem view = new TableItem(getActivity());
+            return view;
+        }
+        
+        private void bindView(TableItem view, int position) {
+            Table table = getItem(position);
+            ViewHolder holder = (ViewHolder) view.getTag();
+            if (holder == null) {
+                holder = new ViewHolder();
+                view.setTag(holder);
+            }
+            holder.setTable(table);
+        }
+        
+    }
+    
+    private class ViewHolder {
+        private Table table;
+
+        public Table getTable() {
+            return table;
+        }
+
+        public void setTable(Table table) {
+            this.table = table;
+        }
+        
+    }
+    
     private void render() {
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), tables,R.layout.view_table_info_dropdown_list_line, 
-                new String[] {"tableName", "tableStatus"}, 
-                new int[]{R.id.tv_table_name, R.id.tv_table_status});
+        adapter = new InnerAdapter(); 
         listTableInfo.setAdapter(adapter);
     }
     
