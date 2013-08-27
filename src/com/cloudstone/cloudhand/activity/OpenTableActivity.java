@@ -46,16 +46,19 @@ public class OpenTableActivity extends FragmentActivity {
         return dishes;
     }
   
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public int getDishCount(int dishId) {
+        if (!dishCountMap.containsKey(dishId)) {
+            return 0;
+        }
+        return dishCountMap.get(dishId);
+    }
+  
+    public void setDishCount(int dishId, int count) {
+        dishCountMap.put(dishId, count);
     }
     
     public Map<Integer, Integer> getDishCountMap() {
         return dishCountMap;
-    }
-  
-    public void setDishCountMap(Map<Integer, Integer> dishCountMap) {
-        this.dishCountMap = dishCountMap;
     }
     
     @Override
@@ -185,6 +188,7 @@ public class OpenTableActivity extends FragmentActivity {
     }
     
     //按下返回键弹出退出确认
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) { 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { 
             ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();

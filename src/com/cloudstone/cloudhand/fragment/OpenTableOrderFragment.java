@@ -34,19 +34,13 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     
     @Override
     public boolean onQueryTextChange(String keywords) {
-        List<Dish> dishes = searchItem(keywords);
-        updateLayout(dishes);
+        render();
         return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
-    }
-    
-    public void updateLayout(List<Dish> dishes) {
-        adapter = new InnerAdapter(dishes);
-        listView.setAdapter(adapter);
     }
     
     //模糊搜索过滤出一个菜单结果
@@ -70,10 +64,14 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     }
     
     @Override
+    protected List<Dish> getDishes() {
+        return searchItem(searchView.getQuery().toString());
+    }
+    
+    @Override
     protected void render() {
-        adapter = new InnerAdapter(((OpenTableActivity)(getActivity())).getDishes());
+        adapter = new InnerAdapter();
         listView.setAdapter(adapter);
-        onQueryTextChange(searchView.getQuery().toString());
     }
     
 }

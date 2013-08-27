@@ -14,7 +14,6 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 
 public class OpenTableOrderdFragment extends OpenTableBaseFragment {
-    private List<Dish> data = new ArrayList<Dish>();
     private TextView totalPriceView;
     
     @Override
@@ -27,15 +26,6 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
-    }
-    
-    private void initData() {
-        data.clear();
-        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
-            if(getDishCount(i) > 0) {
-                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
-            }
-        }
     }
     
     private Dish getDish(int dishId) {
@@ -53,7 +43,7 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     private double getTotalPrice() {
         double total = 0;
         for (int i = 0;i < ((OpenTableActivity)(getActivity())).getDishCountMap().size();i++) {
-            int count = ((OpenTableActivity)(getActivity())).getDishCountMap().get(i);
+            int count = getDishCount(i);
             if (count > 0) {
                 Dish dish = getDish(i);
                 total += dish.getPrice() * count;
@@ -68,9 +58,18 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     }
     
     @Override
+    protected List<Dish> getDishes() {
+        List<Dish> data = new ArrayList<Dish>();
+        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
+            if(getDishCount(i) > 0) {
+                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
+            }
+        }
+        return data;
+    }
+    @Override
     protected void render() {
-        initData();
-        adapter = new InnerAdapter(data);
+        adapter = new InnerAdapter();
         listView.setAdapter(adapter);
         renderTotalPrice();
     }

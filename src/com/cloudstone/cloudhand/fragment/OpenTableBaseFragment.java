@@ -1,8 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
@@ -60,24 +58,15 @@ public class OpenTableBaseFragment extends BaseFragment {
     }
     
     private void setDishCount(int dishId, int count) {
-        ((OpenTableActivity)(getActivity())).getDishCountMap().put(dishId, count);
+        ((OpenTableActivity)(getActivity())).setDishCount(dishId, count);
     }
     
     protected int getDishCount(int dishId) {
-        Map<Integer, Integer> map = ((OpenTableActivity)(getActivity())).getDishCountMap();
-        if (!map.containsKey(dishId)) {
-            map.put(dishId, 0);
-        }
-        return map.get(dishId);
+        return ((OpenTableActivity)(getActivity())).getDishCount(dishId);
     }
     
     protected class InnerAdapter extends BaseAdapter implements DishItemListener {
-        List<Dish> data = new ArrayList<Dish>();
         
-        public InnerAdapter(List<Dish> data) {
-            this.data = data;
-        }
-            
         @Override
         public void onChanged(DishItem view, boolean incr) {
             ViewHolder holder = (ViewHolder) view.getTag();
@@ -85,13 +74,12 @@ public class OpenTableBaseFragment extends BaseFragment {
             int count = getDishCount(dish.getId());
             if (incr) {
                 count++;
-                setDishCount(dish.getId(), count);
             } else {
                 if (count > 0) {
                     count--;
-                    setDishCount(dish.getId(), count);
                 }
             }
+            setDishCount(dish.getId(), count);
             view.renderCount(count);
             //更新界面
             Intent intent = new Intent();
@@ -101,12 +89,12 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return data.size();
+            return getDishes().size();
         }
 
         @Override
         public Dish getItem(int position) {
-            return data.get(position);
+            return getDishes().get(position);
         }
 
         @Override
@@ -154,6 +142,10 @@ public class OpenTableBaseFragment extends BaseFragment {
             this.dish = dish;
         }
         
+    }
+    
+    protected List<Dish> getDishes() {
+        return null;
     }
     
     //更新界面
