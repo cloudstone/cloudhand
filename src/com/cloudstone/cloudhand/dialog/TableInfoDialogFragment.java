@@ -26,10 +26,10 @@ import com.cloudstone.cloudhand.util.L;
  *
  */
 public class TableInfoDialogFragment extends BaseAlertDialogFragment {
-	ListView lvTableInfo;
-    SimpleAdapter adapter;
+    private ListView listTableInfo;
+    private SimpleAdapter adapter;
     
-    private List<Map<String, String>> data = new ArrayList<Map<String,String>>();
+    private List<Map<String, String>> tables = new ArrayList<Map<String,String>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_table_info, container, false);
-        lvTableInfo = (ListView)view.findViewById(R.id.listview_table_info);
+        listTableInfo = (ListView)view.findViewById(R.id.listview_table_info);
         return view;
     }
     
@@ -64,7 +64,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
                     } else {
                         map.put("tableStatus", getString(R.string.ordered));
                     }
-                    data.add(map);
+                    tables.add(map);
                 }
                 render();
             }
@@ -83,10 +83,10 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     }
     
     private void render() {
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), data,R.layout.view_table_info_dropdown_list_line, 
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), tables,R.layout.view_table_info_dropdown_list_line, 
                 new String[] {"tableName", "tableStatus"}, 
                 new int[]{R.id.tv_table_name, R.id.tv_table_status});
-        lvTableInfo.setAdapter(adapter);
+        listTableInfo.setAdapter(adapter);
     }
     
 }
