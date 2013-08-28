@@ -42,6 +42,7 @@
     <string name="empty">空闲</string>
     <string name="occupied">已用</string>
     <string name="ordered">已下单</string>
+    <string name="message_exit_order">您确认要放弃点餐吗？</string>
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
