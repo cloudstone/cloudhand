@@ -29,12 +29,15 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
-        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+        
+        //长按弹出删除一道菜对话框
+        listDishes.setOnItemLongClickListener(new OnItemLongClickListener() {
             
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View v, int arg2,
-                    long position) {
-                DeleteDishDialogFragment dialog = new DeleteDishDialogFragment();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View v, int intPosition,
+                    long longPosition) {
+                int deleteDishId = getDishes().get(intPosition).getId();
+                DeleteDishDialogFragment dialog = new DeleteDishDialogFragment(deleteDishId);
                 dialog.show(getFragmentManager(), "deleteDishDialogFragment");
                 return false;
             }
@@ -84,7 +87,7 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     @Override
     protected void render() {
         adapter = new InnerAdapter();
-        listView.setAdapter(adapter);
+        listDishes.setAdapter(adapter);
         renderTotalPrice();
     }
     

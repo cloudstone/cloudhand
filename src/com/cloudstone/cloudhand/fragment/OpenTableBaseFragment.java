@@ -24,7 +24,7 @@ import android.widget.ListView;
  *
  */
 public class OpenTableBaseFragment extends BaseFragment {
-    protected ListView listView;
+    protected ListView listDishes;
     protected BaseAdapter adapter;
     
     protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -54,7 +54,7 @@ public class OpenTableBaseFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView = (ListView)getView().findViewById(R.id.listview_dish);
+        listDishes = (ListView)getView().findViewById(R.id.listview_dish);
     }
     
     private void setDishCount(int dishId, int count) {
