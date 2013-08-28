@@ -57,10 +57,6 @@ public class OpenTableActivity extends FragmentActivity {
         dishCountMap.put(dishId, count);
     }
     
-    public Map<Integer, Integer> getDishCountMap() {
-        return dishCountMap;
-    }
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

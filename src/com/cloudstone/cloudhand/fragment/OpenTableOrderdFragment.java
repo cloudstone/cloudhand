@@ -42,7 +42,7 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     
     private double getTotalPrice() {
         double total = 0;
-        for (int i = 0;i < ((OpenTableActivity)(getActivity())).getDishCountMap().size();i++) {
+        for (int i = 0;i < getDishes().size();i++) {
             int count = getDishCount(i);
             if (count > 0) {
                 Dish dish = getDish(i);
