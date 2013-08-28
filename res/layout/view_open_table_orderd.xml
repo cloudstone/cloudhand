@@ -101,6 +101,8 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:layout_marginBottom="10dip"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="false"
         android:background="@drawable/bg_open_table_body" />
 
 </LinearLayout>
