@@ -1,6 +1,7 @@
 package com.cloudstone.cloudhand.dialog;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.data.Table;
+import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.network.api.ClearTableApi;
+import com.cloudstone.cloudhand.network.api.ClearTableApi.ClearTableCalback;
 
 /**
  * 
@@ -18,7 +24,7 @@ import com.cloudstone.cloudhand.R;
  *
  */
 @SuppressLint("ValidFragment")
-public class OpenTableDialogFragment extends BaseAlertDialogFragment {
+public class ClearTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
     private ImageView ivIcon;
@@ -26,8 +32,8 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
     
     private int tableId;
     
-    public OpenTableDialogFragment(int tableId) {
-    	this.tableId = tableId;
+    public ClearTableDialogFragment(int tableId) {
+        this.tableId = tableId;
     }
     
     @Override
@@ -46,7 +52,7 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
         tvMessage = (TextView)view.findViewById(R.id.tv_message);
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
-        tvMessage.setText(R.string.message_open_table);
+        tvMessage.setText(R.string.message_clear_table);
         return view;
     }
     
@@ -58,9 +64,33 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment(tableId);
-                dialog.show(getFragmentManager(), "inputCustomerNumberDialogFragment");
-                dismiss();
+                new ClearTableApi(tableId).asyncCall(new ClearTableCalback() {
+                    
+                    @Override
+                    public void onSuccess(Table result) {
+                        ClearTableFinishDialogFragment dialog = new ClearTableFinishDialogFragment();
+                        dialog.show(getFragmentManager(), "clearTableFinishDialogFragment");
+                        Intent intent = new Intent();
+                        intent.setAction("updateTableInfo");
+                        getActivity().sendBroadcast(intent);
+                        dismiss();
+                    }
+                    
+                    @Override
+                    public void onFinish() {
+                        
+                    }
+                    
+                    @Override
+                    protected void onError(ApiException e) {
+                        
+                    }
+                    
+                    @Override
+                    protected void onCleared() {
+                        
+                    }
+                });
             }
         });
         

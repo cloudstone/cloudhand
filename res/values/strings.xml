@@ -53,6 +53,7 @@
     
     <!-- 清台对话框 -->
     <string name="message_clear_table">您确认要清台吗？</string>
+    <string name="message_clear_table_finish">清台成功！</string>
     
     <!-- 输入顾客人数对话框 -->
     <string name="message_input_customer_number">请输入顾客人数:</string>

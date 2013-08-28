@@ -3,10 +3,16 @@ package com.cloudstone.cloudhand.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,7 +35,32 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     private BaseAdapter adapter;
     
     private List<Table> tables = new ArrayList<Table>();
+    
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("updateTableInfo")) {
+                render();
+            }
+        }
+    };
+    
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("updateTableInfo");
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +72,34 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_table_info, container, false);
         listTableInfo = (ListView)view.findViewById(R.id.listview_table_info);
+        listTableInfo.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View v,
+                    int intPosition, long longPosition) {
+                if(tables.get(intPosition).getStatus() == 0) {
+                    OpenTableDialogFragment dialog = new OpenTableDialogFragment(intPosition + 1);
+                    dialog.show(getFragmentManager(), "openTableDialogFragment");
+                    render();
+                } else {
+                    ClearTableDialogFragment dialog = new ClearTableDialogFragment(intPosition + 1);
+                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
+                }
+                return false;
+            }
+        });
+        
         return view;
     }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
-      //获取桌况
+       render();
+    }
+    
+    public void getTableInfo() {
+        //获取桌况
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override
@@ -130,6 +181,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     }
     
     private void render() {
+    	getTableInfo();
         adapter = new InnerAdapter(); 
         listTableInfo.setAdapter(adapter);
     }
