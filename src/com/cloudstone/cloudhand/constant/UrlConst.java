@@ -22,4 +22,8 @@ public class UrlConst {
     public final String BASE_TABLE_URL = BASE_URL + "/tables";
     public final String LIST_TABLE_URL = BASE_TABLE_URL;
     private final String OCCUPY_TABLE_URL =  BASE_TABLE_URL + "/%d/occupy";
+    
+    public String occupyTableUrl(int tableId) {
+        return String.format(OCCUPY_TABLE_URL, tableId);
+    }
 }
