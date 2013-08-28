@@ -8,7 +8,7 @@ package com.cloudstone.cloudhand.data;
  * @author xuhongfeng
  *
  */
-public class Table {
+public class Table extends BaseData {
     private int id;
     private String name;
     private int type;//类型
@@ -73,5 +73,4 @@ public class Table {
     public void setName(String name) {
         this.name = name;
     }
-    
 }

@@ -22,6 +22,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO deprecated
         addPreferencesFromResource(R.xml.preference_settings);
         editText = (EditTextPreference)findPreference("edittext_preference");
         

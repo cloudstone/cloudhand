@@ -6,9 +6,7 @@ package com.cloudstone.cloudhand.network.api.base;
 
 import java.lang.reflect.Type;
 import java.util.List;
-
 import org.apache.http.HttpResponse;
-
 import com.cloudstone.cloudhand.data.IJson;
 import com.cloudstone.cloudhand.exception.DecodeApiException;
 import com.cloudstone.cloudhand.network.form.IForm;
