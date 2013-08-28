@@ -26,4 +26,10 @@ public class UrlConst {
     public String occupyTableUrl(int tableId) {
         return String.format(OCCUPY_TABLE_URL, tableId);
     }
+    
+    private final String CLEAR_TABLE_URL =  BASE_TABLE_URL + "/%d/clear";
+    
+    public String clearTableUrl(int tableId) {
+        return String.format(CLEAR_TABLE_URL, tableId);
+    }
 }

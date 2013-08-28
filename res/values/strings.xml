@@ -48,6 +48,15 @@
     <string name="ordered">已下单</string>
     <string name="message_exit_order">您确认要放弃点餐吗？</string>
     
+    <!-- 开台对话框 -->
+    <string name="message_open_table">您确认要开台吗？</string>
+    
+    <!-- 清台对话框 -->
+    <string name="message_clear_table">您确认要清台吗？</string>
+    
+    <!-- 输入顾客人数对话框 -->
+    <string name="message_input_customer_number">请输入顾客人数:</string>
+    
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
     <string name="error_list_table_info_failed">获取桌况列表失败</string>
