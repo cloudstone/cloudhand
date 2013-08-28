@@ -46,21 +46,22 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     //模糊搜索过滤出一个菜单结果
     private List<Dish> searchItem(String keywords) {
         ContrastPinyin contrastPinyin = new ContrastPinyin();
-        List<Dish> dishes = new ArrayList<Dish>();
-        for (int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
+        List<Dish> data = new ArrayList<Dish>();
+        List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        for (int i = 0; i < dishes.size(); i++) {
             int index = 0;;
             if(contrastPinyin.isContain(keywords)) {
-                index = ((OpenTableActivity)(getActivity())).getDishes().get(i).getName().indexOf(keywords);
+                index = dishes.get(i).getName().indexOf(keywords);
             } else {
-                String pinyin = contrastPinyin.getSpells(((OpenTableActivity)(getActivity())).getDishes().get(i).getName());
+                String pinyin = contrastPinyin.getSpells(dishes.get(i).getName());
                 index = pinyin.indexOf(keywords.toLowerCase());
             }
             // 存在匹配的数据
             if (index != -1) {
-                dishes.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
+                data.add(dishes.get(i));
             }
         }
-        return dishes;
+        return data;
     }
     
     @Override

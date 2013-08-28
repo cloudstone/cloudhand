@@ -60,9 +60,10 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     @Override
     protected List<Dish> getDishes() {
         List<Dish> data = new ArrayList<Dish>();
-        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
+        List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        for(int i = 0; i < dishes.size(); i++) {
             if(getDishCount(i) > 0) {
-                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
+                data.add(dishes.get(i));
             }
         }
         return data;
