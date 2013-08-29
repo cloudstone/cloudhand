@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ChooseTableDialogFragment dialog = new ChooseTableDialogFragment();
-                dialog.show(getFragmentManager(), "choiceTableDialogFragment");
+                dialog.show(getFragmentManager(), "chooseTableDialogFragment");
             }
         });
         //设置

@@ -95,7 +95,7 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
                     });
                     
                 } else {
-                    Toast.makeText(getActivity(), R.string.choice_table_customer_number_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.choose_table_customer_number_error, Toast.LENGTH_SHORT).show();
                 }
                 
             }

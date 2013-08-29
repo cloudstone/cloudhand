@@ -32,7 +32,8 @@
             android:id="@+id/tv_customet_number"
             android:layout_width="180dip"
             android:layout_height="50dip"
-            android:background="@drawable/bg_dropdown_normal"/>
+            android:background="@drawable/bg_dropdown_normal"
+            style="@style/Text.normal.white" />
         
     </LinearLayout>
     
