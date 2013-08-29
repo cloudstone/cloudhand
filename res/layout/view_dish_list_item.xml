@@ -36,6 +36,7 @@
             android:id="@+id/btn_incr"
             android:layout_width="40dip"
             android:layout_height="40dip"
+            android:focusable="false"
             android:background="@drawable/btn_add_normal" />
         
         <Button 
@@ -43,6 +44,7 @@
             android:layout_width="33dip"
             android:layout_height="33dip"
             android:layout_marginLeft="10dip"
+            android:focusable="false"
             android:background="@drawable/btn_sub_normal" />
     </LinearLayout>
 </merge>
