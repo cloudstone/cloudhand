@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
 import com.cloudstone.cloudhand.network.api.ClearTableApi.ClearTableCalback;
+import com.cloudstone.cloudhand.util.L;
 
 /**
  * 
@@ -77,19 +78,16 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
                     }
                     
                     @Override
-                    public void onFinish() {
-                        
+                    public void onFinish() {}
+                                       
+                    @Override
+                    protected void onError(ApiException exception) {
+                        Toast.makeText(getActivity(), R.string.error_clear_table_failed, Toast.LENGTH_SHORT).show();
+                        L.e(ClearTableDialogFragment.this, exception);
                     }
                     
                     @Override
-                    protected void onError(ApiException e) {
-                        
-                    }
-                    
-                    @Override
-                    protected void onCleared() {
-                        
-                    }
+                    protected void onCleared() {}
                 });
             }
         });

@@ -92,8 +92,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             }
             
             @Override
-            public void onFinish() {
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
@@ -130,13 +129,11 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                     }
 
                     @Override
-                    public void onFinish() {
-                    }
+                    public void onFinish() {}
 
                     @Override
                     protected void onAuthFailed() {
                         Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
-                        
                     }
 
                     @Override
@@ -162,13 +159,10 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 tvPassword.setText(password);
                 //判断记住密码是否选中
                 cbRemember.setChecked(!password.equals(""));
-                
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
     

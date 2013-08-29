@@ -40,8 +40,13 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+        	System.out.println(intent.getAction());
             if(intent.getAction().equals("updateTableInfo")) {
                 render();
+            }
+            if(intent.getAction().equals("tableInfoDismiss")) {
+            	System.out.println("sss");
+                dismiss();
             }
         }
     };
@@ -52,6 +57,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("updateTableInfo");
+        filter.addAction("tableInfoDismiss");
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
     
@@ -115,8 +121,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
             }
 
             @Override
-            public void onFinish() {
-            }
+            public void onFinish() {}
 
         });
     }

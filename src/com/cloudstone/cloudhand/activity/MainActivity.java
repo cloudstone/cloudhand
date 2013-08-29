@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.dialog.ChoiceTableDialogFragment;
+import com.cloudstone.cloudhand.dialog.ChooseTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
 import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                ChoiceTableDialogFragment dialog = new ChoiceTableDialogFragment();
+                ChooseTableDialogFragment dialog = new ChooseTableDialogFragment();
                 dialog.show(getFragmentManager(), "choiceTableDialogFragment");
             }
         });

@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckedTextView;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
@@ -84,12 +85,11 @@ public class OpenTableActivity extends FragmentActivity {
             }
             
             @Override
-            public void onFinish() {
-                
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
+                Toast.makeText(OpenTableActivity.this, R.string.error_list_dishes_failed, Toast.LENGTH_SHORT).show();
                 L.e(OpenTableActivity.this, exception);
             }
         });
@@ -161,14 +161,10 @@ public class OpenTableActivity extends FragmentActivity {
     public class MyOnPageChangeListener implements OnPageChangeListener {
 
         @Override
-        public void onPageScrollStateChanged(int arg0) {
-            
-        }
+        public void onPageScrollStateChanged(int arg0) {}
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-            
-        }
+        public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
         @Override
         public void onPageSelected(int position) {

@@ -38,6 +38,7 @@
             android:id="@+id/btn_confirm"
             android:layout_width="180dip"
             android:layout_height="45dip"
+            android:layout_marginTop="5dip"
             android:layout_gravity="center"
             android:text="@string/confirm"
             style="@style/Text.large.white"

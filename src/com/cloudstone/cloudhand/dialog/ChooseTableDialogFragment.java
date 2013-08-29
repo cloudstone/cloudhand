@@ -1,5 +1,6 @@
 package com.cloudstone.cloudhand.dialog;
 
+import java.util.Iterator;
 import java.util.List;
 
 import android.content.Intent;
@@ -29,7 +30,7 @@ import com.cloudstone.cloudhand.util.L;
  * @author xhc
  *
  */
-public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
+public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     private AutoCompleteTextView tvTableName;
     private EditText tvCustomerNumber;
     private Button btnConfirm;
@@ -47,7 +48,7 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_choice_table, container, false);
+        View view = inflater.inflate(R.layout.dialog_choose_table, container, false);
         tvTableName = (AutoCompleteTextView)view.findViewById(R.id.text_table_name);
         tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
@@ -77,9 +78,18 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
             @Override
             public void onSuccess(List<Table> result) {
                 //过滤掉非空闲状态的桌子
+                Iterator<Table> it = result.iterator();
+                while (it.hasNext()) {
+                    Table table = it.next();
+                    if(table.getStatus() != 0) {
+                        it.remove();
+                    }
+                }
+                
                 for(int i = 0;i < result.size();i++) {
                     if(result.get(i).getStatus() != 0) {
                         result.remove(i);
+                        i = 0;
                     }
                 }
                 
@@ -92,14 +102,12 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
 
             @Override
             public void onFailed(ApiException exception) {
-                Toast.makeText(getActivity(), R.string.error_list_table_info_failed, 0).show();
-                L.e(ChoiceTableDialogFragment.class, exception);
+                Toast.makeText(getActivity(), R.string.error_list_table_info_failed, Toast.LENGTH_SHORT).show();
+                L.e(ChooseTableDialogFragment.class, exception);
             }
 
             @Override
-            public void onFinish() {
-                
-            }
+            public void onFinish() {}
 
         });
         
@@ -109,9 +117,11 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
             @Override
             public void onClick(View v) {
                 int tableId = 0;
+                String tableName = tvTableName.getText().toString();
+                String inputCustomerNumber = tvCustomerNumber.getText().toString();
                 //获取输入的桌名的ID
                 for(int i = 0;i < tableNames.length;i++) {
-                    if(tvTableName.getText().toString().equals(tableNames[i])) {
+                    if(tableName.equals(tableNames[i])) {
                         tableId = i + 1;
                         break;
                     }
@@ -119,9 +129,9 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
                 //判断输入的桌子是否存在
                 if(tableId > 0) {
                     //判断输入的顾客人数是否为非0正整数
-                    if(isInt(tvCustomerNumber.getText().toString())) {
-                        int customerNumber = Integer.parseInt(tvCustomerNumber.getText().toString());
-                        new OccupyTableApi(tableId,customerNumber).asyncCall(new OccupyTableCalback() {
+                    if(isInt(inputCustomerNumber)) {
+                        int customerNumber = Integer.parseInt(inputCustomerNumber);
+                        new OccupyTableApi(tableId, customerNumber).asyncCall(new OccupyTableCalback() {
                             
                             @Override
                             public void onSuccess(Table result) {
@@ -142,8 +152,9 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
                             }
                             
                             @Override
-                            protected void onError(ApiException e) {
-                                
+                            protected void onError(ApiException exception) {
+                                Toast.makeText(getActivity(), R.string.error_open_table_failed, Toast.LENGTH_SHORT).show();
+                                L.e(ChooseTableDialogFragment.this, exception);
                             }
                         });
                         
@@ -164,7 +175,6 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-               
             }
         });
     }
@@ -172,11 +182,7 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
     //判断一个字符串是否为非0正整数
     private boolean isInt(String str) { 
         try { 
-            if(Integer.parseInt(str) > 0) {
-                return true; 
-            } else {
-                return false;
-            }
+            return Integer.parseInt(str) > 0;
         } catch (NumberFormatException e) { 
             return false;
         }

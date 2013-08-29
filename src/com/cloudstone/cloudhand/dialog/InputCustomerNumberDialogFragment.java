@@ -17,6 +17,7 @@ import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi.OccupyTableCalback;
+import com.cloudstone.cloudhand.util.L;
 
 /**
  * 
@@ -59,32 +60,37 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
 
             @Override
             public void onClick(View arg0) {
-            	//判断输入的顾客人数是否为非0正整数
-                if(isInt(tvInput.getText().toString())) {
-                    int customerNumber = Integer.parseInt(tvInput.getText().toString());
+                //判断输入的顾客人数是否为非0正整数
+                String inputCustomerNumber = tvInput.getText().toString();
+                if(isInt(inputCustomerNumber)) {
+                    int customerNumber = Integer.parseInt(inputCustomerNumber);
                     new OccupyTableApi(tableId,customerNumber).asyncCall(new OccupyTableCalback() {
                         
                         @Override
                         public void onSuccess(Table result) {
+                            //打开点餐界面
                             Intent intent = new Intent();
                             intent.setClass(getActivity(), OpenTableActivity.class);
                             startActivity(intent);
+                            
+                            //关闭桌况界面
+                            intent = new Intent();
+                            intent.setAction("tableInfoDismiss");
+                            getActivity().sendBroadcast(intent);
+                            
                             dismiss();
                         }
                         
                         @Override
-                        public void onFinish() {
-                            
-                        }
+                        public void onFinish() {}
                         
                         @Override
-                        protected void onOccupied() {
-                            
-                        }
+                        protected void onOccupied() {}
                         
                         @Override
-                        protected void onError(ApiException e) {
-                            
+                        protected void onError(ApiException exception) {
+                            Toast.makeText(getActivity(), R.string.error_open_table_failed, Toast.LENGTH_SHORT).show();
+                            L.e(InputCustomerNumberDialogFragment.this, exception);
                         }
                     });
                     
@@ -108,11 +114,7 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
     //判断一个字符串是否为非0正整数
     private boolean isInt(String str) { 
         try { 
-            if(Integer.parseInt(str) > 0) {
-                return true; 
-            } else {
-                return false;
-            }
+            return Integer.parseInt(str) > 0;
         } catch (NumberFormatException e) { 
             return false;
         }

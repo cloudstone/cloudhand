@@ -32,8 +32,8 @@
     <string name="submit_order_confirm">确认下单</string>
     
     <!-- 选桌子对话框 -->
-    <string name="choice_table_table_nonentity_error">桌子不存在</string>
-    <string name="choice_table_customer_number_error">顾客人数错误</string>
+    <string name="choose_table_table_nonentity_error">桌子不存在</string>
+    <string name="choose_table_customer_number_error">顾客人数错误</string>
 
     <!-- 设置 -->
     <string name="settings">设置</string>
@@ -60,5 +60,9 @@
     
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
+    <string name="error_list_dishes_failed">获取菜单列表失败</string>
     <string name="error_list_table_info_failed">获取桌况列表失败</string>
+    <string name="error_open_table_failed">开台失败</string>
+    <string name="error_clear_table_failed">清台失败</string>
+
 </resources>
