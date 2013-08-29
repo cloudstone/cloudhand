@@ -30,6 +30,7 @@
     <string name="total_price">总价</string>
     <string name="yuan">元</string>
     <string name="submit_order_confirm">确认下单</string>
+    <string name="message_delete_dish">是否删除这道菜？</string>
 
     <!-- 设置 -->
     <string name="settings">设置</string>

@@ -72,7 +72,7 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     @Override
     protected void render() {
         adapter = new InnerAdapter();
-        listView.setAdapter(adapter);
+        dishListView.setAdapter(adapter);
     }
     
 }
