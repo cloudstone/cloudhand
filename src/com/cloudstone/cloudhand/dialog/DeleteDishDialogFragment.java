@@ -1,6 +1,5 @@
 package com.cloudstone.cloudhand.dialog;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -20,7 +19,6 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
  * @author xhc
  *
  */
-@SuppressLint("ValidFragment")
 public class DeleteDishDialogFragment extends DialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
@@ -28,10 +26,6 @@ public class DeleteDishDialogFragment extends DialogFragment {
     private TextView tvMessage;
     
     private int dishId;
-    
-    public DeleteDishDialogFragment(int dishId) {
-        this.dishId = dishId;
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +44,8 @@ public class DeleteDishDialogFragment extends DialogFragment {
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
         tvMessage.setText(R.string.message_delete_dish);
+        
+        dishId = getArguments().getInt("dishId");
         return view;
     }
     
@@ -70,7 +66,7 @@ public class DeleteDishDialogFragment extends DialogFragment {
             }
         });
         
-            btnCancle.setOnClickListener(new OnClickListener() {
+        btnCancle.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
