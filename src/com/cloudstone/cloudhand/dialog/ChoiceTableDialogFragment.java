@@ -50,8 +50,8 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
         View view = inflater.inflate(R.layout.dialog_choice_table, container, false);
         tvTableName = (AutoCompleteTextView)view.findViewById(R.id.text_table_name);
         tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
-        btnConfirm = (Button)view.findViewById(R.id.button_confirm);
-        btnCancle = (Button)view.findViewById(R.id.button_cancle);
+        btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
+        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
         
         //输入桌名文本框被点时自动获取桌子列表
         tvTableName.setOnClickListener(new OnClickListener() {

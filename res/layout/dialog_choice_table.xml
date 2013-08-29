@@ -75,7 +75,7 @@
             android:orientation="horizontal" >
         
             <Button 
-                android:id="@+id/button_confirm"
+                android:id="@+id/btn_confirm"
                 android:layout_width="90dip"
                 android:layout_height="45dip"
                 android:text="@string/confirm"
@@ -83,7 +83,7 @@
                 android:background="@drawable/selector_base_button" />
         
             <Button 
-                android:id="@+id/button_cancle"
+                android:id="@+id/btn_cancle"
                 android:layout_width="90dip"
                 android:layout_height="45dip"
                 android:layout_marginLeft="15dip"

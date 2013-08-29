@@ -45,8 +45,8 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_input_customer_number, container, false);
-        btnConfirm = (Button)view.findViewById(R.id.button_confirm);
-        btnCancle = (Button)view.findViewById(R.id.button_cancle);
+        btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
+        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
         tvInput = (EditText)view.findViewById(R.id.tv_customet_number);
         return view;
     }

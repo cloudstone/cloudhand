@@ -32,4 +32,6 @@ public class UrlConst {
     public String clearTableUrl(int tableId) {
         return String.format(CLEAR_TABLE_URL, tableId);
     }
+    
+    public static final String LIST_DISH_DOTE_URL = BASE_URL + "/dishes/notes";
 }

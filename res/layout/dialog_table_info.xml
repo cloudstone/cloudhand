@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="384dip"
     android:layout_height="486dip"
-    android:background="@drawable/bg_dialog_big">
+    android:padding="39dip"
+    android:background="@drawable/bg_dialogggg">
     
     <!-- TODO:改成match_parent -->
     <LinearLayout 

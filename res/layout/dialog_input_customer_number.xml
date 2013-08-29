@@ -3,8 +3,8 @@
     android:layout_width="270dip"
     android:layout_height="190dip"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@drawable/bg_main" >
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_dialog" >
         
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:background="@drawable/bg_dropdown_normal" >
     
         <Button 
-            android:id="@+id/button_confirm"
+            android:id="@+id/btn_confirm"
             android:layout_width="90dip"
             android:layout_height="45dip"
             android:text="@string/confirm"
@@ -53,14 +53,13 @@
             android:background="@drawable/selector_base_button" />
     
         <Button 
-            android:id="@+id/button_cancle"
+            android:id="@+id/btn_cancle"
             android:layout_width="90dip"
             android:layout_height="45dip"
             android:layout_marginLeft="15dip"
             android:text="@string/cancel"
             style="@style/Text.large.white"
             android:background="@drawable/selector_base_button" />
-        </LinearLayout>
-        
+    </LinearLayout>
 
 </LinearLayout>

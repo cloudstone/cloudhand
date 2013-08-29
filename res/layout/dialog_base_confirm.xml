@@ -4,7 +4,7 @@
     android:layout_height="120dip"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/bg_main" >
+    android:background="@drawable/bg_dialog_small" >
 
     <LinearLayout 
         android:layout_width="match_parent"
@@ -28,12 +28,20 @@
         
     </LinearLayout>
     
-    <Button 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg_dropdown_normal" >
+    
+        <Button 
             android:id="@+id/btn_confirm"
             android:layout_width="180dip"
-            android:layout_height="40dip"
+            android:layout_height="45dip"
             android:text="@string/confirm"
-            android:layout_gravity="center"
-            style="@style/base_button" />
+            style="@style/Text.large.white"
+            android:background="@drawable/selector_base_button" />
+    </LinearLayout>
         
 </LinearLayout>
