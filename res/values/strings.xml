@@ -20,7 +20,7 @@
     
     <!-- 开台 -->
     <string name="order">点餐</string>
-    <string name="orderd">已点</string>
+    <string name="ordered">已点</string>
     <string name="dish_name">菜品名称</string>
     <string name="price">单价</string>
     <string name="count">数量</string>
@@ -45,7 +45,7 @@
     <string name="table_status">状态</string>
     <string name="empty">空闲</string>
     <string name="occupied">已用</string>
-    <string name="ordered">已下单</string>
+    <string name="submited">已下单</string>
     <string name="message_exit_order">您确认要放弃点餐吗？</string>
     
     <!-- 开台对话框 -->

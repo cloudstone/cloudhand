@@ -181,7 +181,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     }
     
     private void render() {
-    	getTableInfo();
+        getTableInfo();
         adapter = new InnerAdapter(); 
         listTableInfo.setAdapter(adapter);
     }

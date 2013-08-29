@@ -3,7 +3,7 @@
     android:layout_width="384dip"
     android:layout_height="486dip"
     android:padding="39dip"
-    android:background="@drawable/bg_dialogggg">
+    android:background="@drawable/bg_main">
     
     <!-- TODO:改成match_parent -->
     <LinearLayout 

@@ -76,6 +76,13 @@ public class ChoiceTableDialogFragment extends BaseAlertDialogFragment {
 
             @Override
             public void onSuccess(List<Table> result) {
+                //过滤掉非空闲状态的桌子
+                for(int i = 0;i < result.size();i++) {
+                    if(result.get(i).getStatus() != 0) {
+                        result.remove(i);
+                    }
+                }
+                
                 tableNames = new String[result.size()];
                 for(int i = 0;i < result.size();i++) {
                     tableNames[i] = result.get(i).getName();

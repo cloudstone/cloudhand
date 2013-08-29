@@ -13,13 +13,13 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 
-public class OpenTableOrderdFragment extends OpenTableBaseFragment {
+public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.view_open_table_orderd, container, false);
+        return inflater.inflate(R.layout.view_open_table_ordered, container, false);
     }
     
     @Override

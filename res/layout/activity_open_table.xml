@@ -23,12 +23,12 @@
             android:background="@drawable/selector_order_tab" />
 
         <CheckedTextView
-            android:id="@+id/tv_orderd"
+            android:id="@+id/tv_ordered"
             android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/orderd"
+            android:text="@string/ordered"
             style="@style/Text.xlarge.white"
             android:background="@drawable/selector_order_tab" />
     </LinearLayout>

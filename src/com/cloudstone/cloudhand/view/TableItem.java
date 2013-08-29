@@ -36,7 +36,7 @@ public class TableItem extends LinearLayout {
             statusView.setText(R.string.occupied);
                 break;
         default:
-            statusView.setText(R.string.ordered);
+            statusView.setText(R.string.submited);
             break;
         }
     }

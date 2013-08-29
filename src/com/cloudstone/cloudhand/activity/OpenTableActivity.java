@@ -22,12 +22,10 @@ import android.widget.CheckedTextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
-import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
-import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
-import com.cloudstone.cloudhand.network.api.LishDishNoteApi;
+import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
@@ -71,59 +69,38 @@ public class OpenTableActivity extends FragmentActivity {
         initTextView();
         initViewPager();
         
-//        //获取菜单列表
-//        new ListDishApi().asyncCall(new IApiCallback<List<Dish>>() {
-//            
-//            @Override
-//            public void onSuccess(List<Dish> result) {
-//                for(int i = 0;i < result.size();i++) {
-//                    dishes.add(result.get(i));
-//                }
-//                //发送更新菜单界面的广播
-//                Intent intent = new Intent();
-//                intent.setAction("update");
-//                OpenTableActivity.this.sendBroadcast(intent);
-//            }
-//            
-//            @Override
-//            public void onFinish() {
-//                
-//            }
-//            
-//            @Override
-//            public void onFailed(ApiException exception) {
-//                L.e(OpenTableActivity.this, exception);
-//            }
-//        });
+        //获取菜单列表
+        new ListDishApi().asyncCall(new IApiCallback<List<Dish>>() {
+            
+            @Override
+            public void onSuccess(List<Dish> result) {
+                for(int i = 0;i < result.size();i++) {
+                    dishes.add(result.get(i));
+                }
+                //发送更新菜单界面的广播
+                Intent intent = new Intent();
+                intent.setAction("update");
+                OpenTableActivity.this.sendBroadcast(intent);
+            }
+            
+            @Override
+            public void onFinish() {
+                
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {
+                L.e(OpenTableActivity.this, exception);
+            }
+        });
         
-        new LishDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
-
-			@Override
-			public void onSuccess(List<DishNote> result) {
-				System.out.println("dishnote -- >" + "onSuccess");
-				
-			}
-
-			@Override
-			public void onFailed(ApiException exception) {
-				// TODO Auto-generated method stub
-				System.out.println("dishnote -- >" + "onFailed");
-			}
-
-			@Override
-			public void onFinish() {
-				// TODO Auto-generated method stub
-				System.out.println("dishnote -- >" + "onFinish");
-			}
-
-		});
     }
     
     //初始化ViewPager
     private void initViewPager() {
         viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
         fragmentList.add(new OpenTableOrderFragment());
-        fragmentList.add(new OpenTableOrderdFragment());
+        fragmentList.add(new OpenTableOrderedFragment());
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -132,7 +109,7 @@ public class OpenTableActivity extends FragmentActivity {
     //初始化头标
     private void initTextView() {
         tvOrder = (CheckedTextView)findViewById(R.id.tv_order);
-        tvOrdered = (CheckedTextView)findViewById(R.id.tv_orderd);
+        tvOrdered = (CheckedTextView)findViewById(R.id.tv_ordered);
 
         tvOrder.setOnClickListener(new OnClickListener() {
             
@@ -146,7 +123,7 @@ public class OpenTableActivity extends FragmentActivity {
             
             @Override
             public void onClick(View v) {
-                showOrderdTab();
+                showOrderedTab();
             }
         });
     }
@@ -157,7 +134,7 @@ public class OpenTableActivity extends FragmentActivity {
     }
     
     //切换到已点界面
-    private void showOrderdTab() {
+    private void showOrderedTab() {
         viewPager.setCurrentItem(1);
     }
     
