@@ -24,7 +24,6 @@ import com.cloudstone.cloudhand.util.L;
  * @author xhc
  *
  */
-@SuppressLint("ValidFragment")
 public class ClearTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
@@ -32,10 +31,6 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
     private TextView tvMessage;
     
     private int tableId;
-    
-    public ClearTableDialogFragment(int tableId) {
-        this.tableId = tableId;
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +49,8 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
         tvMessage.setText(R.string.message_clear_table);
+        
+        tableId = getArguments().getInt("tableId");
         return view;
     }
     

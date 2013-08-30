@@ -24,17 +24,12 @@ import com.cloudstone.cloudhand.util.L;
  * @author xhc
  *
  */
-@SuppressLint("ValidFragment")
 public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
     private EditText tvInput;
     
     private int tableId;
-    
-    public InputCustomerNumberDialogFragment(int tableId) {
-        this.tableId = tableId;
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +44,7 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
         btnCancle = (Button)view.findViewById(R.id.btn_cancle);
         tvInput = (EditText)view.findViewById(R.id.tv_customet_number);
+        tableId = getArguments().getInt("tableId");
         return view;
     }
     

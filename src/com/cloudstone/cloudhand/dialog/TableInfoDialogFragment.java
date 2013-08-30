@@ -40,12 +40,10 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-        	System.out.println(intent.getAction());
             if(intent.getAction().equals("updateTableInfo")) {
                 render();
             }
             if(intent.getAction().equals("tableInfoDismiss")) {
-            	System.out.println("sss");
                 dismiss();
             }
         }
@@ -83,12 +81,17 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View v,
                     int intPosition, long longPosition) {
+                Bundle bundle = new Bundle();
                 if(tables.get(intPosition).getStatus() == 0) {
-                    OpenTableDialogFragment dialog = new OpenTableDialogFragment(intPosition + 1);
+                    OpenTableDialogFragment dialog = new OpenTableDialogFragment();
+                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "openTableDialogFragment");
                     render();
                 } else {
-                    ClearTableDialogFragment dialog = new ClearTableDialogFragment(intPosition + 1);
+                    ClearTableDialogFragment dialog = new ClearTableDialogFragment();
+                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "clearTableDialogFragment");
                 }
                 return false;

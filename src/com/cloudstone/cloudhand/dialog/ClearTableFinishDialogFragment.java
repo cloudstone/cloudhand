@@ -56,8 +56,8 @@ public class ClearTableFinishDialogFragment extends BaseAlertDialogFragment {
     
     @Override
     public void dismiss() {
-    	super.dismiss();
-    	Intent intent = new Intent();
+        super.dismiss();
+        Intent intent = new Intent();
         intent.setAction("update");
         getActivity().sendBroadcast(intent);
     }

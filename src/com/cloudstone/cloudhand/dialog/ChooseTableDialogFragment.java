@@ -1,8 +1,10 @@
 package com.cloudstone.cloudhand.dialog;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -36,8 +40,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
     
-    private String[] tableNames;
-    
+    private List<Table> tableList = new ArrayList<Table>();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,21 +84,9 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 Iterator<Table> it = result.iterator();
                 while (it.hasNext()) {
                     Table table = it.next();
-                    if(table.getStatus() != 0) {
-                        it.remove();
+                    if(table.getStatus() == 0) {
+                        tableList.add(table);
                     }
-                }
-                
-                for(int i = 0;i < result.size();i++) {
-                    if(result.get(i).getStatus() != 0) {
-                        result.remove(i);
-                        i = 0;
-                    }
-                }
-                
-                tableNames = new String[result.size()];
-                for(int i = 0;i < result.size();i++) {
-                    tableNames[i] = result.get(i).getName();
                 }
                 render();
             }
@@ -120,9 +111,9 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 String tableName = tvTableName.getText().toString();
                 String inputCustomerNumber = tvCustomerNumber.getText().toString();
                 //获取输入的桌名的ID
-                for(int i = 0;i < tableNames.length;i++) {
-                    if(tableName.equals(tableNames[i])) {
-                        tableId = i + 1;
+                for(int i = 0;i < tableList.size();i++) {
+                    if(tableName.equals(tableList.get(i).getName())) {
+                        tableId = tableList.get(i).getId();
                         break;
                     }
                 }
@@ -142,14 +133,10 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                             }
                             
                             @Override
-                            public void onFinish() {
-                                
-                            }
+                            public void onFinish() {}
                             
                             @Override
-                            protected void onOccupied() {
-                                
-                            }
+                            protected void onOccupied() {}
                             
                             @Override
                             protected void onError(ApiException exception) {
@@ -190,12 +177,65 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     
     private void render() {
         //创建一个下拉框适配器
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.view_base_dropdown_list_line, tableNames); 
-        //设置下拉列表风格
-        adapter.setDropDownViewResource(R.layout.view_base_dropdown_list_line);
-        
+        TableAdapter adapter = new TableAdapter(getActivity(),
+                R.layout.view_base_dropdown_list_line, tableList); 
         //关联适配器到用户名下拉框
         tvTableName.setAdapter(adapter);
     }
+    
+    private class TableAdapter extends ArrayAdapter<Table> {
+        private LinearLayout linearLayout;
+        private int resource;
+        private List<Table> data = new ArrayList<Table>();
+        private LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        private TextView tvItem;
+        
+        public TableAdapter(Context context, int textViewResourceId,
+                List<Table> data) {
+            super(context, textViewResourceId, data);
+            this.data = data;
+            this.resource = textViewResourceId;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Table getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+        
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            
+            if(convertView == null) {
+                linearLayout = new LinearLayout(getContext());
+                convertView = layoutInflater.inflate(resource, linearLayout, true);
+            }
+            tvItem = new TextView(getContext());
+            tvItem = (TextView)convertView.findViewById(R.id.tv_name);
+            tvItem.setText(data.get(position).getName());
+            
+            tvItem.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+                    //TODO 这里有问题，总是得到最后一个值，还不知道怎么解决。
+                    //TODO 不知道怎么把已点的值传给外面的AutoCompleteTextView
+                    tvTableName.setText(tvItem.getText());
+                    tvItem.setVisibility(0x00000004);
+                }
+            });
+            return convertView;
+        }
+        
+    }
+    
 }

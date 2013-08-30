@@ -17,7 +17,6 @@ import com.cloudstone.cloudhand.R;
  * @author xhc
  *
  */
-@SuppressLint("ValidFragment")
 public class OpenTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
@@ -25,10 +24,6 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
     private TextView tvMessage;
     
     private int tableId;
-    
-    public OpenTableDialogFragment(int tableId) {
-    	this.tableId = tableId;
-    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +42,8 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
         tvMessage.setText(R.string.message_open_table);
+        
+        tableId = getArguments().getInt("tableId");
         return view;
     }
     
@@ -58,7 +55,10 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment(tableId);
+            	InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("tableId", tableId);
+                dialog.setArguments(bundle);
                 dialog.show(getFragmentManager(), "inputCustomerNumberDialogFragment");
                 dismiss();
             }
