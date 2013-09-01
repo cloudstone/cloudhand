@@ -29,7 +29,6 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
-        
         //长按弹出删除一道菜对话框
         dishListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             
