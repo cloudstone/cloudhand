@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
 import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;

@@ -9,7 +9,12 @@ package com.cloudstone.cloudhand.data;
  *
  */
 public class User extends BaseData {
+    private int id;
     
+    public int getId() {
+        return id;
+    }
+
     private int type;
     
     private String realName;
@@ -17,7 +22,7 @@ public class User extends BaseData {
     private String name;
     
     public String getName() {
-    	return name;
+        return name;
     }
     
     /* 备注 */
