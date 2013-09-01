@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
@@ -101,6 +102,8 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
                     @Override
                     public void onFailed(ApiException exception) {
                         L.i(OpenTableOrderdFragment.class, "onFailed");
+                        L.e(this, exception);
+                        Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

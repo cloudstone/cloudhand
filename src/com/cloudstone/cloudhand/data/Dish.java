@@ -11,7 +11,7 @@ import com.cloudstone.cloudhand.constant.Const;
  *
  */
 public class Dish extends BaseData {
-	private int id;
+    private int id;
     private String name;
     private double price;
     private double memberPrice;
