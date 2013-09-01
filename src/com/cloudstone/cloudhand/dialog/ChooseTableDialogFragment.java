@@ -4,25 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.SearchableInfo;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.test.PerformanceTestCase;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.LayoutInflater.Filter;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filterable;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -33,10 +24,7 @@ import com.cloudstone.cloudhand.network.api.ListTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi.OccupyTableCalback;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
-import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.util.L;
-import com.cloudstone.cloudhand.view.ChooseTableItem;
-import com.cloudstone.cloudhand.view.ChooseTableItem.ChooseTableItemListener;
 
 /**
  * 
@@ -77,48 +65,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             }
         });
         
-//        tvTableName.addTextChangedListener(new TextWatcher() {
-//			
-//			@Override
-//			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-//				System.out.println("onTextChanged");
-////				searchItem(tvTableName.getText().toString());
-////				render();
-//				tvTableName.showDropDown();
-//			}
-//			
-//			@Override
-//			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-//					int arg3) {
-//			}
-//			
-//			@Override
-//			public void afterTextChanged(Editable arg0) {
-//				tvTableName.showDropDown();
-//			}
-//		});
-        
         return view;
-    }
-    
-    public void searchItem(String keywords) {
-    	ContrastPinyin contrastPinyin = new ContrastPinyin();
-    	List<Table> result = new ArrayList<Table>();
-    	
-    	for (int i = 0; i < tableList.size(); i++) {
-            int index = 0;;
-            if(contrastPinyin.isContain(keywords)) {
-                index = tableList.get(i).getName().indexOf(keywords);
-            } else {
-                String pinyin = contrastPinyin.getSpells(tableList.get(i).getName());
-                index = pinyin.indexOf(keywords.toLowerCase());
-            }
-            // 存在匹配的数据
-            if (index == -1) {
-            	tableList.remove(i);
-            }
-            System.out.println(index);
-        }
     }
     
     @Override
@@ -226,114 +173,14 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     }
     
     private void render() {
-    	String[] tableName = new String[tableList.size()];
-    	for(int i = 0; i < tableList.size(); i++) {
-    		tableName[i] = tableList.get(i).getName();
-    	}
+        String[] tableName = new String[tableList.size()];
+        for(int i = 0; i < tableList.size(); i++) {
+            tableName[i] = tableList.get(i).getName();
+        }
         //创建一个下拉框适配器
-    	ArrayAdapter<String> ada = new ArrayAdapter<String>(getActivity(), R.layout.view_base_dropdown_list_line, tableName);
-//        TableAdapter adapter = new TableAdapter(getActivity(), R.layout.view_base_dropdown_list_line, tableList); 
-    	TableAdapter adapter = new TableAdapter();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.view_base_dropdown_list_line, tableName);
         //关联适配器到用户名下拉框
-        tvTableName.setAdapter(ada);
-    }
-    
-    private class TableAdapter extends BaseAdapter implements Filterable, ChooseTableItemListener{
-    	
-
-//        public TableAdapter(Context context, int textViewResourceId,
-//				List<Table> objects) {
-//			super(context, textViewResourceId, objects);
-//		}
-
-		@Override
-        public int getCount() {
-            return tableList.size();
-        }
-
-        @Override
-        public Table getItem(int position) {
-            return tableList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-        
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-        	ChooseTableItem view = (ChooseTableItem) convertView;
-//            LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            
-            if(view == null) {
-//                linearLayout = new LinearLayout(getContext());
-//                convertView = layoutInflater.inflate(resource, linearLayout, true);
-            	view = createView();
-            }
-//            tvItem = new TextView(getContext());
-//            tvItem = (TextView)convertView.findViewById(R.id.tv_name);
-//            tvItem.setText(tableList.get(position).getName());
-            
-            Table table = getItem(position);
-            view.render(table.getName());
-            bindView(view, position);
-            return view;
-            
-//            holder.setOnClickListener(new OnClickListener() {
-//                
-//                @Override
-//                public void onClick(View v) {
-//                    //TODO 这里有问题，总是得到最后一个值，还不知道怎么解决。
-//                    //TODO 不知道怎么把已点的值传给外面的AutoCompleteTextView
-//                    tvTableName.setText(tvItem.getText());
-//                    tvItem.setVisibility(0x00000004);
-//                }
-//            });
-        }
-        
-        private ChooseTableItem createView() {
-        	ChooseTableItem view = new ChooseTableItem(getActivity());
-        	view.setListener(this);
-        	return view;
-        }
-        
-        private void bindView(ChooseTableItem view, int position) {
-            Table table = getItem(position);
-            ViewHolder holder = (ViewHolder) view.getTag();
-            if (holder == null) {
-                holder = new ViewHolder();
-                view.setTag(holder);
-            }
-            holder.setTable(table);
-        }
-
-		@Override
-		public void onClick(ChooseTableItem view) {
-			ViewHolder holder = (ViewHolder) view.getTag();
-			Table table = holder.getTable();
-			tvTableName.setText(table.getName());
-		}
-
-		@Override
-		public android.widget.Filter getFilter() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-        
-    }
-    
-    private class ViewHolder {
-        private Table table;
-
-        public Table getTable() {
-            return table;
-        }
-
-        public void setTable(Table table) {
-            this.table = table;
-        }
-        
+        tvTableName.setAdapter(adapter);
     }
     
 }
