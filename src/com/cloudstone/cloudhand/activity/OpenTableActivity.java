@@ -22,11 +22,13 @@ import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
+import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
 
@@ -37,15 +39,23 @@ public class OpenTableActivity extends FragmentActivity {
     private TextView tvOrder; //页卡标题 - 点餐
     private TextView tvOrderd; //页卡标题 - 已点
     
-    //用于菜品列表的数据
+    //菜品列表的数据
     private List<Dish> dishes = new ArrayList<Dish>();
-    //用于记录每样菜点了几份
-    private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
     public List<Dish> getDishes() {
         return dishes;
     }
-  
+    
+    //菜品备注列表的数据
+    private List<DishNote> dishNotes = new ArrayList<DishNote>();
+    
+    public List<DishNote> getDishNotes() {
+        return dishNotes;
+    }
+    
+    //用于记录每样菜点了几份
+    private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
+    
     public int getDishCount(int dishId) {
         if (!dishCountMap.containsKey(dishId)) {
             return 0;
@@ -55,6 +65,21 @@ public class OpenTableActivity extends FragmentActivity {
   
     public void setDishCount(int dishId, int count) {
         dishCountMap.put(dishId, count);
+    }
+    
+    //用于记录每样菜选择了哪些备注
+    private Map<Integer, List<Integer>> dishNoteMap = new HashMap<Integer, List<Integer>>();
+    
+    public List<Integer> getDishNoteIdList(int dishId) {
+        if(dishNoteMap.get(dishId) == null) {
+            return new ArrayList<Integer>();
+        } else {
+            return dishNoteMap.get(dishId);
+        }
+    }
+
+    public void setDishNoteIdList(int dishId, List<Integer> dishNotes) {
+        dishNoteMap.put(dishId, dishNotes);
     }
     
     @Override
@@ -84,14 +109,27 @@ public class OpenTableActivity extends FragmentActivity {
             }
             
             @Override
-            public void onFinish() {
-                
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
                 L.e(OpenTableActivity.this, exception);
             }
+        });
+        
+        //获取备注列表
+        new ListDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
+            
+            @Override
+            public void onSuccess(List<DishNote> result) {
+                dishNotes = result;
+            }
+            
+            @Override
+            public void onFinish() {}
+            
+            @Override
+            public void onFailed(ApiException exception) {}
         });
     }
     

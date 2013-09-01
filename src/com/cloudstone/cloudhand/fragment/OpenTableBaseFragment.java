@@ -5,6 +5,8 @@ import java.util.List;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.data.DishNote;
+import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
 import com.cloudstone.cloudhand.view.DishItem;
 import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
 
 /**
  * 
@@ -109,7 +112,20 @@ public class OpenTableBaseFragment extends BaseFragment {
                 view = createView();
             }
             Dish dish = getItem(position);
-            view.render(dish, getDishCount(dish.getId()));
+            String dishNote = "";
+            List<Integer> dishNoteIdList = ((OpenTableActivity)(getActivity())).getDishNoteIdList(dish.getId());
+            List<DishNote> dishNotes = ((OpenTableActivity)(getActivity())).getDishNotes();
+            for(int i = 0; i < dishNoteIdList.size(); i++) {
+                for(int j = 0; j < dishNotes.size(); j++) {
+                    if(dishNoteIdList.get(i) == dishNotes.get(j).getId()) {
+                        dishNote += dishNotes.get(j).getName() + ";";
+                    }
+                }
+            }
+            if(dishNote.equals("")) {
+                dishNote = getString(R.string.no_remark);
+            }
+            view.render(dish, getDishCount(dish.getId()), dishNote);
             bindView(view, position);
             return view;
         }
@@ -128,6 +144,17 @@ public class OpenTableBaseFragment extends BaseFragment {
                 view.setTag(holder);
             }
             holder.setDish(dish);
+        }
+
+        @Override
+        public void onCheckedChange(DishItem view) {
+            ViewHolder holder = (ViewHolder) view.getTag();
+            Dish dish = holder.getDish();
+            DishNoteDialogFragment dialog = new DishNoteDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("dishId", dish.getId());
+            dialog.setArguments(bundle);
+            dialog.show(getFragmentManager(), "dishNoteDialogFragment");
         }
     }
     
