@@ -1,6 +1,5 @@
 package com.cloudstone.cloudhand.dialog;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +54,7 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-            	InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment();
+                InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("tableId", tableId);
                 dialog.setArguments(bundle);

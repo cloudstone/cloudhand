@@ -94,7 +94,7 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
                     dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "clearTableDialogFragment");
                 }
-                return false;
+                return true;
             }
         });
         
