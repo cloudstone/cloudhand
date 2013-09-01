@@ -68,19 +68,19 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
                 od1.setId(1);
                 od1.setOrderId(1);
                 od1.setNumber(2);
-//                od1.setRemarks(new String[]{"aa", "bb"});
+//                od1.setRemarks(new String[]{"暂无备注"});
                 OrderDish od2 = new OrderDish();
                 od2.setId(2);
                 od2.setOrderId(2);
                 od2.setNumber(2);
-//                od2.setRemarks(new String[]{"aa", "bb"});
+//                od2.setRemarks(new String[]{"暂无备注"});
                 
                 List<OrderDish> list = new ArrayList<OrderDish>();
                 list.add(od1);
                 list.add(od2);
                 
                 Order order = new Order();
-                order.setTableId(2);
+                order.setTableId(5);
                 order.setUserId(2);
                 order.setCustomerNumber(3);
                 order.setDishes(list);
@@ -113,14 +113,14 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
         });
     }
     
-    private void initData() {
-        data.clear();
-        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
-            if(getDishCount(i) > 0) {
-                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
-            }
-        });
-    }
+//    private void initData() {
+//        data.clear();
+//        for(int i = 0; i < ((OpenTableActivity)(getActivity())).getDishes().size(); i++) {
+//            if(getDishCount(i) > 0) {
+//                data.add(((OpenTableActivity)(getActivity())).getDishes().get(i));
+//            }
+//        });
+//    }
     
     private Dish getDish(int dishId) {
         List<Dish> dishes =((OpenTableActivity)(getActivity())).getDishes();
