@@ -31,6 +31,7 @@
     <string name="yuan">元</string>
     <string name="submit_order_confirm">确认下单</string>
     <string name="message_delete_dish">是否删除这道菜？</string>
+    <string name="submit_failed">下单失败</string>
 
     <!-- 设置 -->
     <string name="settings">设置</string>
