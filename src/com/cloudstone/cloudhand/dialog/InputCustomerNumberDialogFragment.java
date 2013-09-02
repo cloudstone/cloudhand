@@ -25,7 +25,7 @@ import com.cloudstone.cloudhand.util.L;
  */
 public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
-    private Button btnCancle;
+    private Button btnCancel;
     private EditText tvInput;
     
     private int tableId;
@@ -41,7 +41,7 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_input_customer_number, container, false);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
-        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
+        btnCancel = (Button)view.findViewById(R.id.btn_cancel);
         tvInput = (EditText)view.findViewById(R.id.tv_customet_number);
         tableId = getArguments().getInt("tableId");
         return view;
@@ -97,7 +97,7 @@ public class InputCustomerNumberDialogFragment extends BaseAlertDialogFragment {
            
         });
         
-        btnCancle.setOnClickListener(new OnClickListener() {
+        btnCancel.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {

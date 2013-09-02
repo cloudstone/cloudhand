@@ -35,7 +35,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     private AutoCompleteTextView tvTableName;
     private EditText tvCustomerNumber;
     private Button btnConfirm;
-    private Button btnCancle;
+    private Button btnCancel;
     
     private List<Table> tableList = new ArrayList<Table>();
     
@@ -52,7 +52,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
         tvTableName = (AutoCompleteTextView)view.findViewById(R.id.text_table_name);
         tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
-        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
+        btnCancel = (Button)view.findViewById(R.id.btn_cancel);
         
         //输入桌名文本框被点时自动获取桌子列表
         tvTableName.setOnClickListener(new OnClickListener() {
@@ -154,7 +154,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
         });
         
         //取消
-        btnCancle.setOnClickListener(new OnClickListener() {
+        btnCancel.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {

@@ -18,7 +18,7 @@ import com.cloudstone.cloudhand.R;
  */
 public class OpenTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
-    private Button btnCancle;
+    private Button btnCancel;
     private ImageView ivIcon;
     private TextView tvMessage;
     
@@ -35,7 +35,7 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_base_confirm_cancle, container, false);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
-        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
+        btnCancel = (Button)view.findViewById(R.id.btn_cancel);
         ivIcon = (ImageView)view.findViewById(R.id.iv_icon);
         tvMessage = (TextView)view.findViewById(R.id.tv_message);
         
@@ -63,7 +63,7 @@ public class OpenTableDialogFragment extends BaseAlertDialogFragment {
             }
         });
         
-        btnCancle.setOnClickListener(new OnClickListener() {
+        btnCancel.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
