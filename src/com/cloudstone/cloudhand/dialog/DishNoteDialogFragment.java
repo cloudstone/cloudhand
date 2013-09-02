@@ -1,7 +1,10 @@
 package com.cloudstone.cloudhand.dialog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +20,6 @@ import android.widget.ListView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.DishNote;
-import com.cloudstone.cloudhand.exception.ApiException;
-import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.view.DishNoteItem;
 import com.cloudstone.cloudhand.view.DishNoteItem.DishNoteItemListener;
 
@@ -30,8 +30,8 @@ public class DishNoteDialogFragment extends DialogFragment {
     private ListView listDishNote;
     private BaseAdapter adapter;
     
-    private List<Integer> dishNoteIdList = new ArrayList<Integer>();
-    private int dishId;
+    private int dishId; //被点击的菜的id
+    private Set<Integer> checkedDishNoteIdSet = new HashSet<Integer>(); //这样菜中被选中的备注id集合
     
     private List<DishNote> dishNotes = new ArrayList<DishNote>();
     
@@ -65,7 +65,7 @@ public class DishNoteDialogFragment extends DialogFragment {
             
             @Override
             public void onClick(View v) {
-                setDishNote(dishId, dishNoteIdList);
+                setDishNote(dishId, checkedDishNoteIdSet);
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
                 intent.setAction("update");
@@ -111,12 +111,13 @@ public class DishNoteDialogFragment extends DialogFragment {
             }
             DishNote dishNote = getItem(position);
             boolean isChecked = false;
-            for(int i = 0;i < getDishNote(dishId).size();i++) {
-                if(dishNote.getId() == getDishNote(dishId).get(i)) {
-                    isChecked = true;
-                    dishNoteIdList.add(dishNote.getId());
-                    break;
-                }
+            Iterator<Integer> iterator = getDishNote(dishId).iterator();
+            while(iterator.hasNext()){
+                 if(dishNote.getId() == iterator.next()) {
+                     isChecked = true;
+                     checkedDishNoteIdSet.add(dishNote.getId());
+                     break;
+                 }
             }
             view.render(dishNote, isChecked);
             bindView(view, position);
@@ -145,26 +146,29 @@ public class DishNoteDialogFragment extends DialogFragment {
             if(holder != null) {
                 DishNote dishNote = holder.getDishNote();
                 if(isChecked) {
-                    dishNoteIdList.add(dishNote.getId());
+                    checkedDishNoteIdSet.add(dishNote.getId());
                 } else {
-                    for(int i = 0; i < dishNoteIdList.size();i++) {
-                        if(dishNoteIdList.get(i) == dishNote.getId()) {
-                            dishNoteIdList.remove(i);
+                    Iterator<Integer> iterator = checkedDishNoteIdSet.iterator();
+                    List<Integer> removeList = new ArrayList<Integer>();
+                    while(iterator.hasNext()) {
+                        int dishNoteId = iterator.next();
+                        if(dishNoteId == dishNote.getId()) {
+                            removeList.add(dishNoteId);
                         }
                     }
-                    
+                    checkedDishNoteIdSet.remove(removeList);
                 }
             }
         }
         
     }
     
-    private void setDishNote(int dishId, List<Integer> dishNotes) {
-        ((OpenTableActivity)(getActivity())).setDishNoteIdList(dishId, dishNotes);
+    private void setDishNote(int dishId, Set<Integer> dishNotes) {
+        ((OpenTableActivity)(getActivity())).setDishNoteIdSet(dishId, dishNotes);
     }
     
-    protected List<Integer> getDishNote(int dishId) {
-        return ((OpenTableActivity)(getActivity())).getDishNoteIdList(dishId);
+    protected Set<Integer> getDishNote(int dishId) {
+        return ((OpenTableActivity)(getActivity())).getDishNoteIdSet(dishId);
     }
     
     private class ViewHolder {

@@ -1,7 +1,5 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,8 +30,6 @@ import android.widget.ListView;
 public class OpenTableBaseFragment extends BaseFragment {
     protected ListView dishListView;
     protected BaseAdapter adapter;
-    
-    private OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
     
     protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -112,30 +108,30 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public DishItem getView(int position, View convertView, ViewGroup parent) {
+            OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
             DishItem view = (DishItem) convertView;
             if (view == null) {
                 view = createView();
             }
             
             Dish dish = getItem(position);
-            StringBuilder dishNote = new StringBuilder();
-            Set<Integer> dishNoteIdSet = new HashSet<Integer>();
-            List<Integer> dishNoteIdList = openTableActivity.getDishNoteIdList(dish.getId());
-            dishNoteIdSet.addAll(dishNoteIdList);
+            StringBuilder sb = new StringBuilder();
+            Set<Integer> dishNoteIdSet = openTableActivity.getDishNoteIdSet(dish.getId());
+            dishNoteIdSet.addAll(dishNoteIdSet);
             List<DishNote> dishNotes = openTableActivity.getDishNotes();
             
             for(int i = 0; i < dishNotes.size(); i++) {
                 if(dishNoteIdSet.contains(dishNotes.get(i).getId())) {
-                    dishNote.append(dishNotes.get(i).getName()).append(";");
+                    sb.append(dishNotes.get(i).getName()).append(";");
                 }
                 
             }
             
-            if(dishNote.length() == 0) {
-                dishNote.append(getString(R.string.no_remark));
+            if(sb.length() == 0) {
+                sb.append(getString(R.string.no_remark));
             }
             
-            view.render(dish, getDishCount(dish.getId()), dishNote.toString());
+            view.render(dish, getDishCount(dish.getId()), sb.toString());
             bindView(view, position);
             return view;
         }

@@ -2,8 +2,10 @@ package com.cloudstone.cloudhand.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,17 +70,17 @@ public class OpenTableActivity extends FragmentActivity {
     }
     
     //用于记录每样菜选择了哪些备注
-    private Map<Integer, List<Integer>> dishNoteMap = new HashMap<Integer, List<Integer>>();
+    private Map<Integer, Set<Integer>> dishNoteMap = new HashMap<Integer, Set<Integer>>();
     
-    public List<Integer> getDishNoteIdList(int dishId) {
+    public Set<Integer> getDishNoteIdSet(int dishId) {
         if(dishNoteMap.get(dishId) == null) {
-            return new ArrayList<Integer>();
+            return new HashSet<Integer>();
         } else {
             return dishNoteMap.get(dishId);
         }
     }
 
-    public void setDishNoteIdList(int dishId, List<Integer> dishNotes) {
+    public void setDishNoteIdSet(int dishId, Set<Integer> dishNotes) {
         dishNoteMap.put(dishId, dishNotes);
     }
     
