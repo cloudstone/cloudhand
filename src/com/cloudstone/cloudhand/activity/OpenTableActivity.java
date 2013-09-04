@@ -25,7 +25,7 @@ import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
-import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
+import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
@@ -99,7 +99,7 @@ public class OpenTableActivity extends FragmentActivity {
     private void initViewPager() {
         viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
         fragmentList.add(new OpenTableOrderFragment());
-        fragmentList.add(new OpenTableOrderdFragment());
+        fragmentList.add(new OpenTableOrderedFragment());
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());

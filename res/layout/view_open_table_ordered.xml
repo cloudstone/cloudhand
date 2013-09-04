@@ -48,7 +48,7 @@
                 android:layout_width="100dip"
                 android:layout_height="40dip"
                 android:gravity="center"
-                android:text="@string/submit_order_confirm"
+                android:text="@string/submit_confirm"
                 style="@style/Text.normal.white"
                 android:background="@drawable/selector_base_button" />
             

@@ -27,7 +27,7 @@
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/orderd"
+            android:text="@string/ordered"
             style="@style/Text.xlarge.white"
             android:background="@drawable/bg_open_table_title_normal" />
     </LinearLayout>

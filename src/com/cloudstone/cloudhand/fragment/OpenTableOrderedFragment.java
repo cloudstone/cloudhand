@@ -26,7 +26,7 @@ import com.cloudstone.cloudhand.network.api.SubmitOrderApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
 
-public class OpenTableOrderdFragment extends OpenTableBaseFragment {
+public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
     
     private Button btnSubmit;
@@ -34,7 +34,7 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.view_open_table_orderd, container, false);
+        return inflater.inflate(R.layout.view_open_table_ordered, container, false);
     }
     
     @Override
@@ -91,17 +91,17 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
                     
                     @Override
                     public void onSuccess(Order result) {
-                        L.i(OpenTableOrderdFragment.class, "onSuccess");
+                        L.i(OpenTableOrderedFragment.class, "onSuccess");
                     }
                     
                     @Override
                     public void onFinish() {
-                        L.i(OpenTableOrderdFragment.class, "onFinish");
+                        L.i(OpenTableOrderedFragment.class, "onFinish");
                     }
                     
                     @Override
                     public void onFailed(ApiException exception) {
-                        L.i(OpenTableOrderdFragment.class, "onFailed");
+                        L.i(OpenTableOrderedFragment.class, "onFailed");
                         L.e(this, exception);
                         Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
                     }
@@ -124,10 +124,12 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
     
     private double getTotalPrice() {
         double total = 0;
-        for (int i = 0;i < getDishes().size();i++) {
-            int count = getDishCount(i);
+        List<Dish> dishes = getDishes();
+        for (int i = 0;i < dishes.size();i++) {
+            int dishId = dishes.get(i).getId();
+            int count = getDishCount(dishId);
             if (count > 0) {
-                Dish dish = getDish(i);
+                Dish dish = getDish(dishId);
                 total += dish.getPrice() * count;
             }
         }
@@ -144,7 +146,7 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
         List<Dish> data = new ArrayList<Dish>();
         List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
         for(int i = 0; i < dishes.size(); i++) {
-            if(getDishCount(i) > 0) {
+            if(getDishCount(dishes.get(i).getId()) > 0) {
                 data.add(dishes.get(i));
             }
         }
