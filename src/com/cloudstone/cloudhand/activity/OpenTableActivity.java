@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -85,7 +84,6 @@ public class OpenTableActivity extends FragmentActivity {
             
             @Override
             public void onFinish() {
-                
             }
             
             @Override
@@ -161,12 +159,10 @@ public class OpenTableActivity extends FragmentActivity {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-            
         }
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-            
         }
 
         @Override
@@ -185,13 +181,12 @@ public class OpenTableActivity extends FragmentActivity {
     
     //按下返回键弹出退出确认
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) { 
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { 
+    public void onBackPressed() {
+        if (getFragmentManager().findFragmentByTag(ExitOrderDialogFragment.class.getSimpleName()) == null) {
             ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();
-            dialog.show(getFragmentManager(), "exitOrderDialogFragment");
-            return true;
-        } 
-        return super.onKeyDown(keyCode, event);
+            dialog.show(getFragmentManager(), ExitOrderDialogFragment.class.getSimpleName());
+        } else {
+            super.onBackPressed();
+        }
     }
-    
 }
