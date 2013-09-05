@@ -3,169 +3,68 @@ package com.cloudstone.cloudhand.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.CheckedTextView;
+import android.widget.Toast;
+
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Table;
-import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
-import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.fragment.TableInfoEmptyFragment;
+import com.cloudstone.cloudhand.fragment.TableInfoOccupiedFragment;
 import com.cloudstone.cloudhand.network.api.ListTableApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
-import com.cloudstone.cloudhand.view.TableItem;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-public class TableInfoActivity extends BaseActivity {
-	
-	private ListView listTableInfo;
-    private BaseAdapter adapter;
+public class TableInfoActivity extends FragmentActivity {
+    private ViewPager viewPager; //页卡内容
+    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private CheckedTextView tvEmpty; //页卡标题 - 空闲
+    private CheckedTextView tvOccupied; //页卡标题 - 已用
     
+    //用于桌子列表的数据
     private List<Table> tables = new ArrayList<Table>();
     
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("updateTableInfo")) {
-                refresh();
-            }
-            if(intent.getAction().equals("tableInfoDismiss")) {
-                finish();
-            }
-        }
-    };
-    
-    
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("updateTableInfo");
-        filter.addAction("tableInfoDismiss");
-        registerReceiver(broadcastReceiver, filter);
+    public List<Table> getTables() {
+        return tables;
     }
     
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_table_info);
-        refresh();
+        //隐藏标题栏
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏状态栏
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_table_info);
+        update();
         
-        listTableInfo = (ListView)findViewById(R.id.listview_table_info);
-        listTableInfo.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View v, int intPosition,
-                    long longPosition) {
-                Bundle bundle = new Bundle();
-                if(tables.get(intPosition).getStatus() == 0) {
-                    OpenTableDialogFragment dialog = new OpenTableDialogFragment();
-                    bundle.putInt("tableId", tables.get(intPosition).getId());
-                    dialog.setArguments(bundle);
-                    dialog.show(getFragmentManager(), "openTableDialogFragment");
-                    render();
-                } else {
-                    ClearTableDialogFragment dialog = new ClearTableDialogFragment();
-                    bundle.putInt("tableId", tables.get(intPosition).getId());
-                    dialog.setArguments(bundle);
-                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
-                }
-            }
-        });
+        initTextView();
+        initViewPager();
     }
     
-    private class InnerAdapter extends BaseAdapter {
-        
-        @Override
-        public int getCount() {
-            return tables.size();
-        }
-
-        @Override
-        public Table getItem(int position) {
-            return (Table)tables.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TableItem view = (TableItem) convertView;
-            if (view == null) {
-                view = createView();
-            }
-            Table table = getItem(position);
-            view.render(table);
-            bindView(view, position);
-            return view;
-        }
-        
-        private TableItem createView() {
-            TableItem view = new TableItem(TableInfoActivity.this);
-            return view;
-        }
-        
-        private void bindView(TableItem view, int position) {
-            Table table = getItem(position);
-            ViewHolder holder = (ViewHolder) view.getTag();
-            if (holder == null) {
-                holder = new ViewHolder();
-                view.setTag(holder);
-            }
-            holder.setTable(table);
-        }
-        
-    }
-    
-    private class ViewHolder {
-        private Table table;
-
-        public Table getTable() {
-            return table;
-        }
-
-        public void setTable(Table table) {
-            this.table = table;
-        }
-        
-    }
-    
-    private void render() {
-        adapter = new InnerAdapter(); 
-        listTableInfo.setAdapter(adapter);
-    }
-    
-    //刷新界面
-    public void refresh() {
+    public void update() {
         //获取桌况
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override
             public void onSuccess(List<Table> result) {
                 tables = result;
-                render();
+                Intent intent = new Intent();
+                intent.setAction("updateTableInfo");
+                TableInfoActivity.this.sendBroadcast(intent);
             }
 
             @Override
@@ -180,4 +79,85 @@ public class TableInfoActivity extends BaseActivity {
 
         });
     }
+    
+    //初始化ViewPager
+    private void initViewPager() {
+        viewPager = (ViewPager)findViewById(R.id.viewPager_table_info);
+        fragmentList.add(new TableInfoEmptyFragment());
+        fragmentList.add(new TableInfoOccupiedFragment());
+        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
+        viewPager.setCurrentItem(0);
+        viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
+    }
+    
+    //初始化头标
+    private void initTextView() {
+        tvEmpty = (CheckedTextView)findViewById(R.id.tv_table_name);
+        tvOccupied = (CheckedTextView)findViewById(R.id.tv_table_status);
+
+        tvEmpty.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                showOrderTab();
+            }
+        });
+        
+        tvOccupied.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                showOrderedTab();
+            }
+        });
+    }
+    
+    //切换到空闲界面
+    private void showOrderTab() {
+        viewPager.setCurrentItem(0);
+    }
+    
+    //切换到已用界面
+    private void showOrderedTab() {
+        viewPager.setCurrentItem(1);
+    }
+    
+    //ViewPager适配器
+    private class MyViewPagerAdapter extends FragmentPagerAdapter {
+        
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return  fragmentList.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+        
+    }
+    
+    //页面切换事件
+    public class MyOnPageChangeListener implements OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            tvEmpty.setChecked(position == 0);
+            tvOccupied.setChecked(position == 1);
+        }
+        
+    }
+    
 }

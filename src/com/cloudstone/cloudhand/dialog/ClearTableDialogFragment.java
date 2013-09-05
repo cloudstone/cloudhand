@@ -1,7 +1,7 @@
 package com.cloudstone.cloudhand.dialog;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
@@ -23,7 +24,7 @@ import com.cloudstone.cloudhand.util.L;
  * @author xhc
  *
  */
-public class ClearTableDialogFragment extends BaseAlertDialogFragment {
+public class ClearTableDialogFragment extends DialogFragment {
     private Button btnConfirm;
     private Button btnCancel;
     private ImageView ivIcon;
@@ -67,9 +68,7 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
                     public void onSuccess(Table result) {
                         ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
                         dialog.show(getFragmentManager(), "clearTableFinishDialogFragment");
-                        Intent intent = new Intent();
-                        intent.setAction("updateTableInfo");
-                        getActivity().sendBroadcast(intent);
+                        ((TableInfoActivity)(getActivity())).update();
                         dismiss();
                     }
                     

@@ -1,7 +1,15 @@
-package com.cloudstone.cloudhand.dialog;
+package com.cloudstone.cloudhand.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.data.Table;
+import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
+import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
+import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
+import com.cloudstone.cloudhand.view.TableItem;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,39 +20,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.data.Table;
-import com.cloudstone.cloudhand.exception.ApiException;
-import com.cloudstone.cloudhand.network.api.ListTableApi;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
-import com.cloudstone.cloudhand.util.L;
-import com.cloudstone.cloudhand.view.TableItem;
+import android.widget.SearchView;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 
  * @author xhc
  *
  */
-public class TableInfoDialogFragment extends BaseAlertDialogFragment {
+public class TableInfoBaseFragment extends BaseFragment implements SearchView.OnQueryTextListener {
+    private SearchView searchView;
     private ListView listTableInfo;
     private BaseAdapter adapter;
-    
-    private List<Table> tables = new ArrayList<Table>();
     
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("updateTableInfo")) {
-                refresh();
+                render();
             }
             if(intent.getAction().equals("tableInfoDismiss")) {
-                dismiss();
+                getActivity().finish();
             }
         }
     };
@@ -66,67 +65,39 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     }
     
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, 0);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.view_table_info, container, false);
     }
     
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_table_info, container, false);
-        listTableInfo = (ListView)view.findViewById(R.id.listview_table_info);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        listTableInfo = (ListView)getView().findViewById(R.id.listview_table_info);
+        searchView = (SearchView)getView().findViewById(R.id.searchview_table);
+        searchView.setFocusable(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setSubmitButtonEnabled(false);
+        
         listTableInfo.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int intPosition,
                     long longPosition) {
                 Bundle bundle = new Bundle();
-                if(tables.get(intPosition).getStatus() == 0) {
+                if(getTables().get(intPosition).getStatus() == 0) {
                     OpenTableDialogFragment dialog = new OpenTableDialogFragment();
-                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    bundle.putInt("tableId", getTables().get(intPosition).getId());
                     dialog.setArguments(bundle);
-//                    dialog.show(getFragmentManager(), "openTableDialogFragment");
+                    dialog.show(getFragmentManager(), "openTableDialogFragment");
                     render();
                 } else {
                     ClearTableDialogFragment dialog = new ClearTableDialogFragment();
-                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    bundle.putInt("tableId", getTables().get(intPosition).getId());
                     dialog.setArguments(bundle);
-//                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
+                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
                 }
             }
-        });
-        
-        return view;
-    }
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        refresh();
-    }
-    
-    //刷新界面
-    public void refresh() {
-        //获取桌况
-        new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
-
-            @Override
-            public void onSuccess(List<Table> result) {
-                tables = result;
-                render();
-            }
-
-            @Override
-            public void onFailed(ApiException exception) {
-                Toast.makeText(getActivity(), R.string.error_list_table_info_failed, Toast.LENGTH_SHORT).show();
-                L.e(TableInfoDialogFragment.class, exception);
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
         });
     }
     
@@ -134,12 +105,12 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
         
         @Override
         public int getCount() {
-            return tables.size();
+            return searchItem(searchView.getQuery().toString()).size();
         }
 
         @Override
         public Table getItem(int position) {
-            return (Table)tables.get(position);
+            return (Table)searchItem(searchView.getQuery().toString()).get(position);
         }
 
         @Override
@@ -192,6 +163,42 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     private void render() {
         adapter = new InnerAdapter(); 
         listTableInfo.setAdapter(adapter);
+    }
+    
+    @Override
+    public boolean onQueryTextChange(String keywords) {
+        render();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+    
+    //模糊搜索过滤出一个菜单结果
+    private List<Table> searchItem(String keywords) {
+        ContrastPinyin contrastPinyin = new ContrastPinyin();
+        List<Table> data = new ArrayList<Table>();
+        List<Table> tables = getTables();
+        for (int i = 0; i < tables.size(); i++) {
+            int index = 0;;
+            if(contrastPinyin.isContain(keywords)) {
+                index = tables.get(i).getName().indexOf(keywords);
+            } else {
+                String pinyin = contrastPinyin.getSpells(tables.get(i).getName());
+                index = pinyin.indexOf(keywords.toLowerCase());
+            }
+            // 存在匹配的数据
+            if (index != -1) {
+                data.add(tables.get(i));
+            }
+        }
+        return data;
+    }
+    
+    protected List<Table> getTables() {
+        return ((TableInfoActivity)(getActivity())).getTables();
     }
     
 }

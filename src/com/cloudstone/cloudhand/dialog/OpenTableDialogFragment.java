@@ -1,6 +1,7 @@
 package com.cloudstone.cloudhand.dialog;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,7 @@ import com.cloudstone.cloudhand.R;
  * @author xhc
  *
  */
-public class OpenTableDialogFragment extends BaseAlertDialogFragment {
+public class OpenTableDialogFragment extends DialogFragment {
     private Button btnConfirm;
     private Button btnCancel;
     private ImageView ivIcon;
