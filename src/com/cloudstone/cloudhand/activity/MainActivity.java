@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.User;
+import com.cloudstone.cloudhand.dialog.ChooseTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
 import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;
@@ -67,9 +68,8 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, OpenTableActivity.class);
-                startActivity(intent);
+                ChooseTableDialogFragment dialog = new ChooseTableDialogFragment();
+                dialog.show(getFragmentManager(), "chooseTableDialogFragment");
             }
         });
         //设置

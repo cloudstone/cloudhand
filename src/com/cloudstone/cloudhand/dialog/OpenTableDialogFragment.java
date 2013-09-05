@@ -1,8 +1,6 @@
 package com.cloudstone.cloudhand.dialog;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,20 +10,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
 
 /**
  * 
  * @author xhc
  *
  */
-public class DeleteDishDialogFragment extends DialogFragment {
+public class OpenTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
-    private Button btnCancle;
+    private Button btnCancel;
     private ImageView ivIcon;
     private TextView tvMessage;
     
-    private int dishId;
+    private int tableId;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,14 +35,14 @@ public class DeleteDishDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_base_confirm_cancle, container, false);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
-        btnCancle = (Button)view.findViewById(R.id.btn_cancel);
+        btnCancel = (Button)view.findViewById(R.id.btn_cancel);
         ivIcon = (ImageView)view.findViewById(R.id.iv_icon);
         tvMessage = (TextView)view.findViewById(R.id.tv_message);
         
         ivIcon.setBackgroundResource(R.drawable.ic_ask);
-        tvMessage.setText(R.string.message_delete_dish);
+        tvMessage.setText(R.string.message_open_table);
         
-        dishId = getArguments().getInt("dishId");
+        tableId = getArguments().getInt("tableId");
         return view;
     }
     
@@ -57,16 +54,16 @@ public class DeleteDishDialogFragment extends DialogFragment {
             
             @Override
             public void onClick(View v) {
-                //删除一道菜后刷新界面
-                ((OpenTableActivity)(getActivity())).setDishCount(dishId, 0);
-                Intent intent = new Intent();
-                intent.setAction("update");
-                getActivity().sendBroadcast(intent);
+                InputCustomerNumberDialogFragment dialog = new InputCustomerNumberDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("tableId", tableId);
+                dialog.setArguments(bundle);
+                dialog.show(getFragmentManager(), "inputCustomerNumberDialogFragment");
                 dismiss();
             }
         });
         
-        btnCancle.setOnClickListener(new OnClickListener() {
+        btnCancel.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {

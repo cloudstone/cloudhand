@@ -29,6 +29,10 @@
     <string name="submit_confirm">确认下单</string>
     <string name="submit_failed">下单失败</string>
     <string name="message_delete_dish">是否删除这道菜？</string>
+    
+    <!-- 选桌子对话框 -->
+    <string name="choose_table_table_nonentity_error">桌子不存在</string>
+    <string name="choose_table_customer_number_error">顾客人数错误</string>
 
     <!-- 设置 -->
     <string name="settings">设置</string>
@@ -43,7 +47,21 @@
     <string name="submitted">已下单</string>
     <string name="message_exit_order">您确认要放弃点餐吗？</string>
     
+    <!-- 开台对话框 -->
+    <string name="message_open_table">您确认要开台吗？</string>
+    
+    <!-- 清台对话框 -->
+    <string name="message_clear_table">您确认要清台吗？</string>
+    <string name="message_clear_table_finish">清台成功！</string>
+    
+    <!-- 输入顾客人数对话框 -->
+    <string name="message_input_customer_number">请输入顾客人数:</string>
+    
     <!-- error -->
     <string name="error_list_user_names_failed">获取用户名列表失败</string>
+    <string name="error_list_dishes_failed">获取菜单列表失败</string>
     <string name="error_list_table_info_failed">获取桌况列表失败</string>
+    <string name="error_open_table_failed">开台失败</string>
+    <string name="error_clear_table_failed">清台失败</string>
+
 </resources>

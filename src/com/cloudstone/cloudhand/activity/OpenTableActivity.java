@@ -17,7 +17,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.CheckedTextView;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
@@ -33,8 +34,8 @@ public class OpenTableActivity extends FragmentActivity {
     
     private ViewPager viewPager; //页卡内容
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private TextView tvOrder; //页卡标题 - 点餐
-    private TextView tvOrderd; //页卡标题 - 已点
+    private CheckedTextView tvOrder; //页卡标题 - 点餐
+    private CheckedTextView tvOrdered; //页卡标题 - 已点
     
     //用于菜品列表的数据
     private List<Dish> dishes = new ArrayList<Dish>();
@@ -88,9 +89,11 @@ public class OpenTableActivity extends FragmentActivity {
             
             @Override
             public void onFailed(ApiException exception) {
+                Toast.makeText(OpenTableActivity.this, R.string.error_list_dishes_failed, Toast.LENGTH_SHORT).show();
                 L.e(OpenTableActivity.this, exception);
             }
         });
+        
     }
     
     //初始化ViewPager
@@ -105,8 +108,8 @@ public class OpenTableActivity extends FragmentActivity {
     
     //初始化头标
     private void initTextView() {
-        tvOrder = (TextView)findViewById(R.id.tv_order);
-        tvOrderd = (TextView)findViewById(R.id.tv_orderd);
+        tvOrder = (CheckedTextView)findViewById(R.id.tv_order);
+        tvOrdered = (CheckedTextView)findViewById(R.id.tv_ordered);
 
         tvOrder.setOnClickListener(new OnClickListener() {
             
@@ -116,11 +119,11 @@ public class OpenTableActivity extends FragmentActivity {
             }
         });
         
-        tvOrderd.setOnClickListener(new OnClickListener() {
+        tvOrdered.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
-                showOrderdTab();
+                showOrderedTab();
             }
         });
     }
@@ -131,7 +134,7 @@ public class OpenTableActivity extends FragmentActivity {
     }
     
     //切换到已点界面
-    private void showOrderdTab() {
+    private void showOrderedTab() {
         viewPager.setCurrentItem(1);
     }
     
@@ -167,14 +170,8 @@ public class OpenTableActivity extends FragmentActivity {
 
         @Override
         public void onPageSelected(int position) {
-            //TODO 改成selector
-            if(viewPager.getCurrentItem() == 0) {
-                tvOrder.setBackgroundResource(R.drawable.bg_open_table_title_pressed);
-                tvOrderd.setBackgroundResource(R.drawable.bg_open_table_title_normal);
-            } else {
-                tvOrder.setBackgroundResource(R.drawable.bg_open_table_title_normal);
-                tvOrderd.setBackgroundResource(R.drawable.bg_open_table_title_pressed);
-            }
+            tvOrder.setChecked(position == 0);
+            tvOrdered.setChecked(position == 1);
         }
         
     }

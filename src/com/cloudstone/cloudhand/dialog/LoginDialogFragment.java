@@ -92,8 +92,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             }
             
             @Override
-            public void onFinish() {
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
@@ -130,8 +129,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                     }
 
                     @Override
-                    public void onFinish() {
-                    }
+                    public void onFinish() {}
 
                     @Override
                     protected void onAuthFailed() {

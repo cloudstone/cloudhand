@@ -3,10 +3,16 @@ package com.cloudstone.cloudhand.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,7 +35,36 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
     private BaseAdapter adapter;
     
     private List<Table> tables = new ArrayList<Table>();
+    
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("updateTableInfo")) {
+                refresh();
+            }
+            if(intent.getAction().equals("tableInfoDismiss")) {
+                dismiss();
+            }
+        }
+    };
+    
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("updateTableInfo");
+        filter.addAction("tableInfoDismiss");
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +76,39 @@ public class TableInfoDialogFragment extends BaseAlertDialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_table_info, container, false);
         listTableInfo = (ListView)view.findViewById(R.id.listview_table_info);
+        listTableInfo.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int intPosition,
+                    long longPosition) {
+                Bundle bundle = new Bundle();
+                if(tables.get(intPosition).getStatus() == 0) {
+                    OpenTableDialogFragment dialog = new OpenTableDialogFragment();
+                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    dialog.setArguments(bundle);
+                    dialog.show(getFragmentManager(), "openTableDialogFragment");
+                    render();
+                } else {
+                    ClearTableDialogFragment dialog = new ClearTableDialogFragment();
+                    bundle.putInt("tableId", tables.get(intPosition).getId());
+                    dialog.setArguments(bundle);
+                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
+                }
+            }
+        });
+        
         return view;
     }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
-      //获取桌况
+        refresh();
+    }
+    
+    //刷新界面
+    public void refresh() {
+        //获取桌况
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override

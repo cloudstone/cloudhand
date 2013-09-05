@@ -11,7 +11,7 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip" >
 
-        <TextView
+        <CheckedTextView
             android:id="@+id/tv_order"
             android:layout_width="0dip"
             android:layout_height="50dip"
@@ -19,17 +19,18 @@
             android:gravity="center"
             android:text="@string/order"
             style="@style/Text.xlarge.white"
-            android:background="@drawable/bg_open_table_title_pressed" />
+            android:checked="true"
+            android:background="@drawable/selector_order_tab" />
 
-        <TextView
-            android:id="@+id/tv_orderd"
+        <CheckedTextView
+            android:id="@+id/tv_ordered"
             android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/ordered"
             style="@style/Text.xlarge.white"
-            android:background="@drawable/bg_open_table_title_normal" />
+            android:background="@drawable/selector_order_tab" />
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

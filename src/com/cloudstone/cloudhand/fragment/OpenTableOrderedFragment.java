@@ -6,30 +6,15 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
-import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
-import com.cloudstone.cloudhand.data.Order;
-import com.cloudstone.cloudhand.data.OrderDish;
-import com.cloudstone.cloudhand.exception.ApiException;
-import com.cloudstone.cloudhand.logic.UserLogic;
-import com.cloudstone.cloudhand.network.api.SubmitOrderApi;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
-import com.cloudstone.cloudhand.util.L;
 
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
-    
-    private Button btnSubmit;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,73 +26,6 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
-        
-        //长按弹出删除一道菜对话框
-        dishListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-            
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View v, int intPosition,
-                    long longPosition) {
-                int deleteDishId = getDishes().get(intPosition).getId();
-                
-                DeleteDishDialogFragment dialog = new DeleteDishDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("dishId", deleteDishId);
-                dialog.setArguments(bundle);
-                dialog.show(getFragmentManager(), "deleteDishDialogFragment");
-
-                return false;
-            }
-        });
-                
-        btnSubmit = (Button)getView().findViewById(R.id.btn_submit_order_confirm);
-        
-        btnSubmit.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View arg0) {
-                List<OrderDish> orderDishList = new ArrayList<OrderDish>();
-                List<Dish> dishList = getDishes();
-                OrderDish orderDish;
-                for(int i = 0; i < dishList.size(); i++) {
-                    orderDish = new OrderDish();
-                    Dish dish = dishList.get(i);
-                    orderDish.setOrderId(dish.getId());
-                    orderDish.setNumber(getDishCount(dish.getId()));
-                    orderDishList.add(orderDish);
-                }
-                
-                //TODO 这里缺少备注，桌字Id和人数暂时写死，也没有开台成功对话框，merge就有了。
-                Order order = new Order();
-                order.setUserId(UserLogic.getInstance().getUser().getId());
-                order.setTableId(3);
-                order.setCustomerNumber(3);
-                order.setDishes(orderDishList);
-                
-                SubmitOrderApi submit = new SubmitOrderApi(order);
-                
-                
-                submit.asyncCall(new IApiCallback<Order>() {
-                    
-                    @Override
-                    public void onSuccess(Order result) {
-                        L.i(OpenTableOrderedFragment.class, "onSuccess");
-                    }
-                    
-                    @Override
-                    public void onFinish() {
-                        L.i(OpenTableOrderedFragment.class, "onFinish");
-                    }
-                    
-                    @Override
-                    public void onFailed(ApiException exception) {
-                        L.i(OpenTableOrderedFragment.class, "onFailed");
-                        L.e(this, exception);
-                        Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
     }
     
     private Dish getDish(int dishId) {
@@ -124,12 +42,10 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     
     private double getTotalPrice() {
         double total = 0;
-        List<Dish> dishes = getDishes();
-        for (int i = 0;i < dishes.size();i++) {
-            int dishId = dishes.get(i).getId();
-            int count = getDishCount(dishId);
+        for (int i = 0;i < getDishes().size();i++) {
+            int count = getDishCount(i);
             if (count > 0) {
-                Dish dish = getDish(dishId);
+                Dish dish = getDish(i);
                 total += dish.getPrice() * count;
             }
         }
@@ -146,7 +62,7 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         List<Dish> data = new ArrayList<Dish>();
         List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
         for(int i = 0; i < dishes.size(); i++) {
-            if(getDishCount(dishes.get(i).getId()) > 0) {
+            if(getDishCount(i) > 0) {
                 data.add(dishes.get(i));
             }
         }
@@ -158,6 +74,5 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         dishListView.setAdapter(adapter);
         renderTotalPrice();
     }
-        
     
 }
