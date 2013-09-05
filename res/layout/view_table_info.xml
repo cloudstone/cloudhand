@@ -20,8 +20,7 @@
             android:searchSuggestSelection=" ?"
             android:searchSuggestThreshold="1"
             android:includeInGlobalSearch="true"
-            android:focusable="false"
-            style="@style/Text.normal.white" >
+            android:focusable="false" >
         </SearchView>
 
         <LinearLayout 

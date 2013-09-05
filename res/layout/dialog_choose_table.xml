@@ -54,7 +54,7 @@
             android:layout_width="175dip"
             android:layout_height="40dip"
             android:background="@drawable/bg_dropdown_normal"
-            android:inputType="textPassword"
+            android:inputType="number"
             style="@style/Text.normal.white" />
         
     </LinearLayout>

@@ -42,10 +42,12 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     
     private double getTotalPrice() {
         double total = 0;
-        for (int i = 0;i < getDishes().size();i++) {
-            int count = getDishCount(i);
+        List<Dish> dishes = getDishes();
+        for (int i = 0;i < dishes.size();i++) {
+            int dishId = dishes.get(i).getId();
+            int count = getDishCount(dishId);
             if (count > 0) {
-                Dish dish = getDish(i);
+                Dish dish = getDish(dishId);
                 total += dish.getPrice() * count;
             }
         }
@@ -62,7 +64,7 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         List<Dish> data = new ArrayList<Dish>();
         List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
         for(int i = 0; i < dishes.size(); i++) {
-            if(getDishCount(i) > 0) {
+            if(getDishCount(dishes.get(i).getId()) > 0) {
                 data.add(dishes.get(i));
             }
         }

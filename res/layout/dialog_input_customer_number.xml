@@ -32,6 +32,7 @@
             android:id="@+id/tv_customet_number"
             android:layout_width="180dip"
             android:layout_height="50dip"
+            android:inputType="number"
             android:background="@drawable/bg_dropdown_normal"
             style="@style/Text.normal.white" />
         

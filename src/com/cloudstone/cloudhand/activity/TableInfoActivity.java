@@ -99,7 +99,7 @@ public class TableInfoActivity extends FragmentActivity {
             
             @Override
             public void onClick(View v) {
-                showOrderTab();
+                showEmptyTab();
             }
         });
         
@@ -107,18 +107,18 @@ public class TableInfoActivity extends FragmentActivity {
             
             @Override
             public void onClick(View v) {
-                showOrderedTab();
+                showOccupiedTab();
             }
         });
     }
     
     //切换到空闲界面
-    private void showOrderTab() {
+    private void showEmptyTab() {
         viewPager.setCurrentItem(0);
     }
     
     //切换到已用界面
-    private void showOrderedTab() {
+    private void showOccupiedTab() {
         viewPager.setCurrentItem(1);
     }
     
