@@ -35,6 +35,9 @@
             android:name=".activity.OpenTableActivity" 
             android:screenOrientation="portrait" />
         
+        <activity 
+            android:name=".activity.TableInfoActivity" 
+            android:screenOrientation="portrait" />
         
         <activity
             android:name=".activity.SettingsActivity"

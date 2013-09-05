@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.dialog.ChooseTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
@@ -87,8 +86,11 @@ public class MainActivity extends BaseActivity {
             
             @Override
             public void onClick(View v) {
-                TableInfoDialogFragment dialog = new TableInfoDialogFragment();
-                dialog.show(getFragmentManager(), "tableInfoDialogFragment");
+//                TableInfoDialogFragment dialog = new TableInfoDialogFragment();
+//                dialog.show(getFragmentManager(), "tableInfoDialogFragment");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, TableInfoActivity.class);
+                startActivity(intent);
             }
         });
     }
