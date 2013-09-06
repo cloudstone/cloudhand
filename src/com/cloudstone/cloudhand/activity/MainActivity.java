@@ -15,7 +15,6 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.dialog.ChooseTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.LoginDialogFragment;
 import com.cloudstone.cloudhand.dialog.LogoutDialogFragment;
-import com.cloudstone.cloudhand.dialog.TableInfoDialogFragment;
 import com.cloudstone.cloudhand.logic.UserLogic;
 
 /**
@@ -86,8 +85,6 @@ public class MainActivity extends BaseActivity {
             
             @Override
             public void onClick(View v) {
-//                TableInfoDialogFragment dialog = new TableInfoDialogFragment();
-//                dialog.show(getFragmentManager(), "tableInfoDialogFragment");
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, TableInfoActivity.class);
                 startActivity(intent);

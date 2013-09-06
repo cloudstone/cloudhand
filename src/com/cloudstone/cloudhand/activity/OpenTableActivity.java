@@ -7,17 +7,8 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CheckedTextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -30,12 +21,7 @@ import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
 
-public class OpenTableActivity extends FragmentActivity {
-    
-    private ViewPager viewPager; //页卡内容
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private CheckedTextView tvOrder; //页卡标题 - 点餐
-    private CheckedTextView tvOrdered; //页卡标题 - 已点
+public class OpenTableActivity extends ViewPagerBaseActivity {
     
     //用于菜品列表的数据
     private List<Dish> dishes = new ArrayList<Dish>();
@@ -55,6 +41,13 @@ public class OpenTableActivity extends FragmentActivity {
   
     public void setDishCount(int dishId, int count) {
         dishCountMap.put(dishId, count);
+    }
+    
+    @Override
+    protected void initViewPager() {
+        super.initViewPager();
+        fragmentList.add(new OpenTableOrderFragment());
+        fragmentList.add(new OpenTableOrderedFragment());
     }
     
     @Override
@@ -93,86 +86,6 @@ public class OpenTableActivity extends FragmentActivity {
                 L.e(OpenTableActivity.this, exception);
             }
         });
-        
-    }
-    
-    //初始化ViewPager
-    private void initViewPager() {
-        viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
-        fragmentList.add(new OpenTableOrderFragment());
-        fragmentList.add(new OpenTableOrderedFragment());
-        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
-        viewPager.setCurrentItem(0);
-        viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
-    }
-    
-    //初始化头标
-    private void initTextView() {
-        tvOrder = (CheckedTextView)findViewById(R.id.tv_order);
-        tvOrdered = (CheckedTextView)findViewById(R.id.tv_ordered);
-
-        tvOrder.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                showOrderTab();
-            }
-        });
-        
-        tvOrdered.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                showOrderedTab();
-            }
-        });
-    }
-    
-    //切换到点餐界面
-    private void showOrderTab() {
-        viewPager.setCurrentItem(0);
-    }
-    
-    //切换到已点界面
-    private void showOrderedTab() {
-        viewPager.setCurrentItem(1);
-    }
-    
-    //ViewPager适配器
-    private class MyViewPagerAdapter extends FragmentPagerAdapter {
-        
-        public MyViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return  fragmentList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-        
-    }
-    
-    //页面切换事件
-    public class MyOnPageChangeListener implements OnPageChangeListener {
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            tvOrder.setChecked(position == 0);
-            tvOrdered.setChecked(position == 1);
-        }
         
     }
     
