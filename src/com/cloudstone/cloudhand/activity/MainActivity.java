@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
                 if(UserLogic.getInstance().isLogin()) {
                     //显示询问是否注销对话框
                     LogoutDialogFragment dialog = new LogoutDialogFragment();
-                    dialog.show(getFragmentManager(), "logoutDialog");
+                    dialog.show(getSupportFragmentManager(), "logoutDialog");
                 } else {
                     showLoginDialog();
                 }
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ChooseTableDialogFragment dialog = new ChooseTableDialogFragment();
-                dialog.show(getFragmentManager(), "chooseTableDialogFragment");
+                dialog.show(getSupportFragmentManager(), "chooseTableDialogFragment");
             }
         });
         //设置
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity {
     //显示登录对话框
     public void showLoginDialog() {
         LoginDialogFragment dialog = new LoginDialogFragment();
-        dialog.show(getFragmentManager(), "loginDialog");
+        dialog.show(getSupportFragmentManager(), "loginDialog");
     }
     
     //修改登录用户

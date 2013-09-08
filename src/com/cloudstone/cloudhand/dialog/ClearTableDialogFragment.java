@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.dialog;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,12 +23,11 @@ import com.cloudstone.cloudhand.util.L;
  * @author xhc
  *
  */
-public class ClearTableDialogFragment extends DialogFragment {
+public class ClearTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancel;
     private ImageView ivIcon;
     private TextView tvMessage;
-    
     private int tableId;
     
     @Override

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,7 +14,7 @@ import android.widget.CheckedTextView;
 
 import com.cloudstone.cloudhand.R;
 
-public class ViewPagerBaseActivity extends FragmentActivity {
+public class ViewPagerBaseActivity extends BaseActivity {
     
     private ViewPager viewPager; //页卡内容
     protected List<Fragment> fragmentList = new ArrayList<Fragment>();

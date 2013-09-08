@@ -2,7 +2,6 @@ package com.cloudstone.cloudhand.dialog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +17,7 @@ import com.cloudstone.cloudhand.R;
  * @author xhc
  *
  */
-public class ClearTableSuccessDialogFragment extends DialogFragment {
+public class ClearTableSuccessDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private TextView tvMessage;
     private View ivIcon;

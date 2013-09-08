@@ -94,7 +94,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     public void onBackPressed() {
         if (getFragmentManager().findFragmentByTag(ExitOrderDialogFragment.class.getSimpleName()) == null) {
             ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();
-            dialog.show(getFragmentManager(), ExitOrderDialogFragment.class.getSimpleName());
+            dialog.show(getSupportFragmentManager(), ExitOrderDialogFragment.class.getSimpleName());
         } else {
             super.onBackPressed();
         }

@@ -1,6 +1,5 @@
 package com.cloudstone.cloudhand.activity;
 
-
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;

@@ -36,6 +36,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     private EditText tvCustomerNumber;
     private Button btnConfirm;
     private Button btnCancel;
+    private int tableId;
     
     private List<Table> tableList = new ArrayList<Table>();
     
@@ -53,6 +54,10 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
         tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
         btnCancel = (Button)view.findViewById(R.id.btn_cancel);
+        
+        if(getArguments() != null) {
+            tableId = getArguments().getInt("tableId");
+        }
         
         //输入桌名文本框被点时自动获取桌子列表
         tvTableName.setOnClickListener(new OnClickListener() {
@@ -72,7 +77,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
-        //获取桌况
+      //获取桌况
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override
@@ -86,6 +91,16 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                     }
                 }
                 render();
+                
+                it = tableList.iterator();
+                while (it.hasNext()) {
+                    Table table = it.next();
+                    if(table.getId() == tableId) {
+                        tvTableName.setText(table.getName());
+                        tvTableName.setFocusable(false);
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -95,7 +110,8 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             }
 
             @Override
-            public void onFinish() {}
+            public void onFinish() {
+            }
 
         });
         

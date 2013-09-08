@@ -2,7 +2,6 @@ package com.cloudstone.cloudhand.dialog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,7 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
  * @author xhc
  *
  */
-public class DeleteDishDialogFragment extends DialogFragment {
+public class DeleteDishDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
     private ImageView ivIcon;

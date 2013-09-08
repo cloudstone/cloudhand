@@ -41,13 +41,13 @@
         android:layout_marginTop="5dip"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@drawable/bg_dropdown_normal"  >
+        android:background="@drawable/bg_dropdown_normal" >
         
         <View 
             android:layout_width="25dip"
             android:layout_height="25dip"
             android:layout_margin="5dip"
-            android:background="@drawable/ic_customernumber"/>
+            android:background="@drawable/ic_customernumber" />
         
         <EditText 
             android:id="@+id/edit_password"
