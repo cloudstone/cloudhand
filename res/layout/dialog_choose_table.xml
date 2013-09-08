@@ -6,6 +6,8 @@
     android:paddingRight="87dip"
     android:paddingTop="59dip"
     android:paddingBottom="52dip"
+    android:focusable="true" 
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:background="@drawable/bg_main" >
 

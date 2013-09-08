@@ -1,8 +1,10 @@
 package com.cloudstone.cloudhand.dialog;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +40,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     private Button btnCancel;
     private int tableId;
     
-    private List<Table> tableList = new ArrayList<Table>();
+    private Map<String, Table> tableMap = new HashMap<String, Table>();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,17 +89,16 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 while (it.hasNext()) {
                     Table table = it.next();
                     if(table.getStatus() == 0) {
-                        tableList.add(table);
+                        tableMap.put(table.getName(), table);
                     }
                 }
                 render();
                 
-                it = tableList.iterator();
-                while (it.hasNext()) {
-                    Table table = it.next();
-                    if(table.getId() == tableId) {
-                        tvTableName.setText(table.getName());
-                        tvTableName.setFocusable(false);
+                Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Entry<String, Table> entry = iterator.next();
+                    if(entry.getValue().getId() == tableId) {
+                        tvTableName.setText(entry.getValue().getName());
                         break;
                     }
                 }
@@ -125,18 +126,13 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 
                 String tableName = tvTableName.getText().toString();
                 String inputCustomerNumber = tvCustomerNumber.getText().toString();
-                //获取输入的桌名的ID
-                for(int i = 0;i < tableList.size();i++) {
-                    if(tableName.equals(tableList.get(i).getName())) {
-                        tableId = tableList.get(i).getId();
-                        break;
-                    }
-                }
+                
                 //判断输入的桌子是否存在
-                if(tableId > 0) {
+                if(tableMap.get(tableName) != null) {
                     //判断输入的顾客人数是否为非0正整数
                     if(isInt(inputCustomerNumber)) {
                         customerNumber = Integer.parseInt(inputCustomerNumber);
+                        tableId = tableMap.get(tableName).getId(); //获取输入的桌名的ID
                         new OccupyTableApi(tableId, customerNumber).asyncCall(new OccupyTableCalback() {
                             
                             @Override
@@ -163,15 +159,12 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                                 L.e(ChooseTableDialogFragment.this, exception);
                             }
                         });
-                        
                     } else {
                         Toast.makeText(getActivity(), R.string.choose_table_customer_number_error, Toast.LENGTH_SHORT).show();
                     }
-                    
                 } else {
                     Toast.makeText(getActivity(), R.string.choose_table_table_nonentity_error, Toast.LENGTH_SHORT).show();
                 }
-                
             }
         });
         
@@ -186,7 +179,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     }
     
     //判断一个字符串是否为非0正整数
-    private boolean isInt(String str) { 
+    private boolean isInt(String str) {
         try { 
             return Integer.parseInt(str) > 0;
         } catch (NumberFormatException e) { 
@@ -195,9 +188,13 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     }
     
     private void render() {
-        String[] tableName = new String[tableList.size()];
-        for(int i = 0; i < tableList.size(); i++) {
-            tableName[i] = tableList.get(i).getName();
+        String[] tableName = new String[tableMap.size()];
+        Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Entry<String, Table> entry = iterator.next();
+            tableName[i] = entry.getValue().getName();
+            i++;
         }
         //创建一个下拉框适配器
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.view_base_dropdown_list_line, tableName);
