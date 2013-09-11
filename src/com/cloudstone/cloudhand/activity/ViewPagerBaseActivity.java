@@ -24,8 +24,6 @@ public class ViewPagerBaseActivity extends BaseActivity {
     //初始化ViewPager
     protected void initViewPager() {
         viewPager = (ViewPager)findViewById(R.id.viewPager_base);
-//        fragmentList.add(new OpenTableOrderFragment());
-//        fragmentList.add(new OpenTableOrderedFragment());
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -86,11 +84,11 @@ public class ViewPagerBaseActivity extends BaseActivity {
     public class MyOnPageChangeListener implements OnPageChangeListener {
 
         @Override
-        public void onPageScrollStateChanged(int arg0) {
+        public void onPageScrollStateChanged(int state) {
         }
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
 
         @Override

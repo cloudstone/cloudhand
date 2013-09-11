@@ -142,7 +142,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                         @Override
                         protected void onError(ApiException e) {
                             L.e(this, e);
-                            Toast.makeText(getActivity(), R.string.Logon_failed, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.Login_failed, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

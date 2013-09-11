@@ -144,11 +144,38 @@ public class OpenTableBaseFragment extends BaseFragment {
         
     }
     
+    protected Dish getDish(int dishId) {
+        List<Dish> dishes = getDishes();
+        if (dishes != null) {
+            for (Dish dish:dishes) {
+                if (dish.getId() == dishId) {
+                    return dish;
+                }
+            }
+        }
+        return null;
+    }
+    
+    protected double getTotalPrice() {
+        double total = 0;
+        List<Dish> dishes = getDishes();
+        for (int i = 0;i < dishes.size();i++) {
+            int dishId = dishes.get(i).getId();
+            int count = getDishCount(dishId);
+            if (count > 0) {
+                Dish dish = getDish(dishId);
+                total += dish.getPrice() * count;
+            }
+        }
+        return total;
+    }
+    
     protected List<Dish> getDishes() {
         return null;
     }
     
     //更新界面
-    protected void render() {}
+    protected void render() {
+    }
     
 }

@@ -28,32 +28,6 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
     }
     
-    private Dish getDish(int dishId) {
-        List<Dish> dishes =((OpenTableActivity)(getActivity())).getDishes();
-        if (dishes != null) {
-            for (Dish dish:dishes) {
-                if (dish.getId() == dishId) {
-                    return dish;
-                }
-            }
-        }
-        return null;
-    }
-    
-    private double getTotalPrice() {
-        double total = 0;
-        List<Dish> dishes = getDishes();
-        for (int i = 0;i < dishes.size();i++) {
-            int dishId = dishes.get(i).getId();
-            int count = getDishCount(dishId);
-            if (count > 0) {
-                Dish dish = getDish(dishId);
-                total += dish.getPrice() * count;
-            }
-        }
-        return total;
-    }
-    
     private void renderTotalPrice() {
         double totalPrice = getTotalPrice();
         totalPriceView.setText(totalPrice + "");
