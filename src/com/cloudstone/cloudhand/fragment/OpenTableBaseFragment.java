@@ -2,12 +2,6 @@ package com.cloudstone.cloudhand.fragment;
 
 import java.util.List;
 
-import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.data.Dish;
-import com.cloudstone.cloudhand.view.DishItem;
-import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.view.DishItem;
+import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 
 /**
  * 
@@ -89,12 +90,12 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return getDishes().size();
+            return getDishes().getSize();
         }
 
         @Override
         public Dish getItem(int position) {
-            return getDishes().get(position);
+            return getDishes().getByPos(position);
         }
 
         @Override
@@ -145,22 +146,18 @@ public class OpenTableBaseFragment extends BaseFragment {
     }
     
     protected Dish getDish(int dishId) {
-        List<Dish> dishes = getDishes();
+        DishBag dishes = getDishes();
         if (dishes != null) {
-            for (Dish dish:dishes) {
-                if (dish.getId() == dishId) {
-                    return dish;
-                }
-            }
+            return dishes.getById(dishId);
         }
         return null;
     }
     
     protected double getTotalPrice() {
         double total = 0;
-        List<Dish> dishes = getDishes();
-        for (int i = 0;i < dishes.size();i++) {
-            int dishId = dishes.get(i).getId();
+        DishBag dishes = getDishes();
+        for (int i = 0;i < dishes.getSize();i++) {
+            int dishId = dishes.getByPos(i).getId();
             int count = getDishCount(dishId);
             if (count > 0) {
                 Dish dish = getDish(dishId);
@@ -170,7 +167,7 @@ public class OpenTableBaseFragment extends BaseFragment {
         return total;
     }
     
-    protected List<Dish> getDishes() {
+    protected DishBag getDishes() {
         return null;
     }
     

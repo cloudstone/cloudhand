@@ -1,6 +1,7 @@
 package com.cloudstone.cloudhand.fragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.cloudstone.cloudhand.R;
@@ -198,7 +199,21 @@ public class TableInfoBaseFragment extends BaseFragment implements SearchView.On
     }
     
     protected List<Table> getTables() {
-        return ((TableInfoActivity)(getActivity())).getTables();
+        List<Table> tables = new ArrayList<Table>();
+        Iterator<Table> it = ((TableInfoActivity)(getActivity())).getTables().iterator();
+        while (it.hasNext()) {
+            Table table = it.next();
+            if(getClass() == TableInfoEmptyFragment.class) {
+                if(table.getStatus() == 0) {
+                    tables.add(table);
+                }
+            } else if (getClass() == TableInfoOccupiedFragment.class) {
+                if(table.getStatus() > 0) {
+                    tables.add(table);
+                }
+            }
+        }
+        return tables;
     }
     
 }

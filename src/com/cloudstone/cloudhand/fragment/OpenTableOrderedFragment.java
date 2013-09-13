@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.util.DishBag;
 
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
@@ -34,12 +35,12 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     }
     
     @Override
-    protected List<Dish> getDishes() {
-        List<Dish> data = new ArrayList<Dish>();
-        List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
-        for(int i = 0; i < dishes.size(); i++) {
-            if(getDishCount(dishes.get(i).getId()) > 0) {
-                data.add(dishes.get(i));
+    protected DishBag getDishes() {
+        DishBag data = new DishBag();
+        DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        for(int i = 0; i < dishes.getSize(); i++) {
+            if(getDishCount(dishes.getByPos(i).getId()) > 0) {
+                data.put(dishes.getByPos(i).getId(), dishes.getByPos(i));
             }
         }
         return data;

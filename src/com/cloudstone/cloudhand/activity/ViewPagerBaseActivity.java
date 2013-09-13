@@ -14,6 +14,11 @@ import android.widget.CheckedTextView;
 
 import com.cloudstone.cloudhand.R;
 
+/**
+ * 
+ * @author xhc
+ *
+ */
 public class ViewPagerBaseActivity extends BaseActivity {
     
     private ViewPager viewPager; //页卡内容

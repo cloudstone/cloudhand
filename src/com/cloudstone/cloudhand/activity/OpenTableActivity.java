@@ -1,6 +1,5 @@
 package com.cloudstone.cloudhand.activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,16 +18,22 @@ import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
+import com.cloudstone.cloudhand.util.DishBag;
 import com.cloudstone.cloudhand.util.L;
 
+/**
+ * 
+ * @author xhc
+ *
+ */
 public class OpenTableActivity extends ViewPagerBaseActivity {
     
     //用于菜品列表的数据
-    private List<Dish> dishes = new ArrayList<Dish>();
+    private DishBag dishes = new DishBag();
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
-    public List<Dish> getDishes() {
+    public DishBag getDishes() {
         return dishes;
     }
   
@@ -68,7 +73,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
             @Override
             public void onSuccess(List<Dish> result) {
                 for(int i = 0;i < result.size();i++) {
-                    dishes.add(result.get(i));
+                    dishes.put(result.get(i).getId(), result.get(i));
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();

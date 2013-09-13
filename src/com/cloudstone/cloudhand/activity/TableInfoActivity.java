@@ -18,6 +18,11 @@ import com.cloudstone.cloudhand.network.api.ListTableApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
 
+/**
+ * 
+ * @author xhc
+ *
+ */
 public class TableInfoActivity extends ViewPagerBaseActivity {
     //用于桌子列表的数据
     private List<Table> tables = new ArrayList<Table>();
