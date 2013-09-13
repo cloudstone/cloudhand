@@ -22,4 +22,16 @@ public class UrlConst {
     public final String LIST_TABLE_URL = BASE_TABLE_URL;
     private final String OCCUPY_TABLE_URL =  BASE_TABLE_URL + "/%d/occupy";
     public static final String SUBMIT_ORDER_URL = BASE_URL + "/orders";
+    
+    public String occupyTableUrl(int tableId) {
+        return String.format(OCCUPY_TABLE_URL, tableId);
+    }
+    
+    private final String CLEAR_TABLE_URL =  BASE_TABLE_URL + "/%d/clear";
+    
+    public String clearTableUrl(int tableId) {
+        return String.format(CLEAR_TABLE_URL, tableId);
+    }
+    
+    public static final String LIST_DISH_DOTE_URL = BASE_URL + "/dishes/notes";
 }

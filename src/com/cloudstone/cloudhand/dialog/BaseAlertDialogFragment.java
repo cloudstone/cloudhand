@@ -4,7 +4,7 @@
  */
 package com.cloudstone.cloudhand.dialog;
 
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 
 /**
  * @author xuhongfeng

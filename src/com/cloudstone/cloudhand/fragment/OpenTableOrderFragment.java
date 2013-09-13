@@ -13,6 +13,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
+import com.cloudstone.cloudhand.util.DishBag;
 
 public class OpenTableOrderFragment extends OpenTableBaseFragment implements SearchView.OnQueryTextListener {
     private SearchView searchView;
@@ -44,28 +45,28 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     }
     
     //模糊搜索过滤出一个菜单结果
-    private List<Dish> searchItem(String keywords) {
+    private DishBag searchItem(String keywords) {
         ContrastPinyin contrastPinyin = new ContrastPinyin();
-        List<Dish> data = new ArrayList<Dish>();
-        List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
-        for (int i = 0; i < dishes.size(); i++) {
+        DishBag data = new DishBag();
+        DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        for (int i = 0; i < dishes.getSize(); i++) {
             int index = 0;;
             if(contrastPinyin.isContain(keywords)) {
-                index = dishes.get(i).getName().indexOf(keywords);
+                index = dishes.getByPos(i).getName().indexOf(keywords);
             } else {
-                String pinyin = contrastPinyin.getSpells(dishes.get(i).getName());
+                String pinyin = contrastPinyin.getSpells(dishes.getByPos(i).getName());
                 index = pinyin.indexOf(keywords.toLowerCase());
             }
             // 存在匹配的数据
             if (index != -1) {
-                data.add(dishes.get(i));
+                data.put(dishes.getByPos(i).getId(), dishes.getByPos(i));
             }
         }
         return data;
     }
     
     @Override
-    protected List<Dish> getDishes() {
+    protected DishBag getDishes() {
         return searchItem(searchView.getQuery().toString());
     }
     

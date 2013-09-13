@@ -2,17 +2,13 @@
     android:id="@+id/tab1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_main" >
+    android:orientation="vertical" >
     
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="85dip"
-        android:layout_marginTop="10dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
         android:orientation="vertical"
-        android:background="@drawable/bg_open_table_title" >
+        android:background="@drawable/bg_dropdown_normal" >
     
         <SearchView 
             android:id="@+id/searchview_dish"
@@ -24,8 +20,7 @@
             android:searchSuggestSelection=" ?"
             android:searchSuggestThreshold="1"
             android:includeInGlobalSearch="true"
-            android:focusable="false"
-            style="@style/Text.normal.white" >
+            android:focusable="false" >
         </SearchView>
 
         <LinearLayout 
@@ -40,7 +35,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_weight="4"
                 android:text="@string/dish_name"
-                style="@style/Text.xlarge.black" />
+                style="@style/Text.xlarge.white" />
             
             <TextView 
                 android:id="@+id/tv_price"
@@ -48,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/price"
-                style="@style/Text.xlarge.black" />
+                style="@style/Text.xlarge.white" />
             
             <TextView 
                 android:id="@+id/tv_count"
@@ -56,24 +51,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:text="@string/count"
-                style="@style/Text.xlarge.black" />
+                style="@style/Text.xlarge.white" />
             
         </LinearLayout>
     </LinearLayout>
     
-    <View 
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@drawable/divider_red" />
-
     <ListView
         android:id="@+id/listview_dish"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:layout_marginBottom="10dip"
-        android:background="@drawable/bg_open_table_body" />
+        android:background="@drawable/bg_dropdown_normal" />
 
 </LinearLayout>
