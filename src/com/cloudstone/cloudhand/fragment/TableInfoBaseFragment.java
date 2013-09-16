@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.TableInfoActivity;
-import com.cloudstone.cloudhand.data.Table;
-import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
-import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
-import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
-import com.cloudstone.cloudhand.view.TableItem;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,17 +13,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.data.Table;
+import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
+import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
+import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
+import com.cloudstone.cloudhand.view.TableItem;
 
 /**
  * 
  * @author xhc
  *
  */
-public class TableInfoBaseFragment extends BaseFragment implements SearchView.OnQueryTextListener {
+public abstract class TableInfoBaseFragment extends BaseFragment implements SearchView.OnQueryTextListener {
     private SearchView searchView;
     private ListView listTableInfo;
     private BaseAdapter adapter;
@@ -111,6 +111,10 @@ public class TableInfoBaseFragment extends BaseFragment implements SearchView.On
 
         @Override
         public Table getItem(int position) {
+            //想过这里的性能问题吗? 划一下列表你的search都少次啊...
+            //解决办法:
+            //1. cache住search的结果
+            //2. 只有在用户输入发生变化的时候更新cache, 其它都只读cache
             return (Table)searchItem(searchView.getQuery().toString()).get(position);
         }
 
@@ -198,22 +202,17 @@ public class TableInfoBaseFragment extends BaseFragment implements SearchView.On
         return data;
     }
     
-    protected List<Table> getTables() {
+    private List<Table> getTables() {
         List<Table> tables = new ArrayList<Table>();
         Iterator<Table> it = ((TableInfoActivity)(getActivity())).getTables().iterator();
         while (it.hasNext()) {
             Table table = it.next();
-            if(getClass() == TableInfoEmptyFragment.class) {
-                if(table.getStatus() == 0) {
-                    tables.add(table);
-                }
-            } else if (getClass() == TableInfoOccupiedFragment.class) {
-                if(table.getStatus() > 0) {
-                    tables.add(table);
-                }
+            if (filterTable(table)) {
+                tables.add(table);
             }
         }
         return tables;
     }
     
+    protected abstract boolean filterTable(Table table);
 }
