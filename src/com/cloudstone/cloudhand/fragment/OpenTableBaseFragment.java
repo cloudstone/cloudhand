@@ -34,10 +34,7 @@ public class OpenTableBaseFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("update")) {
-                render();
-            }
-            if(intent.getAction().equals("init")) {
-                dishes = ((OpenTableActivity)(getActivity())).getDishes();
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
                 render();
             }
         }
@@ -48,7 +45,6 @@ public class OpenTableBaseFragment extends BaseFragment {
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("update");
-        filter.addAction("init");
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
         
@@ -183,6 +179,10 @@ public class OpenTableBaseFragment extends BaseFragment {
     protected void render() {
         adapter = new InnerAdapter();
         dishListView.setAdapter(adapter);
+    }
+    
+    protected DishBag filter(DishBag dishes) {
+        return dishes;
     }
     
 }

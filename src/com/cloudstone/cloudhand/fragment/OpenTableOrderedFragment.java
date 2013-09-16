@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.util.DishBag;
 
@@ -35,17 +34,21 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     
     @Override
     protected void render() {
-        dishes.clear();
-        DishBag data = ((OpenTableActivity)(getActivity())).getDishes();
-        Iterator<Dish> it = data.iterator();
+        super.render();
+        renderTotalPrice();
+    }
+    
+    @Override
+    protected DishBag filter(DishBag dishes) {
+        DishBag data = new DishBag();
+        Iterator<Dish> it = dishes.iterator();
         while(it.hasNext()) {
             Dish dish = it.next();
             if(getDishCount(dish.getId()) > 0) {
-                dishes.put(dish);
+                data.put(dish);
             }
         }
-        super.render();
-        renderTotalPrice();
+        return data;
     }
     
 }

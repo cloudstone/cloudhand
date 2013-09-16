@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.activity;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,15 +33,9 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
-    public DishBag data = new DishBag();
     
     public DishBag getDishes() {
-        Iterator<Dish> it = dishes.iterator();
-        while(it.hasNext()) {
-            Dish dish = it.next();
-            data.put(dish);
-        }
-        return data;
+        return dishes;
     }
   
     public int getDishCount(int dishId) {
@@ -85,7 +78,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction("init");
+                intent.setAction("update");
                 OpenTableActivity.this.sendBroadcast(intent);
             }
             

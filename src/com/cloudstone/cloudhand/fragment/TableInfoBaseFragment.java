@@ -32,15 +32,17 @@ import com.cloudstone.cloudhand.view.TableItem;
  *
  */
 public abstract class TableInfoBaseFragment extends BaseFragment implements SearchView.OnQueryTextListener {
-    private SearchView searchView;
-    private ListView listTableInfo;
-    private BaseAdapter adapter;
+    protected SearchView searchView;
+    protected ListView listTableInfo;
+    protected BaseAdapter adapter;
+    private List<Table> tables = new ArrayList<Table>();
     
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("updateTableInfo")) {
+                tables = filter(((TableInfoActivity)(getActivity())).getTables());
                 render();
             }
             if(intent.getAction().equals("tableInfoDismiss")) {
@@ -48,7 +50,6 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
             }
         }
     };
-    
     
     @Override
     public void onResume() {
@@ -106,16 +107,12 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
         
         @Override
         public int getCount() {
-            return searchItem(searchView.getQuery().toString()).size();
+            return getTables().size();
         }
 
         @Override
         public Table getItem(int position) {
-            //想过这里的性能问题吗? 划一下列表你的search都少次啊...
-            //解决办法:
-            //1. cache住search的结果
-            //2. 只有在用户输入发生变化的时候更新cache, 其它都只读cache
-            return (Table)searchItem(searchView.getQuery().toString()).get(position);
+            return getTables().get(position);
         }
 
         @Override
@@ -172,6 +169,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     
     @Override
     public boolean onQueryTextChange(String keywords) {
+        tables = filter(searchItem(searchView.getQuery().toString()));
         render();
         return false;
     }
@@ -185,7 +183,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     private List<Table> searchItem(String keywords) {
         ContrastPinyin contrastPinyin = new ContrastPinyin();
         List<Table> data = new ArrayList<Table>();
-        List<Table> tables = getTables();
+        List<Table> tables = ((TableInfoActivity)(getActivity())).getTables();
         for (int i = 0; i < tables.size(); i++) {
             int index = 0;;
             if(contrastPinyin.isContain(keywords)) {
@@ -203,15 +201,19 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     }
     
     private List<Table> getTables() {
-        List<Table> tables = new ArrayList<Table>();
-        Iterator<Table> it = ((TableInfoActivity)(getActivity())).getTables().iterator();
-        while (it.hasNext()) {
+        return tables;
+    }
+    
+    private List<Table> filter(List<Table> tables) {
+        List<Table> data = new ArrayList<Table>();
+        Iterator<Table> it = tables.iterator();
+        while(it.hasNext()) {
             Table table = it.next();
-            if (filterTable(table)) {
-                tables.add(table);
+            if(filterTable(table)) {
+                data.add(table);
             }
         }
-        return tables;
+        return data;
     }
     
     protected abstract boolean filterTable(Table table);
