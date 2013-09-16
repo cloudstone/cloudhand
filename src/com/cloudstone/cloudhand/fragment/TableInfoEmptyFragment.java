@@ -1,5 +1,7 @@
 package com.cloudstone.cloudhand.fragment;
 
+import com.cloudstone.cloudhand.data.Table;
+
 /**
  * 
  * @author xhc
@@ -7,4 +9,8 @@ package com.cloudstone.cloudhand.fragment;
  */
 public class TableInfoEmptyFragment extends TableInfoBaseFragment {
 
+    @Override
+    protected boolean filterTable(Table table) {
+        return table.getStatus() == 0;
+    }
 }
