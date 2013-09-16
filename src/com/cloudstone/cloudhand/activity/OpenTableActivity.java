@@ -34,8 +34,9 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
+    public DishBag data = new DishBag();
+    
     public DishBag getDishes() {
-        DishBag data = new DishBag();
         Iterator<Dish> it = dishes.iterator();
         while(it.hasNext()) {
             Dish dish = it.next();
