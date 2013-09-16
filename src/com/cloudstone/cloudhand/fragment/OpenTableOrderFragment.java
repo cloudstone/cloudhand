@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,10 +30,12 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
         searchView.setFocusable(false);
         searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(false);
+        
     }
     
     @Override
     public boolean onQueryTextChange(String keywords) {
+        dishes = searchItem(searchView.getQuery().toString());
         render();
         return false;
     }
@@ -49,31 +50,23 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
         ContrastPinyin contrastPinyin = new ContrastPinyin();
         DishBag data = new DishBag();
         DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
-        for (int i = 0; i < dishes.getSize(); i++) {
-            int index = 0;;
+        
+        Iterator<Dish> it = dishes.iterator();
+        while(it.hasNext()) {
+            int index = 0;
+            Dish dish = it.next();
             if(contrastPinyin.isContain(keywords)) {
-                index = dishes.getByPos(i).getName().indexOf(keywords);
+                index = dish.getName().indexOf(keywords);
             } else {
-                String pinyin = contrastPinyin.getSpells(dishes.getByPos(i).getName());
+                String pinyin = contrastPinyin.getSpells(dish.getName());
                 index = pinyin.indexOf(keywords.toLowerCase());
             }
             // 存在匹配的数据
             if (index != -1) {
-                data.put(dishes.getByPos(i).getId(), dishes.getByPos(i));
+                data.put(dish);
             }
         }
         return data;
-    }
-    
-    @Override
-    protected DishBag getDishes() {
-        return searchItem(searchView.getQuery().toString());
-    }
-    
-    @Override
-    protected void render() {
-        adapter = new InnerAdapter();
-        dishListView.setAdapter(adapter);
     }
     
 }

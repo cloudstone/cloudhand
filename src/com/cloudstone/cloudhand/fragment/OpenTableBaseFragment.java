@@ -1,6 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.List;
+import java.util.Iterator;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,12 +27,17 @@ import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 public class OpenTableBaseFragment extends BaseFragment {
     protected ListView dishListView;
     protected BaseAdapter adapter;
+    protected DishBag dishes = new DishBag();
     
     protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("update")) {
+                render();
+            }
+            if(intent.getAction().equals("init")) {
+                dishes = ((OpenTableActivity)(getActivity())).getDishes();
                 render();
             }
         }
@@ -43,6 +48,7 @@ public class OpenTableBaseFragment extends BaseFragment {
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("update");
+        filter.addAction("init");
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
         
@@ -90,7 +96,7 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return getDishes().getSize();
+            return getDishes().size();
         }
 
         @Override
@@ -146,7 +152,7 @@ public class OpenTableBaseFragment extends BaseFragment {
     }
     
     protected Dish getDish(int dishId) {
-        DishBag dishes = getDishes();
+        DishBag dishes = this.getDishes();
         if (dishes != null) {
             return dishes.getById(dishId);
         }
@@ -155,12 +161,14 @@ public class OpenTableBaseFragment extends BaseFragment {
     
     protected double getTotalPrice() {
         double total = 0;
-        DishBag dishes = getDishes();
-        for (int i = 0;i < dishes.getSize();i++) {
-            int dishId = dishes.getByPos(i).getId();
+        DishBag dishes = this.getDishes();
+        
+        Iterator<Dish> it = dishes.iterator();
+        while(it.hasNext()) {
+            Dish dish = it.next();
+            int dishId = dish.getId();
             int count = getDishCount(dishId);
             if (count > 0) {
-                Dish dish = getDish(dishId);
                 total += dish.getPrice() * count;
             }
         }
@@ -168,11 +176,13 @@ public class OpenTableBaseFragment extends BaseFragment {
     }
     
     protected DishBag getDishes() {
-        return null;
+        return dishes;
     }
     
     //更新界面
     protected void render() {
+        adapter = new InnerAdapter();
+        dishListView.setAdapter(adapter);
     }
     
 }

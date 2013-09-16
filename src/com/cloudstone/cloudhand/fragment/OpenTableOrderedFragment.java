@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,20 +34,17 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     }
     
     @Override
-    protected DishBag getDishes() {
-        DishBag data = new DishBag();
-        DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
-        for(int i = 0; i < dishes.getSize(); i++) {
-            if(getDishCount(dishes.getByPos(i).getId()) > 0) {
-                data.put(dishes.getByPos(i).getId(), dishes.getByPos(i));
+    protected void render() {
+        dishes.clear();
+        DishBag data = ((OpenTableActivity)(getActivity())).getDishes();
+        Iterator<Dish> it = data.iterator();
+        while(it.hasNext()) {
+            Dish dish = it.next();
+            if(getDishCount(dish.getId()) > 0) {
+                dishes.put(dish);
             }
         }
-        return data;
-    }
-    @Override
-    protected void render() {
-        adapter = new InnerAdapter();
-        dishListView.setAdapter(adapter);
+        super.render();
         renderTotalPrice();
     }
     
