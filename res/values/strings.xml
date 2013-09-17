@@ -29,8 +29,10 @@
     <string name="total_price">总价</string>
     <string name="yuan">元</string>
     <string name="submit_confirm">确认下单</string>
-    <string name="submit_failed">下单失败</string>
     <string name="message_delete_dish">是否删除这道菜？</string>
+    <string name="submit_failed">下单失败</string>
+    <string name="submit_success">下单成功！</string>
+    <string name="no_order">您尚未点餐</string>
     
     <!-- 选桌子对话框 -->
     <string name="choose_table_table_nonentity_error">桌子不存在</string>

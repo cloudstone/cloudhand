@@ -33,6 +33,17 @@ import com.cloudstone.cloudhand.util.L;
  */
 public class OpenTableActivity extends ViewPagerBaseActivity {
     
+    private int tableId;
+    private int customerNumber;
+    
+    public int getTableId() {
+        return tableId;
+    }
+
+    public int getCustomerNumber() {
+        return customerNumber;
+    }
+    
     //菜品列表数据
     private DishBag dishes = new DishBag();
     //用于记录每样菜点了几份
@@ -89,6 +100,10 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_open_table);
+        
+        Intent intent = getIntent();
+        tableId = intent.getIntExtra("tableId", 0);
+        customerNumber = intent.getIntExtra("customerNumber", 0);
         
         initTextView();
         initViewPager();
