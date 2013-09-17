@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
@@ -78,7 +79,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction("update");
+                intent.setAction(BroadcastConst.UPDATE_ORDER);
                 OpenTableActivity.this.sendBroadcast(intent);
             }
             

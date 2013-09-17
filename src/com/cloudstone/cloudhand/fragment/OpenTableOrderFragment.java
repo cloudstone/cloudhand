@@ -2,6 +2,10 @@ package com.cloudstone.cloudhand.fragment;
 
 import java.util.Iterator;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +14,37 @@ import android.widget.SearchView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.util.DishBag;
 
 public class OpenTableOrderFragment extends OpenTableBaseFragment implements SearchView.OnQueryTextListener {
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(BroadcastConst.UPDATE_ORDER)) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                render();
+            }
+        }
+    };
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConst.UPDATE_ORDER);
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+        
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
+	
     private SearchView searchView;
     
     @Override
