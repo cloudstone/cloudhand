@@ -1,6 +1,8 @@
 package com.cloudstone.cloudhand.fragment;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +17,8 @@ import android.widget.ListView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.data.DishNote;
+import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
 import com.cloudstone.cloudhand.util.DishBag;
 import com.cloudstone.cloudhand.view.DishItem;
 import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
@@ -107,12 +111,29 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public DishItem getView(int position, View convertView, ViewGroup parent) {
+            OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
             DishItem view = (DishItem) convertView;
             if (view == null) {
                 view = createView();
             }
             Dish dish = getItem(position);
-            view.render(dish, getDishCount(dish.getId()));
+            StringBuilder sb = new StringBuilder();
+            Set<Integer> dishNoteIdSet = openTableActivity.getDishNoteIdSet(dish.getId());
+            dishNoteIdSet.addAll(dishNoteIdSet);
+            List<DishNote> dishNotes = openTableActivity.getDishNotes();
+            
+            for(int i = 0; i < dishNotes.size(); i++) {
+                if(dishNoteIdSet.contains(dishNotes.get(i).getId())) {
+                    sb.append(dishNotes.get(i).getName()).append(";");
+                }
+                
+            }
+            
+            if(sb.length() == 0) {
+                sb.append(getString(R.string.no_remark));
+            }
+            
+            view.render(dish, getDishCount(dish.getId()), sb.toString());
             bindView(view, position);
             return view;
         }
@@ -131,6 +152,17 @@ public class OpenTableBaseFragment extends BaseFragment {
                 view.setTag(holder);
             }
             holder.setDish(dish);
+        }
+        
+        @Override
+        public void onCheckedChange(DishItem view) {
+            ViewHolder holder = (ViewHolder) view.getTag();
+            Dish dish = holder.getDish();
+            DishNoteDialogFragment dialog = new DishNoteDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("dishId", dish.getId());
+            dialog.setArguments(bundle);
+            dialog.show(getFragmentManager(), "dishNoteDialogFragment");
         }
     }
     

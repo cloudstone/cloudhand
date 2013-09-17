@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
 import com.cloudstone.cloudhand.util.DishBag;
 
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
@@ -25,6 +28,23 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
+        //长按弹出删除一道菜对话框
+        dishListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View v, int intPosition,
+                    long longPosition) {
+                int deleteDishId = getDishes().getByPos(intPosition).getId();
+                
+                DeleteDishDialogFragment dialog = new DeleteDishDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("dishId", deleteDishId);
+                dialog.setArguments(bundle);
+                dialog.show(getFragmentManager(), "deleteDishDialogFragment");
+
+                return false;
+            }
+        });
     }
     
     private void renderTotalPrice() {
