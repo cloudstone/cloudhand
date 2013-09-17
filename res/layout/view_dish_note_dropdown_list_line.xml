@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/textfield_pressed">
+    
+    <TextView 
+        android:id="@+id/tv_dish_note_name"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="2"
+        android:gravity="center"
+        style="@style/Text.large.white" />
+    
+    <FrameLayout 
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="1" >
+       
+        <CheckBox 
+            android:id="@+id/cb_dish_note"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:background="@drawable/selector_login_remember_password" />
+    </FrameLayout>
+    
+
+</LinearLayout>

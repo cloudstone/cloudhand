@@ -24,6 +24,7 @@
     <string name="count">数量</string>
     <string name="remark">备注</string>
     <string name="no_remark">暂无备注</string>
+    <string name="check">勾选</string>
     <string name="input_keywords_please">请输入关键字</string>
     <string name="total_price">总价</string>
     <string name="yuan">元</string>

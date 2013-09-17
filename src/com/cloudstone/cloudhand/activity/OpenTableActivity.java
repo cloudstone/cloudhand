@@ -1,8 +1,11 @@
 package com.cloudstone.cloudhand.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +15,13 @@ import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
+import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.DishBag;
 import com.cloudstone.cloudhand.util.L;
@@ -28,27 +33,47 @@ import com.cloudstone.cloudhand.util.L;
  */
 public class OpenTableActivity extends ViewPagerBaseActivity {
     
-    //用于菜品列表的数据
+    //菜品列表数据
     private DishBag dishes = new DishBag();
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
+    //菜品备注列表数据
+    private List<DishNote> dishNotes = new ArrayList<DishNote>();
+    //用于记录每样菜选择了哪些备注
+    private Map<Integer, Set<Integer>> dishNoteMap = new HashMap<Integer, Set<Integer>>();
     
-    
+    //getter and setter
     public DishBag getDishes() {
         return dishes;
     }
-  
+    
     public int getDishCount(int dishId) {
         if (!dishCountMap.containsKey(dishId)) {
             return 0;
         }
         return dishCountMap.get(dishId);
     }
-  
+    
     public void setDishCount(int dishId, int count) {
         dishCountMap.put(dishId, count);
     }
     
+    public List<DishNote> getDishNotes() {
+        return dishNotes;
+    }
+    
+    public Set<Integer> getDishNoteIdSet(int dishId) {
+        if(dishNoteMap.get(dishId) == null) {
+            return new HashSet<Integer>();
+        } else {
+            return dishNoteMap.get(dishId);
+        }
+    }
+    
+    public void setDishNoteIdSet(int dishId, Set<Integer> dishNotes) {
+        dishNoteMap.put(dishId, dishNotes);
+    }
+  
     @Override
     protected void initViewPager() {
         super.initViewPager();
@@ -93,6 +118,21 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
             }
         });
         
+        //获取备注列表
+        new ListDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
+            
+            @Override
+            public void onSuccess(List<DishNote> result) {
+                dishNotes = result;
+            }
+            
+            @Override
+            public void onFinish() {
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {}
+        });
     }
     
     //按下返回键弹出退出确认
