@@ -20,6 +20,7 @@ import android.widget.SearchView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
@@ -33,7 +34,7 @@ import com.cloudstone.cloudhand.view.TableItem;
  */
 public abstract class TableInfoBaseFragment extends BaseFragment implements SearchView.OnQueryTextListener {
     protected SearchView searchView;
-    protected ListView listTableInfo;
+    protected ListView tableListView;
     protected BaseAdapter adapter;
     private List<Table> tables = new ArrayList<Table>();
     
@@ -41,11 +42,11 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("updateTableInfo")) {
+            if(intent.getAction().equals(BroadcastConst.UPDATE_TABLE_INFO)) {
                 tables = filter(((TableInfoActivity)(getActivity())).getTables());
                 render();
             }
-            if(intent.getAction().equals("tableInfoDismiss")) {
+            if(intent.getAction().equals(BroadcastConst.TABLE_INFO_DISMISS)) {
                 getActivity().finish();
             }
         }
@@ -55,8 +56,8 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     public void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("updateTableInfo");
-        filter.addAction("tableInfoDismiss");
+        filter.addAction(BroadcastConst.UPDATE_TABLE_INFO);
+        filter.addAction(BroadcastConst.TABLE_INFO_DISMISS);
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
     
@@ -75,13 +76,13 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listTableInfo = (ListView)getView().findViewById(R.id.listview_table_info);
+        tableListView = (ListView)getView().findViewById(R.id.listview_table_info);
         searchView = (SearchView)getView().findViewById(R.id.searchview_table);
         searchView.setFocusable(false);
         searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(false);
         
-        listTableInfo.setOnItemClickListener(new OnItemClickListener() {
+        tableListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int intPosition,
@@ -92,7 +93,6 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                     bundle.putInt("tableId", getTables().get(intPosition).getId());
                     dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "openTableDialogFragment");
-                    render();
                 } else {
                     ClearTableDialogFragment dialog = new ClearTableDialogFragment();
                     bundle.putInt("tableId", getTables().get(intPosition).getId());
@@ -164,7 +164,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     
     private void render() {
         adapter = new InnerAdapter(); 
-        listTableInfo.setAdapter(adapter);
+        tableListView.setAdapter(adapter);
     }
     
     @Override

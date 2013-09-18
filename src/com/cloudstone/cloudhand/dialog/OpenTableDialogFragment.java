@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
 
 /**
  * 
