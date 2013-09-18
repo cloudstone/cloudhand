@@ -4,10 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,7 @@ import android.widget.ListView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
@@ -32,31 +30,7 @@ public class OpenTableBaseFragment extends BaseFragment {
     protected ListView dishListView;
     protected BaseAdapter adapter;
     protected DishBag dishes = new DishBag();
-    
-    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("update")) {
-                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
-                render();
-            }
-        }
-    };
-    
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("update");
-        getActivity().registerReceiver(broadcastReceiver, filter);
-    }
-        
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(broadcastReceiver);
-    }
+    private String className = getClass().toString();
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -90,7 +64,11 @@ public class OpenTableBaseFragment extends BaseFragment {
             view.renderCount(count);
             //更新界面
             Intent intent = new Intent();
-            intent.setAction("update");
+            if(className.equals(OpenTableOrderFragment.class.toString())) {
+                intent.setAction(BroadcastConst.UPDATE_ORDERED);
+            } else if(className.equals(OpenTableOrderedFragment.class.toString())) {
+                intent.setAction(BroadcastConst.UPDATE_ORDER);
+            }
             getActivity().sendBroadcast(intent);
         }
 

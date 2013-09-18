@@ -15,6 +15,7 @@ import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
+import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ClearTableApi.ClearTableCalback;
 import com.cloudstone.cloudhand.util.L;
 

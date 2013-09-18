@@ -23,7 +23,6 @@ public ClearTableApi(int tableId) {
         super(new UrlConst().clearTableUrl(tableId), EmptyConst.EmptyFormInstance);
     }
 
-    
     public void asyncCall(ClearTableCalback callback) {
         super.asyncCall(callback);
     }

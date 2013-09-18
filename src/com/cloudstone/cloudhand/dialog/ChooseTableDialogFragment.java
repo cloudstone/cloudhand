@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.network.api.ListTableApi;
@@ -144,6 +145,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                                 intent.putExtras(bundle);
                                 intent.setClass(getActivity(), OpenTableActivity.class);
                                 startActivity(intent);
+                                ((TableInfoActivity)(getActivity())).update();
                                 dismiss();
                             }
                             

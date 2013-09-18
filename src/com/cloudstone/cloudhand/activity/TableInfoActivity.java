@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.activity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.TableInfoEmptyFragment;
@@ -61,7 +61,7 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
             public void onSuccess(List<Table> result) {
                 tables = result;
                 Intent intent = new Intent();
-                intent.setAction("updateTableInfo");
+                intent.setAction(BroadcastConst.UPDATE_TABLE_INFO);
                 TableInfoActivity.this.sendBroadcast(intent);
             }
 
