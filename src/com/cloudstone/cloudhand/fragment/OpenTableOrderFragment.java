@@ -24,9 +24,14 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(BroadcastConst.UPDATE_ORDER)) {
+        	if(intent.getAction().equals(BroadcastConst.UPDATE_ORDER)) {
                 dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
                 render();
+                adapter.notifyDataSetChanged();
+            }
+        	if(intent.getAction().equals("ccc")) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                adapter.notifyDataSetChanged();
             }
         }
     };
@@ -36,6 +41,7 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastConst.UPDATE_ORDER);
+        filter.addAction("ccc");
         getActivity().registerReceiver(broadcastReceiver, filter);
     }
         

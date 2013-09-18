@@ -63,7 +63,7 @@ public class OpenTableBaseFragment extends BaseFragment {
             if(className.equals(OpenTableOrderFragment.class.toString())) {
                 intent.setAction(BroadcastConst.UPDATE_ORDERED);
             } else if(className.equals(OpenTableOrderedFragment.class.toString())) {
-                intent.setAction(BroadcastConst.UPDATE_ORDER);
+                intent.setAction("ccc");
             }
             getActivity().sendBroadcast(intent);
         }

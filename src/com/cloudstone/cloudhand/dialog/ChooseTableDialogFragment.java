@@ -145,7 +145,6 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                                 intent.putExtras(bundle);
                                 intent.setClass(getActivity(), OpenTableActivity.class);
                                 startActivity(intent);
-                                ((TableInfoActivity)(getActivity())).update();
                                 dismiss();
                             }
                             
