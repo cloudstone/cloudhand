@@ -34,27 +34,28 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        initView();
+        
+        initListener();
+    }
+    
+    private void initView() {
         btnLogin = (Button)findViewById(R.id.btn_login);
         btnOpenTable = (Button)findViewById(R.id.btn_open_table);
         btnTabelInfo = (Button)findViewById(R.id.btn_table_info);
         btnSettings= (Button)findViewById(R.id.btn_settings);
         tvLoginUser = (TextView)findViewById(R.id.tv_login_user);
-        
-        //初始化登录用户
-        if(UserLogic.getInstance().isLogin()) {
-            tvLoginUser.setText(UserLogic.getInstance().getUser().getName());
-        } else {
-            tvLoginUser.setText(getString(R.string.tip_not_login));
-        }
-        
+    }
+    
+    private void initListener() {
         //登录
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserLogic.getInstance().isLogin()) {
+                if(getUserLogic().isLogin()) {
                     //显示询问是否注销对话框
                     LogoutDialogFragment dialog = new LogoutDialogFragment();
-                    dialog.show(getSupportFragmentManager(), "logoutDialog");
+                    dialog.show(getSupportFragmentManager(), LogoutDialogFragment.class.getSimpleName());
                 } else {
                     showLoginDialog();
                 }
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ChooseTableDialogFragment dialog = new ChooseTableDialogFragment();
-                dialog.show(getSupportFragmentManager(), "chooseTableDialogFragment");
+                dialog.show(getSupportFragmentManager(), ChooseTableDialogFragment.class.getSimpleName());
             }
         });
         //设置
@@ -75,8 +76,7 @@ public class MainActivity extends BaseActivity {
             
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SettingsActivity.class);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,11 +85,22 @@ public class MainActivity extends BaseActivity {
             
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, TableInfoActivity.class);
+                Intent intent = new Intent(MainActivity.this, TableInfoActivity.class);
                 startActivity(intent);
             }
         });
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        //初始化登录用户
+        if(getUserLogic().isLogin()) {
+            tvLoginUser.setText(UserLogic.getInstance().getUser().getName());
+        } else {
+            tvLoginUser.setText(getString(R.string.tip_not_login));
+        }
     }
     
     //显示登录对话框
