@@ -61,7 +61,7 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
             public void onSuccess(List<Table> result) {
                 tables = result;
                 Intent intent = new Intent();
-                intent.setAction(BroadcastConst.UPDATE_TABLE_INFO);
+                intent.setAction(BroadcastConst.INIT_TABLE_INFO);
                 TableInfoActivity.this.sendBroadcast(intent);
             }
 

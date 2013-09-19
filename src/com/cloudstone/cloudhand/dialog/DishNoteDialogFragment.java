@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.view.DishNoteItem;
 import com.cloudstone.cloudhand.view.DishNoteItem.DishNoteItemListener;
@@ -61,7 +62,7 @@ public class DishNoteDialogFragment extends DialogFragment {
                 setDishNote(dishId, checkedDishNoteIdSet);
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction("update");
+                intent.setAction(BroadcastConst.UPDATE_OPEN_TABLE);
                 getActivity().sendBroadcast(intent);
                 
                 dismiss();

@@ -4,7 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
 import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.util.L;
 import com.cloudstone.cloudhand.view.DishItem;
 import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 
@@ -27,10 +31,39 @@ import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
  *
  */
 public class OpenTableBaseFragment extends BaseFragment {
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(BroadcastConst.INIT_OPEN_TABLE)) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                render();
+            }
+            if(intent.getAction().equals(BroadcastConst.UPDATE_OPEN_TABLE)) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+//                render();
+            	adapter.notifyDataSetChanged();
+            }
+        }
+    };
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConst.INIT_OPEN_TABLE);
+        filter.addAction(BroadcastConst.UPDATE_OPEN_TABLE);
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+        
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
     protected ListView dishListView;
     protected BaseAdapter adapter;
     protected DishBag dishes = new DishBag();
-    private String className = getClass().toString();
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -64,11 +97,9 @@ public class OpenTableBaseFragment extends BaseFragment {
             view.renderCount(count);
             //更新界面
             Intent intent = new Intent();
-            if(className.equals(OpenTableOrderFragment.class.toString())) {
-                intent.setAction(BroadcastConst.UPDATE_ORDERED);
-            } else if(className.equals(OpenTableOrderedFragment.class.toString())) {
-                intent.setAction(BroadcastConst.UPDATE_ORDER);
-            }
+            intent.setAction(BroadcastConst.UPDATE_OPEN_TABLE);
+            System.out.println(dishListView.getFirstVisiblePosition());
+//            dishListView.setSelection(dishListView.getSelectedItemPosition());
             getActivity().sendBroadcast(intent);
         }
 
@@ -89,6 +120,7 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public DishItem getView(int position, View convertView, ViewGroup parent) {
+            L.i(this, "getView");
             OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
             DishItem view = (DishItem) convertView;
             if (view == null) {

@@ -71,6 +71,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onSuccess(String[] result) {
+            	for(int i = 0;i < result.length;i++) {
+            		L.i(this, result[i]);
+            	}
                 LoginDialogFragment.this.userNames = result;
                 LoginDialogFragment.this.render();
                 

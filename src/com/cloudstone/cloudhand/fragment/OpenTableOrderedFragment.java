@@ -5,10 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.data.Order;
@@ -37,31 +32,6 @@ import com.cloudstone.cloudhand.util.DishBag;
 import com.cloudstone.cloudhand.util.L;
 
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
-    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(BroadcastConst.UPDATE_ORDERED)) {
-                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
-                render();
-            }
-        }
-    };
-    
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BroadcastConst .UPDATE_ORDERED);
-        getActivity().registerReceiver(broadcastReceiver, filter);
-    }
-        
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(broadcastReceiver);
-    }
-	
     private TextView totalPriceView;
     private Button btnSubmit;
     

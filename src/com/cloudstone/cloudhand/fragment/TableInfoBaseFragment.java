@@ -42,9 +42,14 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(BroadcastConst.UPDATE_TABLE_INFO)) {
+            if(intent.getAction().equals(BroadcastConst.INIT_TABLE_INFO)) {
                 tables = filter(((TableInfoActivity)(getActivity())).getTables());
                 render();
+            }
+            if(intent.getAction().equals(BroadcastConst.UPDATE_TABLE_INFO)) {
+                tables = filter(((TableInfoActivity)(getActivity())).getTables());
+                adapter.notifyDataSetChanged();
+                onResume();
             }
             if(intent.getAction().equals(BroadcastConst.TABLE_INFO_DISMISS)) {
                 getActivity().finish();
@@ -56,6 +61,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     public void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConst.INIT_TABLE_INFO);
         filter.addAction(BroadcastConst.UPDATE_TABLE_INFO);
         filter.addAction(BroadcastConst.TABLE_INFO_DISMISS);
         getActivity().registerReceiver(broadcastReceiver, filter);
