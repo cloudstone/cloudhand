@@ -34,7 +34,6 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
     
-    
     public DishBag getDishes() {
         return dishes;
     }
@@ -79,7 +78,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction(BroadcastConst.UPDATE_ORDER);
+                intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
                 OpenTableActivity.this.sendBroadcast(intent);
             }
             
