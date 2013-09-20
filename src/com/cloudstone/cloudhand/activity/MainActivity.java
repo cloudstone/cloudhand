@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
     //显示登录对话框
     public void showLoginDialog() {
         LoginDialogFragment dialog = new LoginDialogFragment();
-        dialog.show(getSupportFragmentManager(), "loginDialog");
+        dialog.show(getSupportFragmentManager(), LoginDialogFragment.class.getSimpleName());
     }
     
     //修改登录用户
