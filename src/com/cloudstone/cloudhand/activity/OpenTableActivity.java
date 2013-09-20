@@ -104,7 +104,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction(BroadcastConst.UPDATE_ORDER);
+                intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
                 OpenTableActivity.this.sendBroadcast(intent);
             }
             

@@ -4,7 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +33,38 @@ public class OpenTableBaseFragment extends BaseFragment {
     protected ListView dishListView;
     protected BaseAdapter adapter;
     protected DishBag dishes = new DishBag();
-    private String className = getClass().toString();
+    
+    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(BroadcastConst.INIT_OPEN_TABLE)) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                render();
+                renderTotalPrice();
+            }
+            if(intent.getAction().equals(BroadcastConst.UPDATE_OPEN_TABLE)) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                adapter.notifyDataSetChanged();
+                renderTotalPrice();
+            }
+        }
+    };
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConst.INIT_OPEN_TABLE);
+        filter.addAction(BroadcastConst.UPDATE_OPEN_TABLE);
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+        
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -64,11 +98,7 @@ public class OpenTableBaseFragment extends BaseFragment {
             view.renderCount(count);
             //更新界面
             Intent intent = new Intent();
-            if(className.equals(OpenTableOrderFragment.class.toString())) {
-                intent.setAction(BroadcastConst.UPDATE_ORDERED);
-            } else if(className.equals(OpenTableOrderedFragment.class.toString())) {
-                intent.setAction(BroadcastConst.UPDATE_ORDER);
-            }
+            intent.setAction(BroadcastConst.UPDATE_OPEN_TABLE);
             getActivity().sendBroadcast(intent);
         }
 
@@ -190,6 +220,9 @@ public class OpenTableBaseFragment extends BaseFragment {
         adapter = new InnerAdapter();
         dishListView.setAdapter(adapter);
     }
+    
+    //更新总价
+    protected void renderTotalPrice() {}
     
     protected DishBag filter(DishBag dishes) {
         return dishes;
