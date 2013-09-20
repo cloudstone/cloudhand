@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -47,7 +48,7 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_table_info);
-        initTextView();
+        initTextView(2);
         initViewPager();
         updateTables();
     }

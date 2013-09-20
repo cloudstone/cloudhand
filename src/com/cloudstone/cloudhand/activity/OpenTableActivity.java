@@ -91,6 +91,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         super.initViewPager();
         fragmentList.add(new OpenTableOrderFragment());
         fragmentList.add(new OpenTableOrderedFragment());
+        fragmentList.add(new OpenTableOrderedFragment());
     }
     
     @Override
@@ -106,7 +107,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         tableId = intent.getIntExtra("tableId", 0);
         customerNumber = intent.getIntExtra("customerNumber", 0);
         
-        initTextView();
+        initTextView(3);
         initViewPager();
         
         //获取菜单列表

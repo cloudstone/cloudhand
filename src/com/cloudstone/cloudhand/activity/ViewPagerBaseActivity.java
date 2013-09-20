@@ -23,8 +23,14 @@ public class ViewPagerBaseActivity extends BaseActivity {
     
     private ViewPager viewPager; //页卡内容
     protected List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private CheckedTextView tvFirstTitle; //页卡标题1
-    private CheckedTextView tvSecondTitle; //页卡标题2
+    protected List<CheckedTextView> titleList = new ArrayList<CheckedTextView>(); //页卡标题
+    
+//    protected void setTitleList(int size) {
+//        for(int i = 0; i < size; i++) {
+//            CheckedTextView title = (CheckedTextView)findViewById(R.id.tv_firstTitle);
+//            titleList.add(title);
+//        }
+//    }
     
     //初始化ViewPager
     protected void initViewPager() {
@@ -35,36 +41,45 @@ public class ViewPagerBaseActivity extends BaseActivity {
     }
     
     //初始化头标
-    protected void initTextView() {
-        tvFirstTitle = (CheckedTextView)findViewById(R.id.tv_firstTitle);
-        tvSecondTitle = (CheckedTextView)findViewById(R.id.tv_secondTitle);
-
-        tvFirstTitle.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                showFirstTab();
+    protected void initTextView(int size) {
+        for(int i = 0;i < size;i++) {
+            CheckedTextView title;
+            if(i == 0) {
+                title = (CheckedTextView)findViewById(R.id.tv_firstTitle);
+                title.setOnClickListener(new OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+                        viewPager.setCurrentItem(0);
+                    }
+                });
+            } else if(i == 1) {
+                title = (CheckedTextView)findViewById(R.id.tv_secondTitle);
+                title.setOnClickListener(new OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+                        viewPager.setCurrentItem(1);
+                    }
+                });
+            } else {
+                title = (CheckedTextView)findViewById(R.id.tv_thirdTitle);
+                title.setOnClickListener(new OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+                        viewPager.setCurrentItem(2);
+                    }
+                });
             }
-        });
-        
-        tvSecondTitle.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                showSecondTab();
-            }
-        });
+            titleList.add(title);
+        }
     }
     
-    //切换到页卡1
-    private void showFirstTab() {
-        viewPager.setCurrentItem(0);
-    }
-    
-    //切换到页卡2
-    private void showSecondTab() {
-        viewPager.setCurrentItem(1);
-    }
+    //切换页卡
+    /*private void showTab(int position) {
+        viewPager.setCurrentItem(position);
+    }*/
     
     //ViewPager适配器
     private class MyViewPagerAdapter extends FragmentPagerAdapter {
@@ -98,8 +113,10 @@ public class ViewPagerBaseActivity extends BaseActivity {
 
         @Override
         public void onPageSelected(int position) {
-            tvFirstTitle.setChecked(position == 0);
-            tvSecondTitle.setChecked(position == 1);
+            System.out.println(titleList.size());
+            for(int i = 0; i < titleList.size(); i++) {
+                titleList.get(i).setChecked(i == position); 
+            }
         }
         
     }
