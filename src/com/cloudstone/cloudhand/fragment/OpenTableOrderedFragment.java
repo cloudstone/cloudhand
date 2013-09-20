@@ -137,15 +137,10 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         });
     }
     
-    private void renderTotalPrice() {
+    @Override
+    protected void renderTotalPrice() {
         double totalPrice = getTotalPrice();
         totalPriceView.setText(totalPrice + "");
-    }
-    
-    @Override
-    protected void render() {
-        super.render();
-        renderTotalPrice();
     }
     
     @Override

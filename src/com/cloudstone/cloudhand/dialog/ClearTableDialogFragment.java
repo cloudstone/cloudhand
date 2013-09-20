@@ -69,9 +69,9 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
                     
                     @Override
                     public void onSuccess(Table result) {
+                        ((TableInfoActivity)(getActivity())).updateTables();
                         ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
-                        dialog.show(getFragmentManager(), "clearTableFinishDialogFragment");
-//                        ((TableInfoActivity)(getActivity())).update();
+                        dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
                         dismiss();
                     }
                     

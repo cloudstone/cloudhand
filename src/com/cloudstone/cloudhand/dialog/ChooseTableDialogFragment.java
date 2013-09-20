@@ -138,6 +138,10 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                             
                             @Override
                             public void onSuccess(Table result) {
+                                //如果是从桌况进入点餐界面要刷新桌况
+                                if(getActivity().getClass() == TableInfoActivity.class) {
+                                    ((TableInfoActivity)(getActivity())).updateTables();
+                                }
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("tableId", tableId);
                                 bundle.putInt("customerNumber", customerNumber);

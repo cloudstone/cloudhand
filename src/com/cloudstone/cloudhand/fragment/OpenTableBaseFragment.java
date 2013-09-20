@@ -31,18 +31,23 @@ import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
  *
  */
 public class OpenTableBaseFragment extends BaseFragment {
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    protected ListView dishListView;
+    protected BaseAdapter adapter;
+    protected DishBag dishes = new DishBag();
+    
+    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(BroadcastConst.INIT_OPEN_TABLE)) {
                 dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
                 render();
+                renderTotalPrice();
             }
             if(intent.getAction().equals(BroadcastConst.UPDATE_OPEN_TABLE)) {
                 dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
-//                render();
-            	adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+                renderTotalPrice();
             }
         }
     };
@@ -61,9 +66,6 @@ public class OpenTableBaseFragment extends BaseFragment {
         super.onPause();
         getActivity().unregisterReceiver(broadcastReceiver);
     }
-    protected ListView dishListView;
-    protected BaseAdapter adapter;
-    protected DishBag dishes = new DishBag();
     
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -98,8 +100,6 @@ public class OpenTableBaseFragment extends BaseFragment {
             //更新界面
             Intent intent = new Intent();
             intent.setAction(BroadcastConst.UPDATE_OPEN_TABLE);
-            System.out.println(dishListView.getFirstVisiblePosition());
-//            dishListView.setSelection(dishListView.getSelectedItemPosition());
             getActivity().sendBroadcast(intent);
         }
 
@@ -222,6 +222,9 @@ public class OpenTableBaseFragment extends BaseFragment {
         adapter = new InnerAdapter();
         dishListView.setAdapter(adapter);
     }
+    
+    //更新总价
+    protected void renderTotalPrice() {}
     
     protected DishBag filter(DishBag dishes) {
         return dishes;

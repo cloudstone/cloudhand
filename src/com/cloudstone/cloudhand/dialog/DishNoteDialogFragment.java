@@ -64,7 +64,6 @@ public class DishNoteDialogFragment extends DialogFragment {
                 Intent intent = new Intent();
                 intent.setAction(BroadcastConst.UPDATE_OPEN_TABLE);
                 getActivity().sendBroadcast(intent);
-                
                 dismiss();
             }
         });

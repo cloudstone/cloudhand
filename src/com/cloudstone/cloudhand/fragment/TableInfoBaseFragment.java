@@ -49,7 +49,6 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
             if(intent.getAction().equals(BroadcastConst.UPDATE_TABLE_INFO)) {
                 tables = filter(((TableInfoActivity)(getActivity())).getTables());
                 adapter.notifyDataSetChanged();
-                onResume();
             }
             if(intent.getAction().equals(BroadcastConst.TABLE_INFO_DISMISS)) {
                 getActivity().finish();

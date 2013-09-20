@@ -47,21 +47,24 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_table_info);
-        update();
-        
         initTextView();
         initViewPager();
+        updateTables();
     }
     
-    public void update() {
-        //获取桌况
+    public void updateTables() {
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override
             public void onSuccess(List<Table> result) {
-                tables = result;
                 Intent intent = new Intent();
-                intent.setAction(BroadcastConst.INIT_TABLE_INFO);
+                if(tables.isEmpty()) {
+                    tables = result;
+                    intent.setAction(BroadcastConst.INIT_TABLE_INFO);
+                } else {
+                    tables = result;
+                    intent.setAction(BroadcastConst.UPDATE_TABLE_INFO);
+                }
                 TableInfoActivity.this.sendBroadcast(intent);
             }
 
