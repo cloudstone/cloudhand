@@ -3,11 +3,13 @@ package com.cloudstone.cloudhand.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -26,11 +28,36 @@ import com.cloudstone.cloudhand.util.L;
  *
  */
 public class TableInfoActivity extends ViewPagerBaseActivity {
+	
     //用于桌子列表的数据
     private List<Table> tables = new ArrayList<Table>();
     
     public List<Table> getTables() {
         return tables;
+    }
+    
+    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(BroadcastConst.UPDATE_TABLES)) {
+                updateTables();
+            }
+        }
+    };
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadcastConst.UPDATE_TABLES);
+        this.registerReceiver(broadcastReceiver, filter);
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(broadcastReceiver);
     }
     
     @Override

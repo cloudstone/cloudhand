@@ -19,11 +19,15 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
+import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.Table;
-import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
+import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.network.api.GetOrderApi;
+import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.view.TableItem;
 
@@ -99,10 +103,42 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                     dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "openTableDialogFragment");
                 } else {
-                    ClearTableDialogFragment dialog = new ClearTableDialogFragment();
-                    bundle.putInt("tableId", getTables().get(intPosition).getId());
-                    dialog.setArguments(bundle);
-                    dialog.show(getFragmentManager(), "clearTableDialogFragment");
+                    int orderId = 0;
+                    int tableId = getTables().get(intPosition).getId();
+                    List<Table> tables = ((TableInfoActivity)(getActivity())).getTables();
+                    for(int i = 0; i < tables.size();i++) {
+                        Table table = tables.get(i);
+                        if(table.getId() == tableId) {
+                            orderId = table.getOrderId();
+                            break;
+                        }
+                    }
+                    new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
+                        @Override
+                        public void onSuccess(Order result) {
+                        	Bundle bundle = new Bundle();
+                            //如果是从桌况进入点餐界面要刷新桌况
+                            if(getActivity().getClass() == TableInfoActivity.class) {
+                                ((TableInfoActivity)(getActivity())).updateTables();
+                                bundle.putBoolean("flag", true);
+                            }
+                            
+                            bundle.putInt("tableId", result.getTableId());
+                            bundle.putInt("customerNumber", result.getCustomerNumber());
+                            Intent intent = new Intent();
+                            intent.putExtras(bundle);
+                            intent.setClass(getActivity(), OpenTableActivity.class);
+                            startActivity(intent);
+                        }
+                        
+                        @Override
+                        public void onFinish() {
+                        }
+                        
+                        @Override
+                        public void onFailed(ApiException exception) {
+                        }
+                    });
                 }
             }
         });

@@ -19,6 +19,7 @@ public class DishBag implements Iterable<Dish> {
     
     public void put(Dish value) {
         list.add(value);
+        map.put(value.getId(), value);
     }
     
     public void remove(int key, Dish value) {

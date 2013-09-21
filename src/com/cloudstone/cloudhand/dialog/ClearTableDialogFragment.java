@@ -2,6 +2,7 @@ package com.cloudstone.cloudhand.dialog;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
@@ -69,7 +72,9 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
                     
                     @Override
                     public void onSuccess(Table result) {
-                        ((TableInfoActivity)(getActivity())).updateTables();
+                        Intent intent = new Intent();
+                        intent.setAction(BroadcastConst.UPDATE_TABLES);
+                        getActivity().sendBroadcast(intent);
                         ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
                         dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
                         dismiss();
@@ -94,34 +99,6 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-            	int orderId = 0;
-            	List<Table> tables = ((TableInfoActivity)(getActivity())).getTables();
-            	for(int i = 0; i < tables.size();i++) {
-            		Table table = tables.get(i);
-            		if(table.getId() == tableId) {
-            			orderId = table.getOrderId();
-            			break;
-            		}
-            	}
-            	System.out.println("here1");
-                new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
-					
-					@Override
-					public void onSuccess(Order result) {
-						System.out.println("onSuccess");
-						
-					}
-					
-					@Override
-					public void onFinish() {
-						System.out.println("onFinish");
-					}
-					
-					@Override
-					public void onFailed(ApiException exception) {
-						System.out.println("onFailed");
-					}
-				});
                 dismiss();
             }
         });

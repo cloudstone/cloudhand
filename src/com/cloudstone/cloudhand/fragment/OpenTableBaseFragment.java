@@ -21,7 +21,6 @@ import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
 import com.cloudstone.cloudhand.util.DishBag;
-import com.cloudstone.cloudhand.util.L;
 import com.cloudstone.cloudhand.view.DishItem;
 import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 
@@ -120,7 +119,6 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public DishItem getView(int position, View convertView, ViewGroup parent) {
-            L.i(this, "getView");
             OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
             DishItem view = (DishItem) convertView;
             if (view == null) {

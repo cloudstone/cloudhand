@@ -9,8 +9,10 @@ import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckedTextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -21,6 +23,7 @@ import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
+import com.cloudstone.cloudhand.fragment.OpenTableSubmittedFragment;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
@@ -36,6 +39,8 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     
     private int tableId;
     private int customerNumber;
+    private boolean flag; //是否显示已下单选项卡
+    private CheckedTextView thirdTitle;
     
     public int getTableId() {
         return tableId;
@@ -91,7 +96,10 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         super.initViewPager();
         fragmentList.add(new OpenTableOrderFragment());
         fragmentList.add(new OpenTableOrderedFragment());
-        fragmentList.add(new OpenTableOrderedFragment());
+        if(flag) {
+            fragmentList.add(new OpenTableSubmittedFragment());
+        }
+        
     }
     
     @Override
@@ -102,10 +110,15 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_open_table);
+        thirdTitle = (CheckedTextView) findViewById(R.id.tv_thirdTitle);
         
         Intent intent = getIntent();
         tableId = intent.getIntExtra("tableId", 0);
         customerNumber = intent.getIntExtra("customerNumber", 0);
+        flag = intent.getBooleanExtra("flag", false);
+        if(!flag) {
+            thirdTitle.setVisibility(View.GONE);
+        }
         
         initTextView(3);
         initViewPager();
