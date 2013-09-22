@@ -105,7 +105,7 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                     Toast.makeText(getActivity(), R.string.no_order, Toast.LENGTH_SHORT).show();
                 } else {
                     Order order = new Order();
-                    order.setId(((OpenTableActivity)(getActivity())).getTableId());
+//                    order.setId(((OpenTableActivity)(getActivity())).getTableId());
                     order.setUserId(UserLogic.getInstance().getUser().getId());
                     order.setTableId(((OpenTableActivity)(getActivity())).getTableId());
                     order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
