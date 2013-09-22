@@ -25,13 +25,6 @@ public class ViewPagerBaseActivity extends BaseActivity {
     protected List<Fragment> fragmentList = new ArrayList<Fragment>();
     protected List<CheckedTextView> titleList = new ArrayList<CheckedTextView>(); //页卡标题
     
-//    protected void setTitleList(int size) {
-//        for(int i = 0; i < size; i++) {
-//            CheckedTextView title = (CheckedTextView)findViewById(R.id.tv_firstTitle);
-//            titleList.add(title);
-//        }
-//    }
-    
     //初始化ViewPager
     protected void initViewPager() {
         viewPager = (ViewPager)findViewById(R.id.viewPager_base);
@@ -113,7 +106,6 @@ public class ViewPagerBaseActivity extends BaseActivity {
 
         @Override
         public void onPageSelected(int position) {
-            System.out.println(titleList.size());
             for(int i = 0; i < titleList.size(); i++) {
                 titleList.get(i).setChecked(i == position); 
             }

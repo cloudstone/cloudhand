@@ -103,9 +103,8 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                     dialog.setArguments(bundle);
                     dialog.show(getFragmentManager(), "openTableDialogFragment");
                 } else {
-                    int orderId = 0;
                     int tableId = getTables().get(intPosition).getId();
-                    List<Table> tables = ((TableInfoActivity)(getActivity())).getTables();
+                    int orderId = 0;
                     for(int i = 0; i < tables.size();i++) {
                         Table table = tables.get(i);
                         if(table.getId() == tableId) {
@@ -113,32 +112,18 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                             break;
                         }
                     }
-                    new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
-                        @Override
-                        public void onSuccess(Order result) {
-                            Bundle bundle = new Bundle();
-                            //如果是从桌况进入点餐界面要刷新桌况
-                            if(getActivity().getClass() == TableInfoActivity.class) {
-                                ((TableInfoActivity)(getActivity())).updateTables();
-                                bundle.putBoolean("flag", true);
-                            }
-                            
-                            bundle.putInt("tableId", result.getTableId());
-                            bundle.putInt("customerNumber", result.getCustomerNumber());
-                            Intent intent = new Intent();
-                            intent.putExtras(bundle);
-                            intent.setClass(getActivity(), OpenTableActivity.class);
-                            startActivity(intent);
-                        }
-                        
-                        @Override
-                        public void onFinish() {
-                        }
-                        
-                        @Override
-                        public void onFailed(ApiException exception) {
-                        }
-                    });
+                    bundle = new Bundle();
+                    //如果是从桌况进入点餐界面要刷新桌况
+                    if(getActivity().getClass() == TableInfoActivity.class) {
+                        ((TableInfoActivity)(getActivity())).updateTables();
+                        bundle.putBoolean("flag", true);
+                        bundle.putInt("orderId", orderId);
+                    }
+                    bundle.putInt("tableId", tableId);
+                    Intent intent = new Intent();
+                    intent.putExtras(bundle);
+                    intent.setClass(getActivity(), OpenTableActivity.class);
+                    startActivity(intent);
                 }
             }
         });

@@ -19,11 +19,13 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
+import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableSubmittedFragment;
+import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
@@ -39,6 +41,8 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     
     private int tableId;
     private int customerNumber;
+    private int orderId;
+    private Order order;
     private boolean flag; //是否显示已下单选项卡
     private CheckedTextView thirdTitle;
     
@@ -48,6 +52,14 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
 
     public int getCustomerNumber() {
         return customerNumber;
+    }
+    
+    public Order getOrder() {
+        return order;
+    }
+    
+    public boolean getFlag() {
+        return flag;
     }
     
     //菜品列表数据
@@ -115,6 +127,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         Intent intent = getIntent();
         tableId = intent.getIntExtra("tableId", 0);
         customerNumber = intent.getIntExtra("customerNumber", 0);
+        orderId = intent.getIntExtra("orderId", 0);
         flag = intent.getBooleanExtra("flag", false);
         if(!flag) {
             thirdTitle.setVisibility(View.GONE);
@@ -162,6 +175,22 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
             
             @Override
             public void onFailed(ApiException exception) {}
+        });
+        
+        new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
+            
+            @Override
+            public void onSuccess(Order result) {
+                order = result;
+            }
+            
+            @Override
+            public void onFinish() {
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {
+            }
         });
     }
     

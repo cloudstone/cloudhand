@@ -111,29 +111,52 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                     order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
                     order.setDishes(orderDishList);
                     
-//                    SubmitOrderApi submit = new SubmitOrderApi(order);
-                    SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
-                    
-                    submit.asyncCall(new IApiCallback<Order>() {
-                        
-                        @Override
-                        public void onSuccess(Order result) {
-                            SubmitSuccessDialogFragment dialog = new SubmitSuccessDialogFragment();
-                            dialog.show(getFragmentManager(), "submitSuccessDialogFragment");
-                        }
-                        
-                        @Override
-                        public void onFinish() {
-                            L.i(OpenTableOrderedFragment.class, "onFinish");
-                        }
-                        
-                        @Override
-                        public void onFailed(ApiException exception) {
-                            L.i(OpenTableOrderedFragment.class, "onFailed");
-                            L.e(this, exception);
-                            Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    //根据是否有已下单选项卡执行初次提交订单或者加菜
+                    if(((OpenTableActivity)(getActivity())).getFlag()) {
+                        SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
+                        submit.asyncCall(new IApiCallback<Order>() {
+                            
+                            @Override
+                            public void onSuccess(Order result) {
+                                SubmitSuccessDialogFragment dialog = new SubmitSuccessDialogFragment();
+                                dialog.show(getFragmentManager(), "submitSuccessDialogFragment");
+                            }
+                            
+                            @Override
+                            public void onFinish() {
+                                L.i(OpenTableOrderedFragment.class, "onFinish");
+                            }
+                            
+                            @Override
+                            public void onFailed(ApiException exception) {
+                                L.i(OpenTableOrderedFragment.class, "onFailed");
+                                L.e(this, exception);
+                                Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        SubmitOrderApi submit = new SubmitOrderApi(order);
+                        submit.asyncCall(new IApiCallback<Order>() {
+                            
+                            @Override
+                            public void onSuccess(Order result) {
+                                SubmitSuccessDialogFragment dialog = new SubmitSuccessDialogFragment();
+                                dialog.show(getFragmentManager(), "submitSuccessDialogFragment");
+                            }
+                            
+                            @Override
+                            public void onFinish() {
+                                L.i(OpenTableOrderedFragment.class, "onFinish");
+                            }
+                            
+                            @Override
+                            public void onFailed(ApiException exception) {
+                                L.i(OpenTableOrderedFragment.class, "onFailed");
+                                L.e(this, exception);
+                                Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             }
         });

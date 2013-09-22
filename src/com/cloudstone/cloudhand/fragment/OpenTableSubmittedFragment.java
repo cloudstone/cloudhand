@@ -11,21 +11,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.OrderDish;
-import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
-import com.cloudstone.cloudhand.exception.ApiException;
-import com.cloudstone.cloudhand.network.api.GetOrderApi;
-import com.cloudstone.cloudhand.network.api.ListTableApi;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
-import com.cloudstone.cloudhand.util.L;
 import com.cloudstone.cloudhand.view.BaseDishItem;
 
 public class OpenTableSubmittedFragment extends BaseFragment {
@@ -35,8 +27,6 @@ public class OpenTableSubmittedFragment extends BaseFragment {
     private ListView dishListView;
     private BaseAdapter adapter;
     private Button btnClearTable;
-    private List<Table> tables;
-    int tableId;
     
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -47,62 +37,20 @@ public class OpenTableSubmittedFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
         dishListView = (ListView)getView().findViewById(R.id.listview_dish);
-        
-        tableId = ((OpenTableActivity)(getActivity())).getTableId();
-        new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
-
+        order = ((OpenTableActivity)(getActivity())).getOrder();
+        orderDishList = order.getDishes();
+        render();
+        btnClearTable = (Button)getView().findViewById(R.id.btn_clear_table);
+        btnClearTable.setOnClickListener(new OnClickListener() {
+            
             @Override
-            public void onSuccess(List<Table> result) {
-                tables = result;
-                int orderId = 0;
-                for(int i = 0; i < tables.size();i++) {
-                    Table table = tables.get(i);
-                    if(table.getId() == tableId) {
-                        orderId = table.getOrderId();
-                        break;
-                    }
-                }
-                new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
-                    
-                    @Override
-                    public void onSuccess(Order result) {
-                        order = result;
-                        orderDishList = order.getDishes();
-                        render();
-                    }
-                    
-                    @Override
-                    public void onFinish() {
-                    }
-                    
-                    @Override
-                    public void onFailed(ApiException exception) {
-                    }
-                });
-                btnClearTable = (Button)getView().findViewById(R.id.btn_clear_table);
-                btnClearTable.setOnClickListener(new OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        ClearTableDialogFragment dialog = new ClearTableDialogFragment();
-                        bundle.putInt("tableId", tableId);
-                        dialog.setArguments(bundle);
-                        dialog.show(getFragmentManager(), "clearTableDialogFragment");
-                    }
-                });
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                ClearTableDialogFragment dialog = new ClearTableDialogFragment();
+                bundle.putInt("tableId", order.getTableId());
+                dialog.setArguments(bundle);
+                dialog.show(getFragmentManager(), "clearTableDialogFragment");
             }
-
-            @Override
-            public void onFailed(ApiException exception) {
-                Toast.makeText(getActivity(), R.string.error_list_table_info_failed, Toast.LENGTH_SHORT).show();
-                L.e(TableInfoActivity.class, exception);
-            }
-
-            @Override
-            public void onFinish() {
-            }
-
         });
     }
     
