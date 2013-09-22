@@ -116,7 +116,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                     new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
                         @Override
                         public void onSuccess(Order result) {
-                        	Bundle bundle = new Bundle();
+                            Bundle bundle = new Bundle();
                             //如果是从桌况进入点餐界面要刷新桌况
                             if(getActivity().getClass() == TableInfoActivity.class) {
                                 ((TableInfoActivity)(getActivity())).updateTables();

@@ -4,20 +4,24 @@
  */
 package com.cloudstone.cloudhand.network.api.base;
 
-import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 
 import com.cloudstone.cloudhand.exception.DecodeApiException;
 import com.cloudstone.cloudhand.network.form.IForm;
 import com.cloudstone.cloudhand.util.HttpUtils;
+import com.cloudstone.cloudhand.util.JsonUtils;
 import com.cloudstone.cloudhand.util.L;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * @author xuhongfeng
  *
  */
 public class AbsGetStringArrayApi<FORM extends IForm> extends AbsGetApi<String[], FORM> {
+    private static final Type type = new TypeToken<List<String>>(){}.getType();
 
     public AbsGetStringArrayApi(String url, FORM form) {
         super(url, form);
@@ -26,22 +30,10 @@ public class AbsGetStringArrayApi<FORM extends IForm> extends AbsGetApi<String[]
     @Override
     protected String[] decodeResponse(HttpResponse response)
             throws DecodeApiException {
-        String s = HttpUtils.responseToString(response);
-        try {
-			s = new String(s.getBytes(), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//        byte[] bytes = s.getBytes(); 
-//        try {
-//        	L.i(this, "ok");
-//			s = new String(bytes, "HTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		} 
-        L.i(this, "HttpResponse : " + s);
-        return s.split(",");
+        String json = HttpUtils.responseToString(response);
+        L.i(this, "HttpResponse : " + json);
+        List<String> names = JsonUtils.jsonToList(json, type);
+        return names.toArray(new String[names.size()]);
     }
 
 }

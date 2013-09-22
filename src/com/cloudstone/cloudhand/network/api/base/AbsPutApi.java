@@ -24,9 +24,15 @@ public abstract class AbsPutApi<RESULT, FORM extends IForm> extends AbsApi<RESUL
     @Override
     protected HttpUriRequest onCreateRequest() {
         HttpPut put = new HttpPut(getUrl());
+//        RequestParams params = HttpUtils.generatePostParams(form);
+//        put.setEntity(params.getEntity());
+        setPutEntity(put);
+        return put;
+    }
+    
+    protected void setPutEntity(HttpPut put) {
         RequestParams params = HttpUtils.generatePostParams(form);
         put.setEntity(params.getEntity());
-        return put;
     }
 
 }

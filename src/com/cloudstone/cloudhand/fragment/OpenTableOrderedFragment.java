@@ -26,6 +26,7 @@ import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
 import com.cloudstone.cloudhand.dialog.SubmitSuccessDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.UserLogic;
+import com.cloudstone.cloudhand.network.api.SubmitOrderAgainApi;
 import com.cloudstone.cloudhand.network.api.SubmitOrderApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.DishBag;
@@ -110,7 +111,8 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                     order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
                     order.setDishes(orderDishList);
                     
-                    SubmitOrderApi submit = new SubmitOrderApi(order);
+//                    SubmitOrderApi submit = new SubmitOrderApi(order);
+                    SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
                     
                     submit.asyncCall(new IApiCallback<Order>() {
                         
