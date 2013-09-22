@@ -104,15 +104,11 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                 if(orderDishList.size() == 0) {
                     Toast.makeText(getActivity(), R.string.no_order, Toast.LENGTH_SHORT).show();
                 } else {
-                    Order order = new Order();
-//                    order.setId(((OpenTableActivity)(getActivity())).getTableId());
-                    order.setUserId(UserLogic.getInstance().getUser().getId());
-                    order.setTableId(((OpenTableActivity)(getActivity())).getTableId());
-                    order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
-                    order.setDishes(orderDishList);
-                    
+                    Order order;
                     //根据是否有已下单选项卡执行初次提交订单或者加菜
                     if(((OpenTableActivity)(getActivity())).getFlag()) {
+                        order = ((OpenTableActivity)(getActivity())).getOrder();
+                        order.setDishes(orderDishList);
                         SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
                         submit.asyncCall(new IApiCallback<Order>() {
                             
@@ -135,6 +131,11 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                             }
                         });
                     } else {
+                        order = new Order();
+                        order.setUserId(UserLogic.getInstance().getUser().getId());
+                        order.setTableId(((OpenTableActivity)(getActivity())).getTableId());
+                        order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
+                        order.setDishes(orderDishList);
                         SubmitOrderApi submit = new SubmitOrderApi(order);
                         submit.asyncCall(new IApiCallback<Order>() {
                             
