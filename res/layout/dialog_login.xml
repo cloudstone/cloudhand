@@ -23,7 +23,7 @@
             android:background="@drawable/ic_username" />
 
         <Spinner 
-            android:id="@+id/sp_user_name" 
+            android:id="@+id/sp_user_name"
             android:layout_width="175dip"
             android:layout_height="50dip"
             android:layout_marginLeft="5dip"

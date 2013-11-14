@@ -21,19 +21,16 @@
         <View 
             android:layout_width="25dip"
             android:layout_height="25dip"
-            android:layout_margin="5dip"
+            android:layout_marginLeft="10dip"
             android:background="@drawable/ic_table" />
         
-        <AutoCompleteTextView
-            android:id="@+id/text_table_name"
-            style="@style/Text.large.white"
+        <Spinner 
+            android:id="@+id/sp_table_name" 
             android:layout_width="175dip"
-            android:layout_height="34dip"
-            android:layout_marginTop="6dip"
-            android:gravity="top"
-            android:background="@drawable/bg_dropdown_normal"
-            android:completionThreshold="1" >
-        </AutoCompleteTextView>
+            android:layout_height="50dip"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/btn_spinner_normal"
+            style="@style/Text.large.white" />
         
     </LinearLayout>
             
@@ -48,7 +45,7 @@
         <View 
             android:layout_width="25dip"
             android:layout_height="25dip"
-            android:layout_margin="5dip"
+            android:layout_marginLeft="10dip"
             android:background="@drawable/ic_customernumber" />
         
         <EditText 

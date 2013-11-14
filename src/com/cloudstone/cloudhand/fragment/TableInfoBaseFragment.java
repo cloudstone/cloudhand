@@ -22,12 +22,8 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
-import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
-import com.cloudstone.cloudhand.exception.ApiException;
-import com.cloudstone.cloudhand.network.api.GetOrderApi;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.view.TableItem;
 

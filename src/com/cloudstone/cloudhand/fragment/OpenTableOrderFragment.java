@@ -69,4 +69,9 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
         return data;
     }
     
+    @Override
+    protected DishBag filter(DishBag dishes) {
+        return searchItem(searchView.getQuery().toString());
+    }
+    
 }

@@ -1,10 +1,12 @@
 package com.cloudstone.cloudhand.dialog;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +15,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -35,13 +37,13 @@ import com.cloudstone.cloudhand.util.L;
  *
  */
 public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
-    private AutoCompleteTextView tvTableName;
+    private Spinner spTableName;
     private EditText tvCustomerNumber;
     private Button btnConfirm;
     private Button btnCancel;
     private int tableId;
     
-    private Map<String, Table> tableMap = new HashMap<String, Table>();
+    private Map<String, Table> tableMap = new TreeMap<String, Table>();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_choose_table, container, false);
-        tvTableName = (AutoCompleteTextView)view.findViewById(R.id.text_table_name);
+        spTableName = (Spinner)view.findViewById(R.id.sp_table_name);
         tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
         btnCancel = (Button)view.findViewById(R.id.btn_cancel);
@@ -61,17 +63,6 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
         if(getArguments() != null) {
             tableId = getArguments().getInt("tableId");
         }
-        
-        //输入桌名文本框被点时自动获取桌子列表
-        tvTableName.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                if(tvTableName.getText().toString().equals("")) {
-                    tvTableName.showDropDown();
-                }
-            }
-        });
         
         return view;
     }
@@ -96,12 +87,14 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 render();
                 
                 Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
+                int selection = 0;
                 while (iterator.hasNext()) {
                     Entry<String, Table> entry = iterator.next();
                     if(entry.getValue().getId() == tableId) {
-                        tvTableName.setText(entry.getValue().getName());
+                        spTableName.setSelection(selection);
                         break;
                     }
+                    selection++;
                 }
             }
 
@@ -125,7 +118,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             @Override
             public void onClick(View v) {
                 
-                String tableName = tvTableName.getText().toString();
+                String tableName = spTableName.getSelectedItem().toString();
                 String inputCustomerNumber = tvCustomerNumber.getText().toString();
                 
                 //判断输入的桌子是否存在
@@ -202,9 +195,11 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             i++;
         }
         //创建一个下拉框适配器
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.view_base_dropdown_list_line, tableName);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.view_base_dropdown_list, tableName);
+        //设置下拉列表风格
+        adapter.setDropDownViewResource(R.layout.view_base_dropdown_list_line);
         //关联适配器到用户名下拉框
-        tvTableName.setAdapter(adapter);
+        spTableName.setAdapter(adapter);
     }
     
 }
