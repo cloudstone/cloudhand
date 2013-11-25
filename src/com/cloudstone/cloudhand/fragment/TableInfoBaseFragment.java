@@ -26,8 +26,13 @@ import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
+import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.UserLogic;
+import com.cloudstone.cloudhand.network.api.ChangeTableApi;
+import com.cloudstone.cloudhand.network.api.ChangeTableApi.ChangeTableCallback;
+import com.cloudstone.cloudhand.network.api.ClearTableApi;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
+import com.cloudstone.cloudhand.util.L;
 import com.cloudstone.cloudhand.view.TableItem;
 
 /**
@@ -40,6 +45,11 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     protected ListView tableListView;
     protected BaseAdapter adapter;
     private List<Table> tables = new ArrayList<Table>();
+    private int selectedTableId ;
+    
+    private int getSelectedTableId() {
+        return selectedTableId;
+    }
     
     protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -127,6 +137,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         }
                     }
                 } else {
+                    int selectedTableId = getTables().get(intPosition).getId();
                     BaseDialog dialog = new BaseDialog(getActivity());
                     dialog.setIcon(R.drawable.ic_ask);
                     dialog.setMessage(R.string.message_change_table);
@@ -134,6 +145,28 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            new ChangeTableApi(((TableInfoActivity)(getActivity())).getTableId(), getSelectedTableId()).asyncCall(new ChangeTableCallback() {
+                                
+                                @Override
+                                public void onSuccess(Table result) {
+                                    L.i(this, "onSuccess");
+                                }
+                                
+                                @Override
+                                public void onFinish() {
+                                    L.i(this, "onFinish");
+                                }
+                                
+                                @Override
+                                protected void onError(ApiException e) {
+                                    L.i(this, "onError");
+                                }
+                                
+                                @Override
+                                protected void onChanged() {
+                                    L.i(this, "onChanged");
+                                }
+                            });
                             dialog.dismiss();
                         }
                     });

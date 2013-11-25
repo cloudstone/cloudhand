@@ -61,6 +61,7 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                 Intent intent = new Intent(getActivity(), TableInfoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("tabNumber", 1);
+                bundle.putInt("tableId", ((OpenTableActivity)(getActivity())).getTableId());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

@@ -32,8 +32,13 @@ import com.cloudstone.cloudhand.util.L;
 public class TableInfoActivity extends ViewPagerBaseActivity {
     private int tabNumber;
     private CheckedTextView secondTitle;
+    private int tableId;
     
     public int getTabNumber() {
+        return tabNumber;
+    }
+    
+    public int getTableId() {
         return tabNumber;
     }
 	
@@ -87,6 +92,7 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
         setContentView(R.layout.activity_table_info);
         Intent intent = getIntent();
         tabNumber = intent.getIntExtra("tabNumber", 2);
+        tableId = intent.getIntExtra("tableId", -1);
         secondTitle = (CheckedTextView) findViewById(R.id.tv_secondTitle);
         if(tabNumber < 2) {
             secondTitle.setVisibility(View.GONE);
