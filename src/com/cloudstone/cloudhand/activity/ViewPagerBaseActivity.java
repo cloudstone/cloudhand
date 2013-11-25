@@ -69,11 +69,6 @@ public class ViewPagerBaseActivity extends BaseActivity {
         }
     }
     
-    //切换页卡
-    /*private void showTab(int position) {
-        viewPager.setCurrentItem(position);
-    }*/
-    
     //ViewPager适配器
     private class MyViewPagerAdapter extends FragmentPagerAdapter {
         

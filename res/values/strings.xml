@@ -28,8 +28,9 @@
     <string name="input_keywords_please">请输入关键字</string>
     <string name="total_price">总价</string>
     <string name="yuan">元</string>
-    <string name="submit_confirm">确认下单</string>
+    <string name="submit">下单</string>
     <string name="message_delete_dish">是否删除这道菜？</string>
+    <string name="message_submit">是您确认要下单吗？</string>
     <string name="submit_failed">下单失败</string>
     <string name="submit_success">下单成功！</string>
     <string name="no_order">您尚未点餐</string>
@@ -51,6 +52,7 @@
     <string name="occupied">已用</string>
     <string name="submitted">已下单</string>
     <string name="message_exit_order">您确认要放弃点餐吗？</string>
+    <string name="message_change_table">您确认要更换桌子吗？</string>
     
     <!-- 开台对话框 -->
     <string name="message_open_table">您确认要开台吗？</string>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
+import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
+import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.view.TableItem;
 
@@ -92,34 +95,56 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int intPosition,
                     long longPosition) {
-                Bundle bundle = new Bundle();
-                if(getTables().get(intPosition).getStatus() == 0) {
-                    OpenTableDialogFragment dialog = new OpenTableDialogFragment();
-                    bundle.putInt("tableId", getTables().get(intPosition).getId());
-                    dialog.setArguments(bundle);
-                    dialog.show(getFragmentManager(), "openTableDialogFragment");
-                } else {
-                    int tableId = getTables().get(intPosition).getId();
-                    int orderId = 0;
-                    for(int i = 0; i < tables.size();i++) {
-                        Table table = tables.get(i);
-                        if(table.getId() == tableId) {
-                            orderId = table.getOrderId();
-                            break;
+                if(((TableInfoActivity)(getActivity())).getTabNumber() > 1) {
+                    Bundle bundle = new Bundle();
+                    if(getTables().get(intPosition).getStatus() == 0) {
+                        OpenTableDialogFragment dialog = new OpenTableDialogFragment();
+                        bundle.putInt("tableId", getTables().get(intPosition).getId());
+                        dialog.setArguments(bundle);
+                        dialog.show(getFragmentManager(), "openTableDialogFragment");
+                    } else {
+                        int tableId = getTables().get(intPosition).getId();
+                        int orderId = 0;
+                        for(int i = 0; i < tables.size();i++) {
+                            Table table = tables.get(i);
+                            if(table.getId() == tableId) {
+                                orderId = table.getOrderId();
+                                break;
+                            }
+                        }
+                        //如果是从已用桌子进入点菜页面
+                        if(getActivity().getClass() == TableInfoActivity.class) {
+                            if(orderId > 0) {
+                                bundle.putBoolean("flag", true);
+                                bundle.putInt("orderId", orderId);
+                            }
+                            bundle.putString("tableName", getTables().get(intPosition).getName());
+                            bundle.putInt("tableId", tableId);
+                            Intent submitIntent = new Intent();
+                            submitIntent.putExtras(bundle);
+                            submitIntent.setClass(getActivity(), OpenTableActivity.class);
+                            startActivity(submitIntent);
                         }
                     }
-                    bundle = new Bundle();
-                    //如果是从桌况进入点餐界面要刷新桌况
-                    if(getActivity().getClass() == TableInfoActivity.class) {
-                        ((TableInfoActivity)(getActivity())).updateTables();
-                        bundle.putBoolean("flag", true);
-                        bundle.putInt("orderId", orderId);
-                    }
-                    bundle.putInt("tableId", tableId);
-                    Intent intent = new Intent();
-                    intent.putExtras(bundle);
-                    intent.setClass(getActivity(), OpenTableActivity.class);
-                    startActivity(intent);
+                } else {
+                    BaseDialog dialog = new BaseDialog(getActivity());
+                    dialog.setIcon(R.drawable.ic_ask);
+                    dialog.setMessage(R.string.message_change_table);
+                    dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                        
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });

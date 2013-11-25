@@ -50,7 +50,7 @@
             android:id="@+id/ev_password"
             android:layout_width="138dip"
             android:layout_height="50dip"
-            android:paddingLeft="15dip"
+            android:paddingLeft="17dip"
             android:background="@drawable/bg_dropdown_normal"
             android:inputType="textPassword"
             style="@style/Text.normal.white" />

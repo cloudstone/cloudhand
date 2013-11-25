@@ -49,9 +49,10 @@
             android:background="@drawable/ic_customernumber" />
         
         <EditText 
-            android:id="@+id/edit_password"
+            android:id="@+id/edit_customer_number"
             android:layout_width="175dip"
             android:layout_height="40dip"
+            android:paddingLeft="15dip"
             android:background="@drawable/bg_dropdown_normal"
             android:inputType="number"
             style="@style/Text.normal.white" />

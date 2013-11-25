@@ -1,7 +1,5 @@
 package com.cloudstone.cloudhand.dialog;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +54,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_choose_table, container, false);
         spTableName = (Spinner)view.findViewById(R.id.sp_table_name);
-        tvCustomerNumber = (EditText)view.findViewById(R.id.edit_password);
+        tvCustomerNumber = (EditText)view.findViewById(R.id.edit_customer_number);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
         btnCancel = (Button)view.findViewById(R.id.btn_cancel);
         
@@ -71,7 +69,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
-      //获取桌况
+        //获取桌况
         new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
             @Override
@@ -136,6 +134,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                                     ((TableInfoActivity)(getActivity())).updateTables();
                                 }
                                 Bundle bundle = new Bundle();
+                                bundle.putString("tableName", spTableName.getSelectedItem().toString());
                                 bundle.putInt("tableId", tableId);
                                 bundle.putInt("customerNumber", customerNumber);
                                 Intent intent = new Intent();

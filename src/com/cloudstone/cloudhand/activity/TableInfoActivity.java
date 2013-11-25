@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckedTextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
@@ -28,6 +30,12 @@ import com.cloudstone.cloudhand.util.L;
  *
  */
 public class TableInfoActivity extends ViewPagerBaseActivity {
+    private int tabNumber;
+    private CheckedTextView secondTitle;
+    
+    public int getTabNumber() {
+        return tabNumber;
+    }
 	
     //用于桌子列表的数据
     private List<Table> tables = new ArrayList<Table>();
@@ -64,7 +72,9 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
     protected void initViewPager() {
         super.initViewPager();
         fragmentList.add(new TableInfoEmptyFragment());
-        fragmentList.add(new TableInfoOccupiedFragment());
+        if(tabNumber > 1) {
+            fragmentList.add(new TableInfoOccupiedFragment());
+        }
     }
     
     @Override
@@ -75,7 +85,13 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_table_info);
-        initTextView(2);
+        Intent intent = getIntent();
+        tabNumber = intent.getIntExtra("tabNumber", 2);
+        secondTitle = (CheckedTextView) findViewById(R.id.tv_secondTitle);
+        if(tabNumber < 2) {
+            secondTitle.setVisibility(View.GONE);
+        }
+        initTextView(tabNumber);
         initViewPager();
         updateTables();
     }

@@ -38,8 +38,10 @@ public class OpenTableSubmittedFragment extends BaseFragment {
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
         dishListView = (ListView)getView().findViewById(R.id.listview_dish);
         order = ((OpenTableActivity)(getActivity())).getOrder();
-        orderDishList = order.getDishes();
-        render();
+        if(order != null) {
+            orderDishList = order.getDishes();
+            render();
+        }
         btnClearTable = (Button)getView().findViewById(R.id.btn_clear_table);
         btnClearTable.setOnClickListener(new OnClickListener() {
             
@@ -47,7 +49,7 @@ public class OpenTableSubmittedFragment extends BaseFragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 ClearTableDialogFragment dialog = new ClearTableDialogFragment();
-                bundle.putInt("tableId", order.getTableId());
+                bundle.putInt("tableId", ((OpenTableActivity)(getActivity())).getTableId());
                 dialog.setArguments(bundle);
                 dialog.show(getFragmentManager(), "clearTableDialogFragment");
             }

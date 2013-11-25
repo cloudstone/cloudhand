@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.OrderDish;
+import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
-import com.cloudstone.cloudhand.dialog.SubmitSuccessDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.SubmitOrderAgainApi;
@@ -35,6 +39,7 @@ import com.cloudstone.cloudhand.util.L;
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
     private Button btnSubmit;
+    private TextView tvTableName;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +50,21 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        tvTableName = (TextView)getView().findViewById(R.id.tv_table_name);
+        tvTableName.setText(((OpenTableActivity)(getActivity())).getIntent().getStringExtra("tableName"));
+        
+        //换桌
+        tvTableName.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TableInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("tabNumber", 1);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
         //长按弹出删除一道菜对话框
         dishListView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -71,6 +91,20 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
             
             @Override
             public void onClick(View v) {
+                Submit();
+            }
+        });
+    }
+    
+    //下单
+    private void Submit() {
+        BaseDialog dialog = new BaseDialog(getActivity());
+        dialog.setIcon(R.drawable.ic_ask);
+        dialog.setMessage(R.string.message_submit);
+        dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
                 List<OrderDish> orderDishList = new ArrayList<OrderDish>();
                 DishBag dishes = getDishes();
                 OrderDish orderDish;
@@ -114,8 +148,19 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                             
                             @Override
                             public void onSuccess(Order result) {
-                                SubmitSuccessDialogFragment dialog = new SubmitSuccessDialogFragment();
-                                dialog.show(getFragmentManager(), "submitSuccessDialogFragment");
+                                //弹出下单成功对话框
+                                BaseDialog dialog = new BaseDialog(getActivity());
+                                dialog.setIcon(R.drawable.ic_success);
+                                dialog.setMessage(R.string.submit_success);
+                                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                    
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        getActivity().finish();
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.show();
                             }
                             
                             @Override
@@ -141,8 +186,19 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                             
                             @Override
                             public void onSuccess(Order result) {
-                                SubmitSuccessDialogFragment dialog = new SubmitSuccessDialogFragment();
-                                dialog.show(getFragmentManager(), "submitSuccessDialogFragment");
+                                //弹出下单成功对话框
+                                BaseDialog dialog = new BaseDialog(getActivity());
+                                dialog.setIcon(R.drawable.ic_success);
+                                dialog.setMessage(R.string.submit_success);
+                                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                    
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        getActivity().finish();
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.show();
                             }
                             
                             @Override
@@ -159,8 +215,17 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                         });
                     }
                 }
+                dialog.dismiss();
             }
         });
+        dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     
     @Override

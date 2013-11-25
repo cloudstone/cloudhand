@@ -48,6 +48,7 @@ public class ClearTableSuccessDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
+                getActivity().finish();
                 dismiss();
             }
         });

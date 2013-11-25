@@ -43,7 +43,7 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     private int customerNumber;
     private int orderId;
     private Order order;
-    private boolean flag; //是否显示已下单选项卡
+    private boolean flag; //是否下过单
     private CheckedTextView thirdTitle;
     
     public int getTableId() {
@@ -108,9 +108,10 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         super.initViewPager();
         fragmentList.add(new OpenTableOrderFragment());
         fragmentList.add(new OpenTableOrderedFragment());
-        if(flag) {
-            fragmentList.add(new OpenTableSubmittedFragment());
-        }
+//        if(flag) {
+//            fragmentList.add(new OpenTableSubmittedFragment());
+//        }
+        fragmentList.add(new OpenTableSubmittedFragment());
         
     }
     
@@ -129,9 +130,9 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         customerNumber = intent.getIntExtra("customerNumber", 0);
         orderId = intent.getIntExtra("orderId", 0);
         flag = intent.getBooleanExtra("flag", false);
-        if(!flag) {
-            thirdTitle.setVisibility(View.GONE);
-        }
+//        if(!flag) {
+//            thirdTitle.setVisibility(View.GONE);
+//        }
         
         initTextView(3);
         initViewPager();
