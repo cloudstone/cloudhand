@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Dish;
@@ -54,18 +53,18 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
         tvTableName.setText(((OpenTableActivity)(getActivity())).getIntent().getStringExtra("tableName"));
         
         //换桌
-        tvTableName.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TableInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("tabNumber", 1);
-                bundle.putInt("tableId", ((OpenTableActivity)(getActivity())).getTableId());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        tvTableName.setOnClickListener(new OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), TableInfoActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("tabNumber", 1);
+//                bundle.putInt("tableId", ((OpenTableActivity)(getActivity())).getTableId());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
         //长按弹出删除一道菜对话框
         dishListView.setOnItemLongClickListener(new OnItemLongClickListener() {

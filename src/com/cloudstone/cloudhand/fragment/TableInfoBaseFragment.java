@@ -29,7 +29,7 @@ import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ChangeTableApi;
-import com.cloudstone.cloudhand.network.api.ChangeTableApi.ChangeTableCallback;
+import com.cloudstone.cloudhand.network.api.ChangeTableApi.ChangeTableCalback;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.util.L;
@@ -137,7 +137,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         }
                     }
                 } else {
-                    int selectedTableId = getTables().get(intPosition).getId();
+                    selectedTableId = getTables().get(intPosition).getId();
                     BaseDialog dialog = new BaseDialog(getActivity());
                     dialog.setIcon(R.drawable.ic_ask);
                     dialog.setMessage(R.string.message_change_table);
@@ -145,7 +145,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            new ChangeTableApi(((TableInfoActivity)(getActivity())).getTableId(), getSelectedTableId()).asyncCall(new ChangeTableCallback() {
+                            new ChangeTableApi(((TableInfoActivity)(getActivity())).getTableId(), getSelectedTableId()).asyncCall(new ChangeTableCalback() {
                                 
                                 @Override
                                 public void onSuccess(Table result) {

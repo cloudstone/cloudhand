@@ -98,6 +98,9 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
             secondTitle.setVisibility(View.GONE);
         }
         initTextView(tabNumber);
+        if(tabNumber < 2) {
+            titleList.get(0).setText(getResources().getString(R.string.change_table));
+        }
         initViewPager();
         updateTables();
     }

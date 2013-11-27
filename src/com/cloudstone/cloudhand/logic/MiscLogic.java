@@ -57,4 +57,12 @@ public class MiscLogic extends BaseLogic {
     public void saveCurrentUser(String userName) {
         pref().setCurrentUser(userName);
     }
+    
+    public boolean getNoNet() {
+        return pref().getNoNet();
+    }
+    
+    public void saveNoNet(boolean noNet) {
+        pref().setNoNet(noNet);
+    }
 }

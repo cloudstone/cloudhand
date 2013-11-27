@@ -35,11 +35,11 @@ public class UrlConst {
         return String.format(CLEAR_TABLE_URL, tableId);
     }
     
-    private final String CHANGE_TABLE_URL =  BASE_TABLE_URL + "/change";
+    public static final  String CHANGE_TABLE_URL = BASE_URL + "/tables/change";
     
-    public String changeTableUrl(int fromId, int toldId) {
-        return String.format(CHANGE_TABLE_URL, fromId, toldId);
-    }
+//    public String changeTableUrl() {
+//        return CHANGE_TABLE_URL;
+//    }
     
     public static final String LIST_DISH_DOTE_URL = BASE_URL + "/dishes/notes";
 }
