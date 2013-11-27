@@ -17,7 +17,7 @@ public class BaseDialog extends Dialog {
     private Button button2;
     
     public BaseDialog(Context context) {
-        super(context, R.style.AppTheme);
+        super(context, R.style.Dialog_base);
         setContentView(R.layout.dialog_base);
         ivIcon = (ImageView)findViewById(R.id.iv_icon);
         tvMessage = (TextView)findViewById(R.id.tv_message);
