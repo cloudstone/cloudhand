@@ -25,7 +25,7 @@ public class JsonUtils {
         return GSON.fromJson(json, clazz);
     }
     
-    public static <T extends IJson> List<T> jsonToList(String json, Type type) {
+    public static <T> List<T> jsonToList(String json, Type type) {
         return GSON.fromJson(json, type);
     }
 }
