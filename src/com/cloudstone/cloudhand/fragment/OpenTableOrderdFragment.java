@@ -3,6 +3,8 @@ package com.cloudstone.cloudhand.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.OrderDish;
@@ -49,6 +53,29 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View v, int intPosition,
                     long longPosition) {
                 int deleteDishId = getDishes().get(intPosition).getId();
+//                BaseDialog dialog = new BaseDialog(getActivity());
+//                dialog.setIcon(R.drawable.ic_ask);
+//                dialog.setMessage(R.string.message_logout);
+//                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+//                    
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                      //删除一道菜后刷新界面
+//                        ((OpenTableActivity)(getActivity())).setDishCount(deleteDishId, 0);
+//                        Intent intent = new Intent();
+//                        intent.setAction("update");
+//                        getActivity().sendBroadcast(intent);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                    
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.show();
                 
                 DeleteDishDialogFragment dialog = new DeleteDishDialogFragment();
                 Bundle bundle = new Bundle();

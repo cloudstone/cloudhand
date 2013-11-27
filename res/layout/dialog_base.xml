@@ -44,12 +44,14 @@
             <Button 
                 android:id="@+id/btn_button1"
                 android:text="@string/confirm"
+                android:visibility="gone"
                 style="@style/base_button" />
         
             <Button 
                 android:id="@+id/btn_button2"
                 android:layout_marginLeft="15dip"
                 android:text="@string/cancel"
+                android:visibility="gone"
                 style="@style/base_button" />
         </LinearLayout>
         

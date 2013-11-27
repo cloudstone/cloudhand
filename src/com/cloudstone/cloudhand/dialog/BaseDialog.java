@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 
+/**
+ * 
+ * @author xhc
+ *
+ */
 public class BaseDialog extends Dialog {
     private ImageView ivIcon;
     private TextView tvMessage;
@@ -110,14 +115,5 @@ public class BaseDialog extends Dialog {
         }
         super.show();
     }
-
-    
-//    protected UserLogic getUserLogic() {
-//        return UserLogic.getInstance();
-//    }
-//    
-//    protected MiscLogic getMiscLogic() {
-//        return MiscLogic.getInstance();
-//    }
 
 }
