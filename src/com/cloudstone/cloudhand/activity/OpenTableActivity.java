@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.data.Dish;
-import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
+import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
@@ -187,8 +188,25 @@ public class OpenTableActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) { 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { 
-            ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();
-            dialog.show(getFragmentManager(), "exitOrderDialogFragment");
+            BaseDialog dialog = new BaseDialog(OpenTableActivity.this);
+            dialog.setIcon(R.drawable.ic_ask);
+            dialog.setMessage(R.string.message_exit_order);
+            dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    OpenTableActivity.this.finish();
+                    dialog.dismiss();
+                }
+            });
+            dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
             return true;
         } 
         return super.onKeyDown(keyCode, event);
