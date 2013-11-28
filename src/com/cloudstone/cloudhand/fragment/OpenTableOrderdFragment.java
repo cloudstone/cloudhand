@@ -17,11 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.dialog.BaseDialog;
-import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.OrderDish;
 import com.cloudstone.cloudhand.exception.ApiException;
