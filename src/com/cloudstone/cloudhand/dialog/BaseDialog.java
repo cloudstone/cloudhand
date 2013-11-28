@@ -40,8 +40,8 @@ public class BaseDialog extends Dialog {
         tvMessage.setText(message);
     }
     
-    public void setMessage(int message) {
-        tvMessage.setText(getContext().getResources().getString(message));
+    public void setMessage(int stringId) {
+        tvMessage.setText(getContext().getResources().getString(stringId));
     }
     
     //添加按钮
@@ -70,28 +70,8 @@ public class BaseDialog extends Dialog {
     }
     
     //添加按钮
-    public void addButton(int text, final DialogInterface.OnClickListener onClickListener) {
-        if(button1.getVisibility() != View.VISIBLE) {
-            button1.setVisibility(View.VISIBLE);
-            button1.setText(getContext().getResources().getString(text));
-            button1.setOnClickListener(new View.OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onClick(BaseDialog.this, button1.getId());
-                }
-            });
-        } else {
-            button2.setVisibility(View.VISIBLE);
-            button2.setText(getContext().getResources().getString(text));
-            button2.setOnClickListener(new View.OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onClick(BaseDialog.this, button2.getId());
-                }
-            });
-        }
+    public void addButton(int stringId, final DialogInterface.OnClickListener onClickListener) {
+        addButton(getContext().getResources().getString(stringId), onClickListener);
     }
     
   //获取按钮

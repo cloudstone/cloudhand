@@ -52,37 +52,31 @@ public class OpenTableOrderdFragment extends OpenTableBaseFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View v, int intPosition,
                     long longPosition) {
-                int deleteDishId = getDishes().get(intPosition).getId();
-//                BaseDialog dialog = new BaseDialog(getActivity());
-//                dialog.setIcon(R.drawable.ic_ask);
-//                dialog.setMessage(R.string.message_logout);
-//                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
-//                    
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                      //删除一道菜后刷新界面
-//                        ((OpenTableActivity)(getActivity())).setDishCount(deleteDishId, 0);
-//                        Intent intent = new Intent();
-//                        intent.setAction("update");
-//                        getActivity().sendBroadcast(intent);
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//                    
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.show();
+                final int deleteDishId = getDishes().get(intPosition).getId();
+                BaseDialog dialog = new BaseDialog(getActivity());
+                dialog.setIcon(R.drawable.ic_ask);
+                dialog.setMessage(R.string.message_delete_dish);
+                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //删除一道菜后刷新界面
+                        ((OpenTableActivity)(getActivity())).setDishCount(deleteDishId, 0);
+                        Intent intent = new Intent();
+                        intent.setAction("update");
+                        getActivity().sendBroadcast(intent);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
                 
-                DeleteDishDialogFragment dialog = new DeleteDishDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("dishId", deleteDishId);
-                dialog.setArguments(bundle);
-                dialog.show(getFragmentManager(), "deleteDishDialogFragment");
-
                 return false;
             }
         });
