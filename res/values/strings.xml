@@ -37,6 +37,8 @@
     <string name="settings">设置</string>
     <string name="ip">IP</string>
     <string name="input_ip">请输入IP:</string>
+    <string name="noNet">无网络模式</string>
+    <string name="check_noNet">勾选开启无网络模式</string>
 
     <!--桌况 -->
     <string name="table_name">桌名</string>
