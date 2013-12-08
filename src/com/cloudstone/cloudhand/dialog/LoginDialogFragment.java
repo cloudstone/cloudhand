@@ -73,7 +73,6 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             public void onSuccess(String[] result) {
                 LoginDialogFragment.this.userNames = result;
                 LoginDialogFragment.this.render();
-                
                 //用户名自动选择上一次登录用户
                 String currentUser = MiscLogic.getInstance().getCurrentUser();
                 if(!currentUser.equals("")) {
