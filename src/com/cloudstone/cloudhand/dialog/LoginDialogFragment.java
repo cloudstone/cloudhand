@@ -16,13 +16,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.MiscLogic;
+import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ListUserNameApi;
 import com.cloudstone.cloudhand.network.api.LoginApi;
 import com.cloudstone.cloudhand.network.api.LoginApi.LoginApiCallback;
@@ -64,57 +64,63 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
-        //获取用户名列表
-        new ListUserNameApi().asyncCall(new IApiCallback<String[]>() {
-            
-            @Override
-            public void onSuccess(String[] result) {
-                userNames = result;
-                render();
+        //判断是否勾选了无网络
+        if(MiscLogic.getInstance().getNoNet()) {
+            LoginDialogFragment.this.userNames = UserLogic.getInstance().getAllUser(getActivity()); //从数据库获取用户名
+            LoginDialogFragment.this.render();
+        } else {
+            //获取用户名列表
+            new ListUserNameApi().asyncCall(new IApiCallback<String[]>() {
                 
-                //用户名自动选择上一次登录用户
-                String currentUser = getMiscLogic().getCurrentUser();
-                if(!currentUser.equals("")) {
-                    for(int i = 0; i < userNames.length; i++) {
-                        if(userNames[i].equals(currentUser)) {
-                            tvUserName.setSelection(i);
-                            break;
+                @Override
+                public void onSuccess(String[] result) {
+                    LoginDialogFragment.this.userNames = result;
+                    LoginDialogFragment.this.render();
+                    UserLogic.getInstance().insertUser(getActivity(), result); //将用户名写入数据库
+                    
+                    //用户名自动选择上一次登录用户
+                    String currentUser = MiscLogic.getInstance().getCurrentUser();
+                    if(!currentUser.equals("")) {
+                        for(int i = 0; i < userNames.length; i++) {
+                            if(userNames[i].equals(currentUser)) {
+                                tvUserName.setSelection(i);
+                                break;
+                             }
                          }
-                     }
+                    }
+                    
+                    //密码框自动填上密码
+                    String userName = tvUserName.getSelectedItem().toString();
+                    String password = MiscLogic.getInstance().getPassword(userName);
+                    tvPassword.setText(password);
                 }
                 
-                //密码框自动填上密码
-                String userName = tvUserName.getSelectedItem().toString();
-                String password = MiscLogic.getInstance().getPassword(userName);
-                tvPassword.setText(password);
-            }
-            
-            @Override
-            public void onFinish() {}
-            
-            @Override
-            public void onFailed(ApiException exception) {
-                UIUtils.toast(getActivity(), R.string.error_list_user_names_failed);
-                L.e(LoginDialogFragment.class, exception);
-            }
-        });
+                @Override
+                public void onFinish() {}
+                
+                @Override
+                public void onFailed(ApiException exception) {
+                    UIUtils.toast(getActivity(), R.string.error_list_user_names_failed);
+                    L.e(LoginDialogFragment.class, exception);
+                }
+            });
+        }
         
         //登录
         btnLogin.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
-                if(tvUserName.getSelectedItem() == null) {
-                    Toast.makeText(getActivity(), R.string.user_name_error, Toast.LENGTH_SHORT).show();
+                //判断是否勾选了无网络
+                if(MiscLogic.getInstance().getNoNet()) {
+                    ((MainActivity) getActivity()).setTvLoginStatus(tvUserName.getSelectedItem().toString()); //修改主界面的登录状态为用户名
+                    dismiss();
                 } else {
                     new LoginApi(tvUserName.getSelectedItem().toString(), tvPassword.getText().toString()).asyncCall(new LoginApiCallback() {
 
                         @Override
                         public void onSuccess(User result) {
                             getUserLogic().saveUser(result); //保存用户名
-                            
-                            //TODO use delegate
                             ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
                             
                             String userName = tvUserName.getSelectedItem().toString();
@@ -171,7 +177,6 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             
         });
     }
-    
     
     private void render() {
         //创建一个下拉框适配器

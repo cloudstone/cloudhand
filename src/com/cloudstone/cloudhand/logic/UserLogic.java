@@ -4,7 +4,10 @@
  */
 package com.cloudstone.cloudhand.logic;
 
+import android.content.Context;
+
 import com.cloudstone.cloudhand.data.User;
+import com.cloudstone.cloudhand.storage.UserStorage;
 
 /**
  * @author xuhongfeng
@@ -47,5 +50,35 @@ public class UserLogic extends BaseLogic {
             }
         }
         return me;
+    }
+    
+    //向数据库插入用户名
+    public void insertUser(Context context, String[] params) {
+        UserStorage userStorage = new UserStorage(context);
+        userStorage.insertUser(params);
+    }
+    
+    //清空数据库的用户名
+    public void clearUser(Context context) {
+        UserStorage userStorage = new UserStorage(context);
+        userStorage.clearUser();
+    }
+    
+    //获取数据库的用户名
+    public String[] getAllUser(Context context) {
+        UserStorage userStorage = new UserStorage(context);
+        return userStorage.getAllUser();
+    }
+    
+//    //创建数据库的用户表
+//    public void createUserTable(Context context) {
+//        UserStorage userStorage = new UserStorage(context);
+//        userStorage.createUserTable();
+//    }
+    
+    //删除数据库的用户表
+    public void dropUserTable(Context context) {
+        UserStorage userStorage = new UserStorage(context);
+        userStorage.dropUserTable();
     }
 }

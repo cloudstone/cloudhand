@@ -77,6 +77,9 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
         filter.addAction(BroadcastConst.UPDATE_TABLE_INFO);
         filter.addAction(BroadcastConst.TABLE_INFO_DISMISS);
         getActivity().registerReceiver(broadcastReceiver, filter);
+        Intent intent = new Intent();
+        intent.setAction(BroadcastConst.UPDATE_TABLES);
+        getActivity().sendBroadcast(intent);
     }
     
     @Override
