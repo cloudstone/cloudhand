@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +28,9 @@ import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
 import com.cloudstone.cloudhand.fragment.OpenTableSubmittedFragment;
+import com.cloudstone.cloudhand.logic.DishLogic;
+import com.cloudstone.cloudhand.logic.DishNoteLogic;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
 import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
@@ -45,6 +51,24 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
     private Order order;
     private boolean flag; //是否下过单
     private CheckedTextView thirdTitle;
+    
+//    protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if(intent.getAction().equals(BroadcastConst.UPDATE_TABLES)) {
+//                updateTables();
+//            }
+//        }
+//    };
+//    
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(BroadcastConst.UPDATE_TABLES);
+//        this.registerReceiver(broadcastReceiver, filter);
+//    }
     
     public int getTableId() {
         return tableId;
@@ -136,63 +160,81 @@ public class OpenTableActivity extends ViewPagerBaseActivity {
         
         initTextView(3);
         initViewPager();
-        
-        //获取菜单列表
-        new ListDishApi().asyncCall(new IApiCallback<List<Dish>>() {
-            
-            @Override
-            public void onSuccess(List<Dish> result) {
-                for(int i = 0;i < result.size();i++) {
-                    dishes.put(result.get(i));
+        updateDish();
+    }
+    
+    private void updateDish() {
+        if(MiscLogic.getInstance().getNoNet()) {
+            int dishSize = DishLogic.getInstance().getAllDish(OpenTableActivity.this).size();
+            List<Dish> dish = DishLogic.getInstance().getAllDish(OpenTableActivity.this);
+            for(int i = 0;i < dishSize;i++) {
+                dishes.put(dish.get(i));
+            }
+            dishNotes = DishNoteLogic.getInstance().getAllDishTable(OpenTableActivity.this);
+            //发送更新菜单界面的广播
+            Intent intent = new Intent();
+            intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
+            OpenTableActivity.this.sendBroadcast(intent);
+        } else {
+            //获取菜单列表
+            new ListDishApi().asyncCall(new IApiCallback<List<Dish>>() {
+                
+                @Override
+                public void onSuccess(List<Dish> result) {
+                    DishLogic.getInstance().insertDish(OpenTableActivity.this, result);
+                    for(int i = 0;i < result.size();i++) {
+                        dishes.put(result.get(i));
+                    }
+                    //发送更新菜单界面的广播
+                    Intent intent = new Intent();
+                    intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
+                    OpenTableActivity.this.sendBroadcast(intent);
                 }
-                //发送更新菜单界面的广播
-                Intent intent = new Intent();
-                intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
-                OpenTableActivity.this.sendBroadcast(intent);
-            }
+                
+                @Override
+                public void onFinish() {
+                }
+                
+                @Override
+                public void onFailed(ApiException exception) {
+                    Toast.makeText(OpenTableActivity.this, R.string.error_list_dishes_failed, Toast.LENGTH_SHORT).show();
+                    L.e(OpenTableActivity.this, exception);
+                }
+            });
             
-            @Override
-            public void onFinish() {
-            }
+            //获取备注列表
+            new ListDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
+                
+                @Override
+                public void onSuccess(List<DishNote> result) {
+                    DishNoteLogic.getInstance().insertDishNote(OpenTableActivity.this, result);
+                    dishNotes = result;
+                }
+                
+                @Override
+                public void onFinish() {
+                }
+                
+                @Override
+                public void onFailed(ApiException exception) {}
+            });
             
-            @Override
-            public void onFailed(ApiException exception) {
-                Toast.makeText(OpenTableActivity.this, R.string.error_list_dishes_failed, Toast.LENGTH_SHORT).show();
-                L.e(OpenTableActivity.this, exception);
-            }
-        });
-        
-        //获取备注列表
-        new ListDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
-            
-            @Override
-            public void onSuccess(List<DishNote> result) {
-                dishNotes = result;
-            }
-            
-            @Override
-            public void onFinish() {
-            }
-            
-            @Override
-            public void onFailed(ApiException exception) {}
-        });
-        
-        new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
-            
-            @Override
-            public void onSuccess(Order result) {
-                order = result;
-            }
-            
-            @Override
-            public void onFinish() {
-            }
-            
-            @Override
-            public void onFailed(ApiException exception) {
-            }
-        });
+            new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
+                
+                @Override
+                public void onSuccess(Order result) {
+                    order = result;
+                }
+                
+                @Override
+                public void onFinish() {
+                }
+                
+                @Override
+                public void onFailed(ApiException exception) {
+                }
+            });
+        }
     }
     
     //按下返回键弹出退出确认

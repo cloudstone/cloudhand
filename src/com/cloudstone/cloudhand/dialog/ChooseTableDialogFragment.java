@@ -23,6 +23,8 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.MiscLogic;
+import com.cloudstone.cloudhand.logic.TableLogic;
 import com.cloudstone.cloudhand.network.api.ListTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi.OccupyTableCalback;
@@ -68,45 +70,68 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
-        //获取桌况
-        new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
-
-            @Override
-            public void onSuccess(List<Table> result) {
-                //过滤掉非空闲状态的桌子
-                Iterator<Table> it = result.iterator();
-                while (it.hasNext()) {
-                    Table table = it.next();
-                    if(table.getStatus() == 0) {
-                        tableMap.put(table.getName(), table);
-                    }
-                }
-                render();
-                
-                Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
-                int selection = 0;
-                while (iterator.hasNext()) {
-                    Entry<String, Table> entry = iterator.next();
-                    if(entry.getValue().getId() == tableId) {
-                        spTableName.setSelection(selection);
-                        break;
-                    }
-                    selection++;
+        if(MiscLogic.getInstance().getNoNet()) {
+            List<Table> tables = TableLogic.getInstance().getAllTable(getActivity());
+          //过滤掉非空闲状态的桌子
+            Iterator<Table> it = tables.iterator();
+            while (it.hasNext()) {
+                Table table = it.next();
+                if(table.getStatus() == 0) {
+                    tableMap.put(table.getName(), table);
                 }
             }
-
-            @Override
-            public void onFailed(ApiException exception) {
-                Toast.makeText(getActivity(), R.string.error_list_table_info_failed, Toast.LENGTH_SHORT).show();
-                L.e(ChooseTableDialogFragment.class, exception);
+            render();
+            
+            Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
+            int selection = 0;
+            while (iterator.hasNext()) {
+                Entry<String, Table> entry = iterator.next();
+                if(entry.getValue().getId() == tableId) {
+                    spTableName.setSelection(selection);
+                    break;
+                }
+                selection++;
             }
+        } else {
+          //获取桌况
+            new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
-            @Override
-            public void onFinish() {
-            }
+                @Override
+                public void onSuccess(List<Table> result) {
+                    //过滤掉非空闲状态的桌子
+                    Iterator<Table> it = result.iterator();
+                    while (it.hasNext()) {
+                        Table table = it.next();
+                        if(table.getStatus() == 0) {
+                            tableMap.put(table.getName(), table);
+                        }
+                    }
+                    render();
+                    
+                    Iterator<Entry<String, Table>> iterator = tableMap.entrySet().iterator();
+                    int selection = 0;
+                    while (iterator.hasNext()) {
+                        Entry<String, Table> entry = iterator.next();
+                        if(entry.getValue().getId() == tableId) {
+                            spTableName.setSelection(selection);
+                            break;
+                        }
+                        selection++;
+                    }
+                }
 
-        });
+                @Override
+                public void onFailed(ApiException exception) {
+                    Toast.makeText(getActivity(), R.string.error_list_table_info_failed, Toast.LENGTH_SHORT).show();
+                    L.e(ChooseTableDialogFragment.class, exception);
+                }
+
+                @Override
+                public void onFinish() {
+                }
+
+            });
+        }
         
         //确定
         btnConfirm.setOnClickListener(new OnClickListener() {
@@ -115,7 +140,6 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                
                 String tableName = spTableName.getSelectedItem().toString();
                 String inputCustomerNumber = tvCustomerNumber.getText().toString();
                 
@@ -125,37 +149,53 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                     if(isInt(inputCustomerNumber)) {
                         customerNumber = Integer.parseInt(inputCustomerNumber);
                         tableId = tableMap.get(tableName).getId(); //获取输入的桌名的ID
-                        new OccupyTableApi(tableId, customerNumber).asyncCall(new OccupyTableCalback() {
-                            
-                            @Override
-                            public void onSuccess(Table result) {
-                                //如果是从桌况进入点餐界面要刷新桌况
-                                if(getActivity().getClass() == TableInfoActivity.class) {
-                                    ((TableInfoActivity)(getActivity())).updateTables();
+                        if(MiscLogic.getInstance().getNoNet()) {
+                            //如果是从桌况进入点餐界面要刷新桌况
+                            if(getActivity().getClass() == TableInfoActivity.class) {
+                                ((TableInfoActivity)(getActivity())).updateTables();
+                            }
+                            Bundle bundle = new Bundle();
+                            bundle.putString("tableName", spTableName.getSelectedItem().toString());
+                            bundle.putInt("tableId", tableId);
+                            bundle.putInt("customerNumber", customerNumber);
+                            Intent intent = new Intent();
+                            intent.putExtras(bundle);
+                            intent.setClass(getActivity(), OpenTableActivity.class);
+                            startActivity(intent);
+                            dismiss();
+                        } else {
+                            new OccupyTableApi(tableId, customerNumber).asyncCall(new OccupyTableCalback() {
+                                
+                                @Override
+                                public void onSuccess(Table result) {
+                                    //如果是从桌况进入点餐界面要刷新桌况
+                                    if(getActivity().getClass() == TableInfoActivity.class) {
+                                        ((TableInfoActivity)(getActivity())).updateTables();
+                                    }
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("tableName", spTableName.getSelectedItem().toString());
+                                    bundle.putInt("tableId", tableId);
+                                    bundle.putInt("customerNumber", customerNumber);
+                                    Intent intent = new Intent();
+                                    intent.putExtras(bundle);
+                                    intent.setClass(getActivity(), OpenTableActivity.class);
+                                    startActivity(intent);
+                                    dismiss();
                                 }
-                                Bundle bundle = new Bundle();
-                                bundle.putString("tableName", spTableName.getSelectedItem().toString());
-                                bundle.putInt("tableId", tableId);
-                                bundle.putInt("customerNumber", customerNumber);
-                                Intent intent = new Intent();
-                                intent.putExtras(bundle);
-                                intent.setClass(getActivity(), OpenTableActivity.class);
-                                startActivity(intent);
-                                dismiss();
-                            }
-                            
-                            @Override
-                            public void onFinish() {}
-                            
-                            @Override
-                            protected void onOccupied() {}
-                            
-                            @Override
-                            protected void onError(ApiException exception) {
-                                Toast.makeText(getActivity(), R.string.error_open_table_failed, Toast.LENGTH_SHORT).show();
-                                L.e(ChooseTableDialogFragment.this, exception);
-                            }
-                        });
+                                
+                                @Override
+                                public void onFinish() {}
+                                
+                                @Override
+                                protected void onOccupied() {}
+                                
+                                @Override
+                                protected void onError(ApiException exception) {
+                                    Toast.makeText(getActivity(), R.string.error_open_table_failed, Toast.LENGTH_SHORT).show();
+                                    L.e(ChooseTableDialogFragment.this, exception);
+                                }
+                            });
+                        }
                     } else {
                         Toast.makeText(getActivity(), R.string.choose_table_customer_number_error, Toast.LENGTH_SHORT).show();
                     }

@@ -58,6 +58,9 @@ public class OpenTableBaseFragment extends BaseFragment {
         filter.addAction(BroadcastConst.INIT_OPEN_TABLE);
         filter.addAction(BroadcastConst.UPDATE_OPEN_TABLE);
         getActivity().registerReceiver(broadcastReceiver, filter);
+        Intent intent = new Intent();
+        intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
+        getActivity().sendBroadcast(intent);
     }
         
     @Override

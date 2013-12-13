@@ -16,7 +16,7 @@ public class TableStorage extends BaseStorage {
     private DBOpenHelper dbOpenHelper;
     
     public TableStorage(Context context) {
-        dbOpenHelper = new DBOpenHelper(context, 2);
+        dbOpenHelper = new DBOpenHelper(context);
     }
     
     public void insertTable(List<Table> tables) {
@@ -58,6 +58,7 @@ public class TableStorage extends BaseStorage {
         SQLiteDatabase db = null;
         List<Table> tables = new ArrayList<Table>();
         try {
+            System.out.println(dbOpenHelper.getReadableDatabase().getVersion());
             db = dbOpenHelper.getReadableDatabase();
             String sql = "select * from tables";
             Cursor cursor = db.rawQuery(sql, null);

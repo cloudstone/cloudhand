@@ -28,6 +28,7 @@ import com.cloudstone.cloudhand.data.OrderDish;
 import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.DeleteDishDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.SubmitOrderAgainApi;
 import com.cloudstone.cloudhand.network.api.SubmitOrderApi;
@@ -105,117 +106,133 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
             
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                List<OrderDish> orderDishList = new ArrayList<OrderDish>();
-                DishBag dishes = getDishes();
-                OrderDish orderDish;
-                for(int i = 0; i < dishes.size(); i++) {
-                    orderDish = new OrderDish();
-                    Dish dish = dishes.getByPos(i);
-                    orderDish.setId(dish.getId());
-                    orderDish.setNumber(getDishCount(dish.getId()));
-                    
-                    Set<Integer> dishNoteIdSet = ((OpenTableActivity)(getActivity())).getDishNoteIdSet(dish.getId());
-                    if(dishNoteIdSet.size() > 0) {
-                        List<DishNote> dishNotes = ((OpenTableActivity)(getActivity())).getDishNotes();
-                        String[] remarks = new String[dishNoteIdSet.size()];
-                        int k = 0;
+                dialog.dismiss();
+                if(MiscLogic.getInstance().getNoNet()) {
+                    //弹出下单成功对话框
+                    BaseDialog successDialog = new BaseDialog(getActivity());
+                    successDialog.setIcon(R.drawable.ic_success);
+                    successDialog.setMessage(R.string.submit_success);
+                    successDialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         
-                        Iterator<Integer> iterator = dishNoteIdSet.iterator();
-                        while(iterator.hasNext()){
-                            int next = iterator.next();
-                            for(int j = 0; j < dishNotes.size(); j++) {
-                                if(dishNotes.get(j).getId() == next) {
-                                    remarks[k] = dishNotes.get(j).getName();
-                                    k++;
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    successDialog.show();
+                } else {
+                    List<OrderDish> orderDishList = new ArrayList<OrderDish>();
+                    DishBag dishes = getDishes();
+                    OrderDish orderDish;
+                    for(int i = 0; i < dishes.size(); i++) {
+                        orderDish = new OrderDish();
+                        Dish dish = dishes.getByPos(i);
+                        orderDish.setId(dish.getId());
+                        orderDish.setNumber(getDishCount(dish.getId()));
+                        
+                        Set<Integer> dishNoteIdSet = ((OpenTableActivity)(getActivity())).getDishNoteIdSet(dish.getId());
+                        if(dishNoteIdSet.size() > 0) {
+                            List<DishNote> dishNotes = ((OpenTableActivity)(getActivity())).getDishNotes();
+                            String[] remarks = new String[dishNoteIdSet.size()];
+                            int k = 0;
+                            
+                            Iterator<Integer> iterator = dishNoteIdSet.iterator();
+                            while(iterator.hasNext()){
+                                int next = iterator.next();
+                                for(int j = 0; j < dishNotes.size(); j++) {
+                                    if(dishNotes.get(j).getId() == next) {
+                                        remarks[k] = dishNotes.get(j).getName();
+                                        k++;
+                                    }
                                 }
                             }
+                            orderDish.setRemarks(remarks);
                         }
-                        orderDish.setRemarks(remarks);
+                        orderDishList.add(orderDish);
                     }
-                    orderDishList.add(orderDish);
-                }
-                    
-                if(orderDishList.size() == 0) {
-                    Toast.makeText(getActivity(), R.string.no_order, Toast.LENGTH_SHORT).show();
-                } else {
-                    Order order;
-                    //根据是否有已下单选项卡执行初次提交订单或者加菜
-                    if(((OpenTableActivity)(getActivity())).getFlag()) {
-                        order = ((OpenTableActivity)(getActivity())).getOrder();
-                        order.setDishes(orderDishList);
-                        SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
-                        submit.asyncCall(new IApiCallback<Order>() {
-                            
-                            @Override
-                            public void onSuccess(Order result) {
-                                //弹出下单成功对话框
-                                BaseDialog dialog = new BaseDialog(getActivity());
-                                dialog.setIcon(R.drawable.ic_success);
-                                dialog.setMessage(R.string.submit_success);
-                                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                                    
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        getActivity().finish();
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialog.show();
-                            }
-                            
-                            @Override
-                            public void onFinish() {
-                                L.i(OpenTableOrderedFragment.class, "onFinish");
-                            }
-                            
-                            @Override
-                            public void onFailed(ApiException exception) {
-                                L.i(OpenTableOrderedFragment.class, "onFailed");
-                                L.e(this, exception);
-                                Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        
+                    if(orderDishList.size() == 0) {
+                        Toast.makeText(getActivity(), R.string.no_order, Toast.LENGTH_SHORT).show();
                     } else {
-                        order = new Order();
-                        order.setUserId(UserLogic.getInstance().getUser().getId());
-                        order.setTableId(((OpenTableActivity)(getActivity())).getTableId());
-                        order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
-                        order.setDishes(orderDishList);
-                        SubmitOrderApi submit = new SubmitOrderApi(order);
-                        submit.asyncCall(new IApiCallback<Order>() {
-                            
-                            @Override
-                            public void onSuccess(Order result) {
-                                //弹出下单成功对话框
-                                BaseDialog dialog = new BaseDialog(getActivity());
-                                dialog.setIcon(R.drawable.ic_success);
-                                dialog.setMessage(R.string.submit_success);
-                                dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                                    
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        getActivity().finish();
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialog.show();
-                            }
-                            
-                            @Override
-                            public void onFinish() {
-                                L.i(OpenTableOrderedFragment.class, "onFinish");
-                            }
-                            
-                            @Override
-                            public void onFailed(ApiException exception) {
-                                L.i(OpenTableOrderedFragment.class, "onFailed");
-                                L.e(this, exception);
-                                Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        Order order;
+                        //根据是否有已下单选项卡执行初次提交订单或者加菜
+                        if(((OpenTableActivity)(getActivity())).getFlag()) {
+                            order = ((OpenTableActivity)(getActivity())).getOrder();
+                            order.setDishes(orderDishList);
+                            SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
+                            submit.asyncCall(new IApiCallback<Order>() {
+                                
+                                @Override
+                                public void onSuccess(Order result) {
+                                    //弹出下单成功对话框
+                                    BaseDialog dialog = new BaseDialog(getActivity());
+                                    dialog.setIcon(R.drawable.ic_success);
+                                    dialog.setMessage(R.string.submit_success);
+                                    dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getActivity().finish();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                                
+                                @Override
+                                public void onFinish() {
+                                    L.i(OpenTableOrderedFragment.class, "onFinish");
+                                }
+                                
+                                @Override
+                                public void onFailed(ApiException exception) {
+                                    L.i(OpenTableOrderedFragment.class, "onFailed");
+                                    L.e(this, exception);
+                                    Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            order = new Order();
+                            order.setUserId(UserLogic.getInstance().getUser().getId());
+                            order.setTableId(((OpenTableActivity)(getActivity())).getTableId());
+                            order.setCustomerNumber(((OpenTableActivity)(getActivity())).getCustomerNumber());
+                            order.setDishes(orderDishList);
+                            SubmitOrderApi submit = new SubmitOrderApi(order);
+                            submit.asyncCall(new IApiCallback<Order>() {
+                                
+                                @Override
+                                public void onSuccess(Order result) {
+                                    //弹出下单成功对话框
+                                    BaseDialog dialog = new BaseDialog(getActivity());
+                                    dialog.setIcon(R.drawable.ic_success);
+                                    dialog.setMessage(R.string.submit_success);
+                                    dialog.addButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getActivity().finish();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                                
+                                @Override
+                                public void onFinish() {
+                                    L.i(OpenTableOrderedFragment.class, "onFinish");
+                                }
+                                
+                                @Override
+                                public void onFailed(ApiException exception) {
+                                    L.i(OpenTableOrderedFragment.class, "onFailed");
+                                    L.e(this, exception);
+                                    Toast.makeText(getActivity(), R.string.submit_failed, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
             }
         });
         dialog.addButton(R.string.cancel, new DialogInterface.OnClickListener() {

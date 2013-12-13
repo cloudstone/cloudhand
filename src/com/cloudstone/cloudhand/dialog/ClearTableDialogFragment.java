@@ -20,6 +20,7 @@ import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
 import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ClearTableApi.ClearTableCalback;
@@ -68,30 +69,36 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                new ClearTableApi(tableId).asyncCall(new ClearTableCalback() {
-                    
-                    @Override
-                    public void onSuccess(Table result) {
-                        Intent intent = new Intent();
-                        intent.setAction(BroadcastConst.UPDATE_TABLES);
-                        getActivity().sendBroadcast(intent);
-                        ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
-                        dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
-                        dismiss();
-                    }
-                    
-                    @Override
-                    public void onFinish() {}
-                                       
-                    @Override
-                    protected void onError(ApiException exception) {
-                        Toast.makeText(getActivity(), R.string.error_clear_table_failed, Toast.LENGTH_SHORT).show();
-                        L.e(ClearTableDialogFragment.this, exception);
-                    }
-                    
-                    @Override
-                    protected void onCleared() {}
-                });
+                if(MiscLogic.getInstance().getNoNet()) {
+                    ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
+                    dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
+                    dismiss();
+                } else {
+                    new ClearTableApi(tableId).asyncCall(new ClearTableCalback() {
+                        
+                        @Override
+                        public void onSuccess(Table result) {
+                            Intent intent = new Intent();
+                            intent.setAction(BroadcastConst.UPDATE_TABLES);
+                            getActivity().sendBroadcast(intent);
+                            ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
+                            dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
+                            dismiss();
+                        }
+                        
+                        @Override
+                        public void onFinish() {}
+                                           
+                        @Override
+                        protected void onError(ApiException exception) {
+                            Toast.makeText(getActivity(), R.string.error_clear_table_failed, Toast.LENGTH_SHORT).show();
+                            L.e(ClearTableDialogFragment.this, exception);
+                        }
+                        
+                        @Override
+                        protected void onCleared() {}
+                    });
+                }
             }
         });
         
