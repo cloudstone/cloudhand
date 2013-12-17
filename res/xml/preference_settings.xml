@@ -10,5 +10,11 @@
                 android:key="edittext_preference"  
                 android:title="@string/ip"
                 android:dialogTitle="@string/input_ip" />
+        <CheckBoxPreference 
+            android:layout="@layout/preference_check"
+            android:key="checkbox_noNet" 
+            android:title="@string/noNet"  
+            android:summary="@string/check_noNet" >  
+        </CheckBoxPreference> 
     </PreferenceCategory>  
 </PreferenceScreen   >

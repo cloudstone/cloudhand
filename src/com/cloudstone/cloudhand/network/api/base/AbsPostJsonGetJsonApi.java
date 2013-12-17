@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.protocol.HTTP;
 
 import com.cloudstone.cloudhand.constant.EmptyConst;
 import com.cloudstone.cloudhand.constant.EmptyConst.EmptyForm;
@@ -34,7 +35,7 @@ public abstract class AbsPostJsonGetJsonApi<PAYLOAD extends IJson, RESULT extend
     @Override
     protected void setPostEntity(HttpPost post) {
         try {
-            post.setEntity(new StringEntity(payload.toJson()));
+            post.setEntity(new StringEntity(payload.toJson(), HTTP.UTF_8));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

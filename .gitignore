@@ -2,4 +2,6 @@
 /bin/
 project.properties
 /.settings/
+/.metadata/
 .classpath
+.metadata

@@ -3,37 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dip"
     android:background="@drawable/bg_main" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip" >
+        android:layout_height="50dip" >
 
-        <TextView
-            android:id="@+id/tv_order"
+        <CheckedTextView
+            android:id="@+id/tv_firstTitle"
             android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/order"
             style="@style/Text.xlarge.white"
-            android:background="@drawable/bg_open_table_title_pressed" />
+            android:checked="true"
+            android:background="@drawable/selector_order_tab" />
 
-        <TextView
-            android:id="@+id/tv_orderd"
+        <CheckedTextView
+            android:id="@+id/tv_secondTitle"
             android:layout_width="0dip"
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/orderd"
+            android:text="@string/ordered"
             style="@style/Text.xlarge.white"
-            android:background="@drawable/bg_open_table_title_normal" />
+            android:background="@drawable/selector_order_tab" />
+        
+        <CheckedTextView
+            android:id="@+id/tv_thirdTitle"
+            android:layout_width="0dip"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/submitted"
+            style="@style/Text.xlarge.white"
+            android:background="@drawable/selector_order_tab" />
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager_open_table"
+        android:id="@+id/viewPager_base"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"

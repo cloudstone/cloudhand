@@ -47,7 +47,7 @@
                 style="@style/base_button" />
         
             <Button 
-                android:id="@+id/btn_cancle"
+                android:id="@+id/btn_cancel"
                 android:layout_marginLeft="15dip"
                 android:text="@string/cancel"
                 style="@style/base_button" />

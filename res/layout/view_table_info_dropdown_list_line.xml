@@ -9,7 +9,7 @@
         android:id="@+id/tv_table_name"
         android:layout_width="0dip"
         android:layout_height="40dip"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         style="@style/Text.xlarge.white" />
 

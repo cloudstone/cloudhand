@@ -1,7 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
+import com.cloudstone.cloudhand.util.DishBag;
 
 public class OpenTableOrderFragment extends OpenTableBaseFragment implements SearchView.OnQueryTextListener {
     private SearchView searchView;
@@ -30,10 +30,12 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
         searchView.setFocusable(false);
         searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(false);
+        
     }
     
     @Override
     public boolean onQueryTextChange(String keywords) {
+        dishes = searchItem(searchView.getQuery().toString());
         render();
         return false;
     }
@@ -44,35 +46,32 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     }
     
     //模糊搜索过滤出一个菜单结果
-    private List<Dish> searchItem(String keywords) {
+    private DishBag searchItem(String keywords) {
         ContrastPinyin contrastPinyin = new ContrastPinyin();
-        List<Dish> data = new ArrayList<Dish>();
-        List<Dish> dishes = ((OpenTableActivity)(getActivity())).getDishes();
-        for (int i = 0; i < dishes.size(); i++) {
-            int index = 0;;
+        DishBag data = new DishBag();
+        DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        
+        Iterator<Dish> it = dishes.iterator();
+        while(it.hasNext()) {
+            int index = 0;
+            Dish dish = it.next();
             if(contrastPinyin.isContain(keywords)) {
-                index = dishes.get(i).getName().indexOf(keywords);
+                index = dish.getName().indexOf(keywords);
             } else {
-                String pinyin = contrastPinyin.getSpells(dishes.get(i).getName());
+                String pinyin = contrastPinyin.getSpells(dish.getName());
                 index = pinyin.indexOf(keywords.toLowerCase());
             }
             // 存在匹配的数据
             if (index != -1) {
-                data.add(dishes.get(i));
+                data.put(dish);
             }
         }
         return data;
     }
     
     @Override
-    protected List<Dish> getDishes() {
+    protected DishBag filter(DishBag dishes) {
         return searchItem(searchView.getQuery().toString());
-    }
-    
-    @Override
-    protected void render() {
-        adapter = new InnerAdapter();
-        dishListView.setAdapter(adapter);
     }
     
 }

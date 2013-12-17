@@ -66,6 +66,7 @@ public class PreferenceStorage extends BaseStorage {
     private static final String KEY_IP = "ip";
     private static final String KEY_CURRENT_USER = "current_user";
     private static final String KEY_PASSWORD_PREFIX = "pw_";
+    private static final String NONET = "noNet";
     
     public String getIP() {
         return preferences().getString(KEY_IP, UrlConst.DEFAULT_IP);
@@ -101,5 +102,13 @@ public class PreferenceStorage extends BaseStorage {
     
     public void setCurrentUser(String userName) {
         preferences().edit().putString(KEY_CURRENT_USER, userName).commit();
+    }
+    
+    public boolean getNoNet() {
+        return preferences().getBoolean(NONET, false);
+    }
+    
+    public boolean setNoNet(boolean noNet) {
+        return preferences().edit().putBoolean(NONET, noNet).commit();
     }
 }

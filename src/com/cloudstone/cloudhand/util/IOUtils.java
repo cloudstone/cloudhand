@@ -20,6 +20,8 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.apache.http.protocol.HTTP;
+
 /**
  *
  * copy from apache
