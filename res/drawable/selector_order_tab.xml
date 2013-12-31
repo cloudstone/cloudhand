@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <item android:state_checked="true"
+         android:drawable="@drawable/bg_open_table_title_pressed"/>
+    
+    <item android:state_checked="false"
+         android:drawable="@drawable/bg_open_table_title_normal"/>
+</selector>

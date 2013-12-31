@@ -1,12 +1,6 @@
 package com.cloudstone.cloudhand.fragment;
 
-import java.util.List;
-
-import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.data.Dish;
-import com.cloudstone.cloudhand.view.DishItem;
-import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
+import java.util.Iterator;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +12,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.activity.OpenTableActivity;
+import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.view.DishItem;
+import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
+
 /**
  * 
  * @author xhc
@@ -26,12 +27,14 @@ import android.widget.ListView;
 public class OpenTableBaseFragment extends BaseFragment {
     protected ListView dishListView;
     protected BaseAdapter adapter;
+    protected DishBag dishes = new DishBag();
     
     protected BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("update")) {
+                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
                 render();
             }
         }
@@ -94,7 +97,7 @@ public class OpenTableBaseFragment extends BaseFragment {
 
         @Override
         public Dish getItem(int position) {
-            return getDishes().get(position);
+            return getDishes().getByPos(position);
         }
 
         @Override
@@ -144,11 +147,42 @@ public class OpenTableBaseFragment extends BaseFragment {
         
     }
     
-    protected List<Dish> getDishes() {
+    protected Dish getDish(int dishId) {
+        DishBag dishes = this.getDishes();
+        if (dishes != null) {
+            return dishes.getById(dishId);
+        }
         return null;
     }
     
+    protected double getTotalPrice() {
+        double total = 0;
+        DishBag dishes = this.getDishes();
+        
+        Iterator<Dish> it = dishes.iterator();
+        while(it.hasNext()) {
+            Dish dish = it.next();
+            int dishId = dish.getId();
+            int count = getDishCount(dishId);
+            if (count > 0) {
+                total += dish.getPrice() * count;
+            }
+        }
+        return total;
+    }
+    
+    protected DishBag getDishes() {
+        return dishes;
+    }
+    
     //更新界面
-    protected void render() {}
+    protected void render() {
+        adapter = new InnerAdapter();
+        dishListView.setAdapter(adapter);
+    }
+    
+    protected DishBag filter(DishBag dishes) {
+        return dishes;
+    }
     
 }
