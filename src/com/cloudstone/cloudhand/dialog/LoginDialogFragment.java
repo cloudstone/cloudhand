@@ -92,8 +92,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             }
             
             @Override
-            public void onFinish() {
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
@@ -107,46 +106,46 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                new LoginApi(tvUserName.getSelectedItem().toString(), tvPassword.getText().toString()).asyncCall(new LoginApiCallback() {
+                if(tvUserName.getSelectedItem() == null) {
+                    Toast.makeText(getActivity(), R.string.user_name_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    new LoginApi(tvUserName.getSelectedItem().toString(), tvPassword.getText().toString()).asyncCall(new LoginApiCallback() {
 
-                    @Override
-                    public void onSuccess(User result) {
-                        UserLogic.getInstance().saveUser(result); //保存用户名
-                        ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
-                        
-                        String userName = tvUserName.getSelectedItem().toString();
-                        String password = tvPassword.getText().toString();
-                        //记住当前登录用户
-                        MiscLogic.getInstance().saveCurrentUser(userName);
-                        
-                        //存入数据
-                        if(cbRemember.isChecked()) {
-                            MiscLogic.getInstance().savePassword(userName, password);
-                        } else {
-                            MiscLogic.getInstance().removePassword(userName);
+                        @Override
+                        public void onSuccess(User result) {
+                            UserLogic.getInstance().saveUser(result); //保存用户名
+                            ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
+                            
+                            String userName = tvUserName.getSelectedItem().toString();
+                            String password = tvPassword.getText().toString();
+                            //记住当前登录用户
+                            MiscLogic.getInstance().saveCurrentUser(userName);
+                            
+                            //存入数据
+                            if(cbRemember.isChecked()) {
+                                MiscLogic.getInstance().savePassword(userName, password);
+                            } else {
+                                MiscLogic.getInstance().removePassword(userName);
+                            }
+                            
+                            dismiss();
                         }
-                        
-                        dismiss();
-                    }
 
-                    @Override
-                    public void onFinish() {
-                    }
+                        @Override
+                        public void onFinish() {}
 
-                    @Override
-                    protected void onAuthFailed() {
-                        Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
-                        
-                    }
+                        @Override
+                        protected void onAuthFailed() {
+                            Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    protected void onError(ApiException e) {
-                        L.e(this, e);
-                        Toast.makeText(getActivity(), R.string.Logon_failed, Toast.LENGTH_SHORT).show();
-                        
-                    }
-                    
-                });
+                        @Override
+                        protected void onError(ApiException e) {
+                            L.e(this, e);
+                            Toast.makeText(getActivity(), R.string.Login_failed, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
         
@@ -162,13 +161,12 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 tvPassword.setText(password);
                 //判断记住密码是否选中
                 cbRemember.setChecked(!password.equals(""));
-                
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                
             }
+            
         });
     }
     

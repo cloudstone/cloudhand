@@ -3,3 +3,4 @@
 project.properties
 /.settings/
 .classpath
+.metadata
