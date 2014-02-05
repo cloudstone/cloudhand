@@ -16,7 +16,7 @@
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/order"
+            android:text="@string/empty"
             style="@style/Text.xlarge.white"
             android:checked="true"
             android:background="@drawable/selector_order_tab" />
@@ -27,7 +27,7 @@
             android:layout_height="50dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/ordered"
+            android:text="@string/occupied"
             style="@style/Text.xlarge.white"
             android:background="@drawable/selector_order_tab" />
     </LinearLayout>
