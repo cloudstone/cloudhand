@@ -19,6 +19,7 @@ import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.DishNote;
+import com.cloudstone.cloudhand.util.GlobalValue;
 import com.cloudstone.cloudhand.view.DishNoteItem;
 import com.cloudstone.cloudhand.view.DishNoteItem.DishNoteItemListener;
 
@@ -83,12 +84,12 @@ public class DishNoteDialogFragment extends DialogFragment {
         
         @Override
         public int getCount() {
-            return ((OpenTableActivity)(getActivity())).getDishNotes().size();
+            return (GlobalValue.getIns().getDishNotes().size());
         }
 
         @Override
         public DishNote getItem(int position) {
-            return (DishNote)((OpenTableActivity)(getActivity())).getDishNotes().get(position);
+            return (DishNote)(GlobalValue.getIns().getDishNotes().get(position));
         }
 
         @Override

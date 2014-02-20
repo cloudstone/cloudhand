@@ -17,6 +17,10 @@ public class DishBag implements Iterable<Dish> {
     private List<Dish> list = new ArrayList<Dish>();
     private Map<Integer, Dish> map = new HashMap<Integer, Dish>();
     
+    public List<Dish> getDishes() {
+        return list;
+    }
+    
     public void put(Dish value) {
         list.add(value);
         map.put(value.getId(), value);

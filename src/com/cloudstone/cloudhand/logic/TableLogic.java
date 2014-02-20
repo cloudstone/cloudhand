@@ -25,19 +25,19 @@ public class TableLogic extends BaseLogic {
         return me;
     }
     
-    //向数据库插入用户名
+    //向数据库插入桌子
     public void insertTable(Context context, List<Table> tables) {
         TableStorage tableStorage = new TableStorage(context);
         tableStorage.insertTable(tables);
     }
     
-    //清空数据库的用户名
+    //清空数据库的桌子
     public void clearTable(Context context) {
         TableStorage tableStorage = new TableStorage(context);
         tableStorage.clearTable();
     }
     
-    //获取数据库的用户名
+    //获取数据库的桌子
     public List<Table> getAllTable(Context context) {
         TableStorage tableStorage = new TableStorage(context);
         return tableStorage.getAllTable();

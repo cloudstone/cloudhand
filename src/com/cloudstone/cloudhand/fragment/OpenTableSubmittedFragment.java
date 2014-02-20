@@ -18,9 +18,10 @@ import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.OrderDish;
 import com.cloudstone.cloudhand.dialog.ClearTableDialogFragment;
+import com.cloudstone.cloudhand.util.GlobalValue;
 import com.cloudstone.cloudhand.view.BaseDishItem;
 
-public class OpenTableSubmittedFragment extends BaseFragment {
+public class OpenTableSubmittedFragment extends OpenTableBaseFragment {
     private TextView totalPriceView;
     private Order order;
     private List<OrderDish> orderDishList;
@@ -37,7 +38,7 @@ public class OpenTableSubmittedFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         totalPriceView = (TextView)getView().findViewById(R.id.tv_total_price);
         dishListView = (ListView)getView().findViewById(R.id.listview_dish);
-        order = ((OpenTableActivity)(getActivity())).getOrder();
+        order = GlobalValue.getIns().getOrder();
         if(order != null) {
             orderDishList = order.getDishes();
             render();
@@ -75,13 +76,12 @@ public class OpenTableSubmittedFragment extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            OpenTableActivity openTableActivity = ((OpenTableActivity)(getActivity()));
             BaseDishItem view = (BaseDishItem) convertView;
             if (view == null) {
                 view = createView();
             }
             OrderDish orderDish = getItem(position);
-            Dish dish = openTableActivity.getDishes().getById(orderDish.getId());
+            Dish dish = GlobalValue.getIns().getDishes().getById(orderDish.getId());
             
             StringBuilder sb = new StringBuilder();
             String[] remarks = orderDish.getRemarks();
@@ -126,9 +126,11 @@ public class OpenTableSubmittedFragment extends BaseFragment {
     
     //更新界面
     protected void render() {
-        adapter = new InnerAdapter();
-        dishListView.setAdapter(adapter);
-        totalPriceView.setText(order.getOriginPrice() + "");
+        if(orderDishList != null) {
+            adapter = new InnerAdapter();
+            dishListView.setAdapter(adapter);
+            totalPriceView.setText(order.getOriginPrice() + "");
+        }
     }
     
 }

@@ -43,6 +43,9 @@ public class TableStorage extends BaseStorage {
         SQLiteDatabase db = null;
         try {
             db = dbOpenHelper.getWritableDatabase();
+            String createTableSql = "create table if not exists tables(id integer, name varchar(64), type integer, capacity integer, " +
+                    "minCharge double, tipMode integer, tip double, orderId integer, status integer)";
+            db.execSQL(createTableSql);
             String sql = "delete from tables";
             db.execSQL(sql);
         } catch (Exception e) {

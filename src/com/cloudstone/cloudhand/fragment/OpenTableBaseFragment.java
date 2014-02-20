@@ -21,6 +21,7 @@ import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.dialog.DishNoteDialogFragment;
 import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.util.GlobalValue;
 import com.cloudstone.cloudhand.view.DishItem;
 import com.cloudstone.cloudhand.view.DishItem.DishItemListener;
 
@@ -39,13 +40,17 @@ public class OpenTableBaseFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(BroadcastConst.INIT_OPEN_TABLE)) {
-                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
+                dishes = filter(GlobalValue.getIns().getDishes());
                 render();
                 renderTotalPrice();
+//                DishLogic.getInstance().insertDish(context, dishes.getDishes());
+//                DishNoteLogic.getInstance().insertDishNote(context, GlobalValue.getIns().getDishNotes());
             }
             if(intent.getAction().equals(BroadcastConst.UPDATE_OPEN_TABLE)) {
-                dishes = filter(((OpenTableActivity)(getActivity())).getDishes());
-                adapter.notifyDataSetChanged();
+                dishes = filter(GlobalValue.getIns().getDishes());
+                if(adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
                 renderTotalPrice();
             }
         }
@@ -131,7 +136,7 @@ public class OpenTableBaseFragment extends BaseFragment {
             StringBuilder sb = new StringBuilder();
             Set<Integer> dishNoteIdSet = openTableActivity.getDishNoteIdSet(dish.getId());
             dishNoteIdSet.addAll(dishNoteIdSet);
-            List<DishNote> dishNotes = openTableActivity.getDishNotes();
+            List<DishNote> dishNotes = GlobalValue.getIns().getDishNotes();
             
             for(int i = 0; i < dishNotes.size(); i++) {
                 if(dishNoteIdSet.contains(dishNotes.get(i).getId())) {

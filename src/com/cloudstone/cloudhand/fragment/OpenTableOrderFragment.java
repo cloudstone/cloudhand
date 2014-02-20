@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.util.GlobalValue;
 
 public class OpenTableOrderFragment extends OpenTableBaseFragment implements SearchView.OnQueryTextListener {
     private SearchView searchView;
@@ -49,7 +49,7 @@ public class OpenTableOrderFragment extends OpenTableBaseFragment implements Sea
     private DishBag searchItem(String keywords) {
         ContrastPinyin contrastPinyin = new ContrastPinyin();
         DishBag data = new DishBag();
-        DishBag dishes = ((OpenTableActivity)(getActivity())).getDishes();
+        DishBag dishes = GlobalValue.getIns().getDishes();
         
         Iterator<Dish> it = dishes.iterator();
         while(it.hasNext()) {

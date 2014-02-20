@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.asynctask.InsertTableTask;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.MiscLogic;
@@ -30,6 +29,7 @@ import com.cloudstone.cloudhand.network.api.OccupyTableApi;
 import com.cloudstone.cloudhand.network.api.OccupyTableApi.OccupyTableCalback;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
+import com.cloudstone.cloudhand.util.UpdateData;
 
 /**
  * 
@@ -72,7 +72,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
         super.onActivityCreated(savedInstanceState);
         if(MiscLogic.getInstance().getNoNet()) {
             List<Table> tables = TableLogic.getInstance().getAllTable(getActivity());
-          //过滤掉非空闲状态的桌子
+            //过滤掉非空闲状态的桌子
             Iterator<Table> it = tables.iterator();
             while (it.hasNext()) {
                 Table table = it.next();
@@ -93,11 +93,12 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 selection++;
             }
         } else {
-          //获取桌况
+            //获取桌况
             new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
-
                 @Override
                 public void onSuccess(List<Table> result) {
+                    InsertTableTask inserTable = new InsertTableTask(getActivity(), result);
+                    inserTable.execute();
                     //过滤掉非空闲状态的桌子
                     Iterator<Table> it = result.iterator();
                     while (it.hasNext()) {
@@ -154,14 +155,16 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                             if(getActivity().getClass() == TableInfoActivity.class) {
                                 ((TableInfoActivity)(getActivity())).updateTables();
                             }
-                            Bundle bundle = new Bundle();
+                            /*Bundle bundle = new Bundle();
                             bundle.putString("tableName", spTableName.getSelectedItem().toString());
                             bundle.putInt("tableId", tableId);
                             bundle.putInt("customerNumber", customerNumber);
                             Intent intent = new Intent();
                             intent.putExtras(bundle);
                             intent.setClass(getActivity(), OpenTableActivity.class);
-                            startActivity(intent);
+                            startActivity(intent);*/
+                            UpdateData updateData = new UpdateData(getActivity(), tableId, spTableName.getSelectedItem().toString());
+                            updateData.updateData();
                             dismiss();
                         } else {
                             new OccupyTableApi(tableId, customerNumber).asyncCall(new OccupyTableCalback() {
@@ -172,14 +175,16 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                                     if(getActivity().getClass() == TableInfoActivity.class) {
                                         ((TableInfoActivity)(getActivity())).updateTables();
                                     }
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("tableName", spTableName.getSelectedItem().toString());
-                                    bundle.putInt("tableId", tableId);
-                                    bundle.putInt("customerNumber", customerNumber);
-                                    Intent intent = new Intent();
-                                    intent.putExtras(bundle);
-                                    intent.setClass(getActivity(), OpenTableActivity.class);
-                                    startActivity(intent);
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putString("tableName", spTableName.getSelectedItem().toString());
+//                                    bundle.putInt("tableId", tableId);
+//                                    bundle.putInt("customerNumber", customerNumber);
+//                                    Intent intent = new Intent();
+//                                    intent.putExtras(bundle);
+//                                    intent.setClass(getActivity(), OpenTableActivity.class);
+//                                    startActivity(intent);
+                                    UpdateData updateData = new UpdateData(getActivity(), tableId, spTableName.getSelectedItem().toString());
+                                    updateData.updateData();
                                     dismiss();
                                 }
                                 

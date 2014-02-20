@@ -22,17 +22,20 @@ import android.widget.SearchView;
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
 import com.cloudstone.cloudhand.activity.TableInfoActivity;
+import com.cloudstone.cloudhand.asynctask.InsertTableTask;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.dialog.BaseDialog;
 import com.cloudstone.cloudhand.dialog.OpenTableDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
+import com.cloudstone.cloudhand.logic.TableLogic;
 import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ChangeTableApi;
 import com.cloudstone.cloudhand.network.api.ChangeTableApi.ChangeTableCalback;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
 import com.cloudstone.cloudhand.pinyin.ContrastPinyin;
 import com.cloudstone.cloudhand.util.L;
+import com.cloudstone.cloudhand.util.UpdateData;
 import com.cloudstone.cloudhand.view.TableItem;
 
 /**
@@ -127,16 +130,8 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         }
                         //如果是从已用桌子进入点菜页面
                         if(getActivity().getClass() == TableInfoActivity.class) {
-                            if(orderId > 0) {
-                                bundle.putBoolean("flag", true);
-                                bundle.putInt("orderId", orderId);
-                            }
-                            bundle.putString("tableName", getTables().get(intPosition).getName());
-                            bundle.putInt("tableId", tableId);
-                            Intent submitIntent = new Intent();
-                            submitIntent.putExtras(bundle);
-                            submitIntent.setClass(getActivity(), OpenTableActivity.class);
-                            startActivity(submitIntent);
+                            UpdateData updateData = new UpdateData(getActivity(), orderId, tableId, getTables().get(intPosition).getName());
+                            updateData.updateData();
                         }
                     }
                 } else {

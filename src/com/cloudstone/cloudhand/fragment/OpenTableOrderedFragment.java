@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.data.Dish;
 import com.cloudstone.cloudhand.data.DishNote;
 import com.cloudstone.cloudhand.data.Order;
@@ -34,6 +32,7 @@ import com.cloudstone.cloudhand.network.api.SubmitOrderAgainApi;
 import com.cloudstone.cloudhand.network.api.SubmitOrderApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.DishBag;
+import com.cloudstone.cloudhand.util.GlobalValue;
 import com.cloudstone.cloudhand.util.L;
 
 public class OpenTableOrderedFragment extends OpenTableBaseFragment {
@@ -132,7 +131,7 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                         
                         Set<Integer> dishNoteIdSet = ((OpenTableActivity)(getActivity())).getDishNoteIdSet(dish.getId());
                         if(dishNoteIdSet.size() > 0) {
-                            List<DishNote> dishNotes = ((OpenTableActivity)(getActivity())).getDishNotes();
+                            List<DishNote> dishNotes = GlobalValue.getIns().getDishNotes();
                             String[] remarks = new String[dishNoteIdSet.size()];
                             int k = 0;
                             
@@ -156,8 +155,8 @@ public class OpenTableOrderedFragment extends OpenTableBaseFragment {
                     } else {
                         Order order;
                         //根据是否有已下单选项卡执行初次提交订单或者加菜
-                        if(((OpenTableActivity)(getActivity())).getFlag()) {
-                            order = ((OpenTableActivity)(getActivity())).getOrder();
+                        if(GlobalValue.getIns().getOrder() != null) {
+                            order = GlobalValue.getIns().getOrder();
                             order.setDishes(orderDishList);
                             SubmitOrderAgainApi submit = new SubmitOrderAgainApi(order);
                             submit.asyncCall(new IApiCallback<Order>() {

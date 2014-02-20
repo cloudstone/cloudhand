@@ -44,8 +44,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
         
         if(oldVersion == 3 && newVersion == 4) {
-            String createUserSql = "create table if not exists dishNote(id integer, name varchar(64))";
-            db.execSQL(createUserSql);
+            String createDishNoteSql = "create table if not exists dishNote(id integer, name varchar(64))";
+            db.execSQL(createDishNoteSql);
         }
     }
 

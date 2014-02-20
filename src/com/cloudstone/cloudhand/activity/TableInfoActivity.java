@@ -15,6 +15,7 @@ import android.widget.CheckedTextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.asynctask.InsertTableTask;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
@@ -117,11 +118,13 @@ public class TableInfoActivity extends ViewPagerBaseActivity {
             }
             TableInfoActivity.this.sendBroadcast(intent);
         } else {
+            //获取桌况
             new ListTableApi().asyncCall(new IApiCallback<List<Table>>() {
 
                 @Override
                 public void onSuccess(List<Table> result) {
-                    TableLogic.getInstance().insertTable(TableInfoActivity.this, result);
+                    InsertTableTask inserTable = new InsertTableTask(TableInfoActivity.this, result);
+                    inserTable.execute();
                     Intent intent = new Intent();
                     if(tables.isEmpty()) {
                         tables = result;

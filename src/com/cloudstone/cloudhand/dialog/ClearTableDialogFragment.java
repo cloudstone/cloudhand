@@ -1,7 +1,5 @@
 package com.cloudstone.cloudhand.dialog;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
-import com.cloudstone.cloudhand.activity.OpenTableActivity;
-import com.cloudstone.cloudhand.activity.TableInfoActivity;
 import com.cloudstone.cloudhand.constant.BroadcastConst;
-import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.data.Table;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.MiscLogic;
 import com.cloudstone.cloudhand.network.api.ClearTableApi;
-import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ClearTableApi.ClearTableCalback;
-import com.cloudstone.cloudhand.network.api.base.IApiCallback;
 import com.cloudstone.cloudhand.util.L;
 
 /**
@@ -78,12 +71,14 @@ public class ClearTableDialogFragment extends BaseAlertDialogFragment {
                         
                         @Override
                         public void onSuccess(Table result) {
-                            Intent intent = new Intent();
-                            intent.setAction(BroadcastConst.UPDATE_TABLES);
-                            getActivity().sendBroadcast(intent);
-                            ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
-                            dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
-                            dismiss();
+                            if(getActivity() != null) {
+                                Intent intent = new Intent();
+                                intent.setAction(BroadcastConst.UPDATE_TABLES);
+                                getActivity().sendBroadcast(intent);
+                                ClearTableSuccessDialogFragment dialog = new ClearTableSuccessDialogFragment();
+                                dialog.show(getFragmentManager(), "clearTableSuccessDialogFragment");
+                                dismiss();
+                            }
                         }
                         
                         @Override

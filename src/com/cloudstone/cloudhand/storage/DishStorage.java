@@ -46,6 +46,10 @@ public class DishStorage extends BaseStorage {
         SQLiteDatabase db = null;
         try {
             db = dbOpenHelper.getWritableDatabase();
+            String createDishSql = "create table if not exists dish(id integer, name varchar(64), price double, memberPrice double, " +
+                    "unit integer, spicy integer, specialPrice integer, nonInt integer, desc varchar(64)," +
+                    " imageId varchar(64), status integer, pinyin varchar(64), soldout integer)";
+            db.execSQL(createDishSql);
             String sql = "delete from dish";
             db.execSQL(sql);
         } catch (Exception e) {

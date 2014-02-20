@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.cloudstone.cloudhand.R;
 import com.cloudstone.cloudhand.activity.MainActivity;
+import com.cloudstone.cloudhand.asynctask.InsertUserTask;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.MiscLogic;
@@ -76,7 +77,9 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
                 public void onSuccess(String[] result) {
                     LoginDialogFragment.this.userNames = result;
                     LoginDialogFragment.this.render();
-                    UserLogic.getInstance().insertUser(getActivity(), result); //将用户名写入数据库
+//                    UserLogic.getInstance().insertUser(getActivity(), result); //将用户名写入数据库
+                    InsertUserTask inserUser = new InsertUserTask(getActivity(), result); //将用户名写入数据库
+                    inserUser.execute();
                     
                     //用户名自动选择上一次登录用户
                     String currentUser = MiscLogic.getInstance().getCurrentUser();

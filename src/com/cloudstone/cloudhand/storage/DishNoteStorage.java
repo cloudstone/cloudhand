@@ -42,6 +42,8 @@ public class DishNoteStorage extends BaseStorage {
         SQLiteDatabase db = null;
         try {
             db = dbOpenHelper.getWritableDatabase();
+            String createDishNoteSql = "create table if not exists dishNote(id integer, name varchar(64))";
+            db.execSQL(createDishNoteSql);
             String sql = "delete from dishNote";
             db.execSQL(sql);
         } catch (Exception e) {

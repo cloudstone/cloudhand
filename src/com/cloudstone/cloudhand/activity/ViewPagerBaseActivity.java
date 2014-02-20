@@ -46,6 +46,7 @@ public class ViewPagerBaseActivity extends BaseActivity {
                         viewPager.setCurrentItem(0);
                     }
                 });
+                title.setVisibility(View.VISIBLE);
             } else if(i == 1) {
                 title = (CheckedTextView)findViewById(R.id.tv_secondTitle);
                 title.setOnClickListener(new OnClickListener() {
@@ -55,6 +56,7 @@ public class ViewPagerBaseActivity extends BaseActivity {
                         viewPager.setCurrentItem(1);
                     }
                 });
+                title.setVisibility(View.VISIBLE);
             } else {
                 title = (CheckedTextView)findViewById(R.id.tv_thirdTitle);
                 title.setOnClickListener(new OnClickListener() {
@@ -64,6 +66,7 @@ public class ViewPagerBaseActivity extends BaseActivity {
                         viewPager.setCurrentItem(2);
                     }
                 });
+                title.setVisibility(View.VISIBLE);
             }
             titleList.add(title);
         }

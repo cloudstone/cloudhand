@@ -19,6 +19,7 @@
             android:text="@string/order"
             style="@style/Text.xlarge.white"
             android:checked="true"
+            android:visibility="gone"
             android:background="@drawable/selector_order_tab" />
 
         <CheckedTextView
@@ -29,6 +30,7 @@
             android:gravity="center"
             android:text="@string/ordered"
             style="@style/Text.xlarge.white"
+            android:visibility="gone"
             android:background="@drawable/selector_order_tab" />
         
         <CheckedTextView
@@ -39,6 +41,7 @@
             android:gravity="center"
             android:text="@string/submitted"
             style="@style/Text.xlarge.white"
+            android:visibility="gone"
             android:background="@drawable/selector_order_tab" />
     </LinearLayout>
 
