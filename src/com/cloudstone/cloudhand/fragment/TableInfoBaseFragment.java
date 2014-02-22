@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,7 +50,8 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
     protected ListView tableListView;
     protected BaseAdapter adapter;
     private List<Table> tables = new ArrayList<Table>();
-    private int selectedTableId ;
+    private int selectedTableId;
+    private ProgressDialog progressDialog;
     
     private int getSelectedTableId() {
         return selectedTableId;
@@ -69,6 +72,11 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
             if(intent.getAction().equals(BroadcastConst.TABLE_INFO_DISMISS)) {
                 getActivity().finish();
             }
+            if(intent.getAction().equals(BroadcastConst.DISMISS_PROGRESS_BAR)) {
+                if(progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+            }
         }
     };
     
@@ -79,6 +87,7 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
         filter.addAction(BroadcastConst.INIT_TABLE_INFO);
         filter.addAction(BroadcastConst.UPDATE_TABLE_INFO);
         filter.addAction(BroadcastConst.TABLE_INFO_DISMISS);
+        filter.addAction(BroadcastConst.DISMISS_PROGRESS_BAR);
         getActivity().registerReceiver(broadcastReceiver, filter);
         Intent intent = new Intent();
         intent.setAction(BroadcastConst.UPDATE_TABLES);
@@ -130,6 +139,8 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                         }
                         //如果是从已用桌子进入点菜页面
                         if(getActivity().getClass() == TableInfoActivity.class) {
+                            progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                            progressDialog.setContentView(R.layout.dialog_progressbar);
                             UpdateData updateData = new UpdateData(getActivity(), orderId, tableId, getTables().get(intPosition).getName());
                             updateData.updateData();
                         }
@@ -179,6 +190,15 @@ public abstract class TableInfoBaseFragment extends BaseFragment implements Sear
                 }
             }
         });
+    }
+    
+    private Context getTopParent(Activity context) {
+        Activity parent = context.getParent();
+        while (parent != null) {
+            context = parent;
+            parent = context.getParent();
+        }
+        return context;
     }
     
     private class InnerAdapter extends BaseAdapter {

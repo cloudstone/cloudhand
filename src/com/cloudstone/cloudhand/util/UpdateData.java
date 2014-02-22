@@ -144,6 +144,9 @@ public class UpdateData {
                     bundle.putInt("orderId", orderId);
                     bundle.putString("tableName", tableName);
                     bundle.putInt("tableId", tableId);
+                    Intent intent = new Intent();
+                    intent.setAction(BroadcastConst.DISMISS_PROGRESS_BAR);
+                    context.sendBroadcast(intent);
                     Intent submitIntent = new Intent();
                     submitIntent.putExtras(bundle);
                     submitIntent.setClass(context, OpenTableActivity.class);

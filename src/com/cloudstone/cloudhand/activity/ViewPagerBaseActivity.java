@@ -31,6 +31,7 @@ public class ViewPagerBaseActivity extends BaseActivity {
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
+        viewPager.setOffscreenPageLimit(2); //保存临近两个选项卡不销毁，提高滑动流畅性
     }
     
     //初始化头标

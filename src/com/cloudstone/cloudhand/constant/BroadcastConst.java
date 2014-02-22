@@ -13,5 +13,6 @@ public class BroadcastConst {
     
     public static final String UPDATE_TABLES = "updateTables";
     public static final String INIT_VIEW_PAGE = "initViewPage";
+    public static final String DISMISS_PROGRESS_BAR = "dismissProgressBar";
 
 }

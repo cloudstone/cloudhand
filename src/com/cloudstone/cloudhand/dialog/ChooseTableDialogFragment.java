@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -185,6 +188,7 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
 //                                    startActivity(intent);
                                     UpdateData updateData = new UpdateData(getActivity(), tableId, spTableName.getSelectedItem().toString());
                                     updateData.updateData();
+                                    new ProgressBar(getActivity());
                                     dismiss();
                                 }
                                 
@@ -218,6 +222,15 @@ public class ChooseTableDialogFragment extends BaseAlertDialogFragment {
                 dismiss();
             }
         });
+    }
+    
+    private Context getTopParent(Activity context) {
+        Activity parent = context.getParent();
+        while (parent != null) {
+            context = parent;
+            parent = context.getParent();
+        }
+        return context;
     }
     
     //判断一个字符串是否为非0正整数
