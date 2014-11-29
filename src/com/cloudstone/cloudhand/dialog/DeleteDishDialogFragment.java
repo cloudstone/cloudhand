@@ -2,7 +2,6 @@ package com.cloudstone.cloudhand.dialog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,7 @@ import com.cloudstone.cloudhand.activity.OpenTableActivity;
  * @author xhc
  *
  */
-public class DeleteDishDialogFragment extends DialogFragment {
+public class DeleteDishDialogFragment extends BaseAlertDialogFragment {
     private Button btnConfirm;
     private Button btnCancle;
     private ImageView ivIcon;
@@ -38,7 +37,7 @@ public class DeleteDishDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_base_confirm_cancle, container, false);
         btnConfirm = (Button)view.findViewById(R.id.btn_confirm);
-        btnCancle = (Button)view.findViewById(R.id.btn_cancle);
+        btnCancle = (Button)view.findViewById(R.id.btn_cancel);
         ivIcon = (ImageView)view.findViewById(R.id.iv_icon);
         tvMessage = (TextView)view.findViewById(R.id.tv_message);
         

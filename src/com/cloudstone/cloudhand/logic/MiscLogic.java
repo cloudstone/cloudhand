@@ -37,6 +37,7 @@ public class MiscLogic extends BaseLogic {
         return "http://" +  getServerIP() + ":" + UrlConst.PORT;
     }
     
+    //TOOD move to UserLogic
     public String getPassword(String userName) {
         return pref().getPassword(userName);
     }

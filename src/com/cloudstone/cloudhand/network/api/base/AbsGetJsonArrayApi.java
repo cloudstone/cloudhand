@@ -28,6 +28,7 @@ public abstract class AbsGetJsonArrayApi<RESULT extends IJson, FORM extends IFor
     protected final List<RESULT> decodeResponse(HttpResponse response)
             throws DecodeApiException {
         String json = HttpUtils.responseToString(response);
+        L.i(this, "json -->" + json);
         L.i(this, "HttpResponse : " + json);
         return JsonUtils.jsonToList(json, getType());
     }

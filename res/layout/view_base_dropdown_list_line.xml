@@ -2,6 +2,7 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android" 
     style="@style/Text.normal.white"
+    android:id="@+id/tv_name"
     android:singleLine="true"
     android:layout_width="175dip"
     android:layout_height="40dip"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/textfield_pressed">
     
     <TextView 
         android:id="@+id/tv_dish_name"
@@ -7,35 +11,46 @@
         android:layout_height="50dip"
         android:layout_marginLeft="5dip"
         android:gravity="center_vertical"
-        android:layout_weight="4"
-        style="@style/Text.large" />
+        android:layout_weight="6"
+        style="@style/Text.large.white" />
     
     <TextView 
         android:id="@+id/tv_price"
         android:layout_width="0dip"
         android:layout_height="50dip"
         android:gravity="center_vertical"
-        android:layout_weight="2"
-        style="@style/Text.large" />
+        android:layout_weight="3"
+        style="@style/Text.large.white" />
     
     <TextView 
         android:id="@+id/tv_count"
         android:layout_width="0dip"
         android:layout_height="50dip"
         android:gravity="center_vertical"
-        android:layout_weight="1.5"
-        style="@style/Text.large" />
+        android:layout_weight="3"
+        style="@style/Text.large.white" />
+    
+    <TextView 
+        android:id="@+id/tv_remark"
+        android:layout_width="0dip"
+        android:layout_height="50dip"
+        android:gravity="center_vertical"
+        android:layout_weight="6.5"
+        android:singleLine="true"
+        android:text="@string/no_remark"
+        style="@style/Text.large.white" />
         
     <LinearLayout 
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight="3.5"
+        android:layout_weight="4.5"
         android:orientation="horizontal" >
         
         <Button 
             android:id="@+id/btn_incr"
             android:layout_width="40dip"
             android:layout_height="40dip"
+            android:layout_marginTop="5dip"
             android:focusable="false"
             android:background="@drawable/btn_add_normal" />
         
@@ -44,7 +59,9 @@
             android:layout_width="33dip"
             android:layout_height="33dip"
             android:layout_marginLeft="10dip"
+            android:layout_marginTop="5dip"
             android:focusable="false"
             android:background="@drawable/btn_sub_normal" />
     </LinearLayout>
-</merge>
+    
+</LinearLayout>

@@ -15,6 +15,7 @@ public class DishItem extends LinearLayout {
     private TextView nameView;
     private TextView priceView;
     private TextView countView;
+    private TextView tvRemark;
     private Button btnIncr;
     private Button btnDesc;
 
@@ -30,8 +31,19 @@ public class DishItem extends LinearLayout {
         nameView = (TextView) findViewById(R.id.tv_dish_name);
         priceView = (TextView) findViewById(R.id.tv_price);
         countView = (TextView) findViewById(R.id.tv_count);
+        tvRemark = (TextView) findViewById(R.id.tv_remark);
         btnIncr = (Button) findViewById(R.id.btn_incr);
         btnDesc = (Button) findViewById(R.id.btn_decr);
+        
+        tvRemark.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onCheckedChange(DishItem.this);
+                }
+            }
+        });
         
         btnIncr.setOnClickListener(new OnClickListener() {
             @Override
@@ -56,9 +68,10 @@ public class DishItem extends LinearLayout {
         countView.setText(String.valueOf(count));
     }
     
-    public void render(Dish dish, int count) {
+    public void render(Dish dish, int count, String remark) {
         nameView.setText(dish.getName());
         priceView.setText(dish.getPrice() + "");
+        tvRemark.setText(remark);
         renderCount(count);
     }
     
@@ -69,6 +82,7 @@ public class DishItem extends LinearLayout {
     
     public interface DishItemListener {
         public void onChanged(DishItem view, boolean incr);
+        public void onCheckedChange(DishItem view);
     }
 
 }

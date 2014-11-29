@@ -23,7 +23,6 @@ import com.cloudstone.cloudhand.activity.MainActivity;
 import com.cloudstone.cloudhand.data.User;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.logic.MiscLogic;
-import com.cloudstone.cloudhand.logic.UserLogic;
 import com.cloudstone.cloudhand.network.api.ListUserNameApi;
 import com.cloudstone.cloudhand.network.api.LoginApi;
 import com.cloudstone.cloudhand.network.api.LoginApi.LoginApiCallback;
@@ -71,11 +70,11 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onSuccess(String[] result) {
-                LoginDialogFragment.this.userNames = result;
-                LoginDialogFragment.this.render();
+                userNames = result;
+                render();
                 
                 //用户名自动选择上一次登录用户
-                String currentUser = MiscLogic.getInstance().getCurrentUser();
+                String currentUser = getMiscLogic().getCurrentUser();
                 if(!currentUser.equals("")) {
                     for(int i = 0; i < userNames.length; i++) {
                         if(userNames[i].equals(currentUser)) {
@@ -92,8 +91,7 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             }
             
             @Override
-            public void onFinish() {
-            }
+            public void onFinish() {}
             
             @Override
             public void onFailed(ApiException exception) {
@@ -107,68 +105,70 @@ public class LoginDialogFragment extends BaseAlertDialogFragment {
             
             @Override
             public void onClick(View v) {
-                new LoginApi(tvUserName.getSelectedItem().toString(), tvPassword.getText().toString()).asyncCall(new LoginApiCallback() {
+                if(tvUserName.getSelectedItem() == null) {
+                    Toast.makeText(getActivity(), R.string.user_name_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    new LoginApi(tvUserName.getSelectedItem().toString(), tvPassword.getText().toString()).asyncCall(new LoginApiCallback() {
 
-                    @Override
-                    public void onSuccess(User result) {
-                        UserLogic.getInstance().saveUser(result); //保存用户名
-                        ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
-                        
-                        String userName = tvUserName.getSelectedItem().toString();
-                        String password = tvPassword.getText().toString();
-                        //记住当前登录用户
-                        MiscLogic.getInstance().saveCurrentUser(userName);
-                        
-                        //存入数据
-                        if(cbRemember.isChecked()) {
-                            MiscLogic.getInstance().savePassword(userName, password);
-                        } else {
-                            MiscLogic.getInstance().removePassword(userName);
+                        @Override
+                        public void onSuccess(User result) {
+                            getUserLogic().saveUser(result); //保存用户名
+                            
+                            //TODO use delegate
+                            ((MainActivity) getActivity()).setTvLoginStatus(result.getName()); //修改主界面的登录状态为用户名
+                            
+                            String userName = tvUserName.getSelectedItem().toString();
+                            String password = tvPassword.getText().toString();
+                            //记住当前登录用户
+                            getMiscLogic().saveCurrentUser(userName);
+                            
+                            //存入数据
+                            if(cbRemember.isChecked()) {
+                                getMiscLogic().savePassword(userName, password);
+                            } else {
+                                getMiscLogic().removePassword(userName);
+                            }
+                            
+                            dismiss();
                         }
-                        
-                        dismiss();
-                    }
 
-                    @Override
-                    public void onFinish() {
-                    }
+                        @Override
+                        public void onFinish() {}
 
-                    @Override
-                    protected void onAuthFailed() {
-                        Toast.makeText(getActivity(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
-                        
-                    }
+                        @Override
+                        protected void onAuthFailed() {
+                            UIUtils.toast(getActivity(), R.string.wrong_password);
+                        }
 
-                    @Override
-                    protected void onError(ApiException e) {
-                        L.e(this, e);
-                        Toast.makeText(getActivity(), R.string.Logon_failed, Toast.LENGTH_SHORT).show();
-                        
-                    }
-                    
-                });
+                        @Override
+                        protected void onError(ApiException e) {
+                            L.e(this, e);
+                            UIUtils.toast(getActivity(), R.string.Login_failed);
+                        }
+                    });
+                }
             }
         });
         
         //改变用户名下拉选型的选中项的事件
         tvUserName.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+            //TODO argXXX
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View v,
                     int arg2, long arg3) {
                 String selectedName = tvUserName.getSelectedItem().toString();
-                String password = MiscLogic.getInstance().getPassword(selectedName);
+                String password = getMiscLogic().getPassword(selectedName);
                 //改变密码框的值
                 tvPassword.setText(password);
                 //判断记住密码是否选中
                 cbRemember.setChecked(!password.equals(""));
-                
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                
             }
+            
         });
     }
     

@@ -2,59 +2,116 @@ package com.cloudstone.cloudhand.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.CheckedTextView;
+import android.widget.Toast;
 
 import com.cloudstone.cloudhand.R;
+import com.cloudstone.cloudhand.constant.BroadcastConst;
 import com.cloudstone.cloudhand.data.Dish;
+import com.cloudstone.cloudhand.data.DishNote;
+import com.cloudstone.cloudhand.data.Order;
 import com.cloudstone.cloudhand.dialog.ExitOrderDialogFragment;
 import com.cloudstone.cloudhand.exception.ApiException;
 import com.cloudstone.cloudhand.fragment.OpenTableOrderFragment;
-import com.cloudstone.cloudhand.fragment.OpenTableOrderdFragment;
+import com.cloudstone.cloudhand.fragment.OpenTableOrderedFragment;
+import com.cloudstone.cloudhand.fragment.OpenTableSubmittedFragment;
+import com.cloudstone.cloudhand.network.api.GetOrderApi;
 import com.cloudstone.cloudhand.network.api.ListDishApi;
+import com.cloudstone.cloudhand.network.api.ListDishNoteApi;
 import com.cloudstone.cloudhand.network.api.base.IApiCallback;
+import com.cloudstone.cloudhand.util.DishBag;
 import com.cloudstone.cloudhand.util.L;
 
-public class OpenTableActivity extends FragmentActivity {
+/**
+ * 
+ * @author xhc
+ *
+ */
+public class OpenTableActivity extends ViewPagerBaseActivity {
     
-    private ViewPager viewPager; //页卡内容
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private TextView tvOrder; //页卡标题 - 点餐
-    private TextView tvOrderd; //页卡标题 - 已点
+    private int tableId;
+    private int customerNumber;
+    private int orderId;
+    private Order order;
+    private boolean flag; //是否显示已下单选项卡
+    private CheckedTextView thirdTitle;
     
-    //用于菜品列表的数据
-    private List<Dish> dishes = new ArrayList<Dish>();
+    public int getTableId() {
+        return tableId;
+    }
+
+    public int getCustomerNumber() {
+        return customerNumber;
+    }
+    
+    public Order getOrder() {
+        return order;
+    }
+    
+    public boolean getFlag() {
+        return flag;
+    }
+    
+    //菜品列表数据
+    private DishBag dishes = new DishBag();
     //用于记录每样菜点了几份
     private Map<Integer, Integer> dishCountMap = new HashMap<Integer, Integer>();
+    //菜品备注列表数据
+    private List<DishNote> dishNotes = new ArrayList<DishNote>();
+    //用于记录每样菜选择了哪些备注
+    private Map<Integer, Set<Integer>> dishNoteMap = new HashMap<Integer, Set<Integer>>();
     
-    public List<Dish> getDishes() {
+    //getter and setter
+    public DishBag getDishes() {
         return dishes;
     }
-  
+    
     public int getDishCount(int dishId) {
         if (!dishCountMap.containsKey(dishId)) {
             return 0;
         }
         return dishCountMap.get(dishId);
     }
-  
+    
     public void setDishCount(int dishId, int count) {
         dishCountMap.put(dishId, count);
+    }
+    
+    public List<DishNote> getDishNotes() {
+        return dishNotes;
+    }
+    
+    public Set<Integer> getDishNoteIdSet(int dishId) {
+        if(dishNoteMap.get(dishId) == null) {
+            return new HashSet<Integer>();
+        } else {
+            return dishNoteMap.get(dishId);
+        }
+    }
+    
+    public void setDishNoteIdSet(int dishId, Set<Integer> dishNotes) {
+        dishNoteMap.put(dishId, dishNotes);
+    }
+  
+    @Override
+    protected void initViewPager() {
+        super.initViewPager();
+        fragmentList.add(new OpenTableOrderFragment());
+        fragmentList.add(new OpenTableOrderedFragment());
+        if(flag) {
+            fragmentList.add(new OpenTableSubmittedFragment());
+        }
+        
     }
     
     @Override
@@ -65,8 +122,18 @@ public class OpenTableActivity extends FragmentActivity {
         //隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_open_table);
+        thirdTitle = (CheckedTextView) findViewById(R.id.tv_thirdTitle);
         
-        initTextView();
+        Intent intent = getIntent();
+        tableId = intent.getIntExtra("tableId", 0);
+        customerNumber = intent.getIntExtra("customerNumber", 0);
+        orderId = intent.getIntExtra("orderId", 0);
+        flag = intent.getBooleanExtra("flag", false);
+        if(!flag) {
+            thirdTitle.setVisibility(View.GONE);
+        }
+        
+        initTextView(3);
         initViewPager();
         
         //获取菜单列表
@@ -75,123 +142,66 @@ public class OpenTableActivity extends FragmentActivity {
             @Override
             public void onSuccess(List<Dish> result) {
                 for(int i = 0;i < result.size();i++) {
-                    dishes.add(result.get(i));
+                    dishes.put(result.get(i));
                 }
                 //发送更新菜单界面的广播
                 Intent intent = new Intent();
-                intent.setAction("update");
+                intent.setAction(BroadcastConst.INIT_OPEN_TABLE);
                 OpenTableActivity.this.sendBroadcast(intent);
             }
             
             @Override
             public void onFinish() {
-                
             }
             
             @Override
             public void onFailed(ApiException exception) {
+                Toast.makeText(OpenTableActivity.this, R.string.error_list_dishes_failed, Toast.LENGTH_SHORT).show();
                 L.e(OpenTableActivity.this, exception);
             }
         });
-    }
-    
-    //初始化ViewPager
-    private void initViewPager() {
-        viewPager = (ViewPager)findViewById(R.id.viewPager_open_table);
-        fragmentList.add(new OpenTableOrderFragment());
-        fragmentList.add(new OpenTableOrderdFragment());
-        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
-        viewPager.setCurrentItem(0);
-        viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
-    }
-    
-    //初始化头标
-    private void initTextView() {
-        tvOrder = (TextView)findViewById(R.id.tv_order);
-        tvOrderd = (TextView)findViewById(R.id.tv_orderd);
-
-        tvOrder.setOnClickListener(new OnClickListener() {
+        
+        //获取备注列表
+        new ListDishNoteApi().asyncCall(new IApiCallback<List<DishNote>>() {
             
             @Override
-            public void onClick(View v) {
-                showOrderTab();
+            public void onSuccess(List<DishNote> result) {
+                dishNotes = result;
             }
-        });
-        
-        tvOrderd.setOnClickListener(new OnClickListener() {
             
             @Override
-            public void onClick(View v) {
-                showOrderdTab();
+            public void onFinish() {
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {}
+        });
+        
+        new GetOrderApi(orderId).asyncCall(new IApiCallback<Order>() {
+            
+            @Override
+            public void onSuccess(Order result) {
+                order = result;
+            }
+            
+            @Override
+            public void onFinish() {
+            }
+            
+            @Override
+            public void onFailed(ApiException exception) {
             }
         });
-    }
-    
-    //切换到点餐界面
-    private void showOrderTab() {
-        viewPager.setCurrentItem(0);
-    }
-    
-    //切换到已点界面
-    private void showOrderdTab() {
-        viewPager.setCurrentItem(1);
-    }
-    
-    //ViewPager适配器
-    private class MyViewPagerAdapter extends FragmentPagerAdapter {
-        
-        public MyViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return  fragmentList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-        
-    }
-    
-    //页面切换事件
-    public class MyOnPageChangeListener implements OnPageChangeListener {
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-            
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-            
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            //TODO 改成selector
-            if(viewPager.getCurrentItem() == 0) {
-                tvOrder.setBackgroundResource(R.drawable.bg_open_table_title_pressed);
-                tvOrderd.setBackgroundResource(R.drawable.bg_open_table_title_normal);
-            } else {
-                tvOrder.setBackgroundResource(R.drawable.bg_open_table_title_normal);
-                tvOrderd.setBackgroundResource(R.drawable.bg_open_table_title_pressed);
-            }
-        }
-        
     }
     
     //按下返回键弹出退出确认
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) { 
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { 
+    public void onBackPressed() {
+        if (getFragmentManager().findFragmentByTag(ExitOrderDialogFragment.class.getSimpleName()) == null) {
             ExitOrderDialogFragment dialog = new ExitOrderDialogFragment();
-            dialog.show(getFragmentManager(), "exitOrderDialogFragment");
-            return true;
-        } 
-        return super.onKeyDown(keyCode, event);
+            dialog.show(getSupportFragmentManager(), ExitOrderDialogFragment.class.getSimpleName());
+        } else {
+            super.onBackPressed();
+        }
     }
-    
 }
